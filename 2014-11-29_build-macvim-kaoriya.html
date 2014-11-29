@@ -2,8 +2,8 @@
 <html lang="ja">
 <head>
 	<meta charset="utf-8">
-	<title>Pelicanでblogを始めました — ぶりとだいこん</title>
-	<meta name="description" content="Title: Pelicanでblogを始めました; Date: 2014-11-15; Author: meganehouser">
+	<title>macvim-kaoriyaをソースからビルド — ぶりとだいこん</title>
+	<meta name="description" content="Title: macvim-kaoriyaをソースからビルド; Date: 2014-11-29; Author: meganehouser">
 	<meta name="author" content="meganehouser">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -27,33 +27,91 @@
 		<div class="col-md-8 col-md-offset-2">
 <div class="article" itemscope itemtype="http://schema.org/BlogPosting">
 	<div class="text-center article-header">
-		<h1 itemprop="name headline" class="article-title">Pelicanでblogを始めました</h1>
+		<h1 itemprop="name headline" class="article-title">macvim-kaoriyaをソースからビルド</h1>
 		<span itemprop="author" itemscope itemtype="http://schema.org/Person">
 			<h4 itemprop="name">meganehouser</h4>
 		</span>
-		<time datetime="2014-11-15T00:00:00" itemprop="datePublished">Sat 15 November 2014</time>
+		<time datetime="2014-11-29T00:00:00" itemprop="datePublished">Sat 29 November 2014</time>
 	</div>
 	<div>
 		Category:
 		<span itemprop="articleSection">
-			<a href="http://meganehouser.github.io/category/photo.html" rel="category">photo</a>
+			<a href="http://meganehouser.github.io/category/tips.html" rel="category">tips</a>
 		</span>
 	</div>
  
 	<div>
 		Tags:
 		<span itemprop="keywords">
-			<a href="http://meganehouser.github.io/tag/photo.html" rel="tag">photo</a>
+			<a href="http://meganehouser.github.io/tag/vim-macvim.html" rel="tag">vim macvim</a>
 		</span>
 	</div>
-	<div itemprop="articleBody" class="article-body"><p>夕焼けの歌を聴いた
-<a href="https://www.flickr.com/photos/125573348@N07/14737390253"><img alt="夕焼け" src="https://farm6.staticflickr.com/5571/14737390253_d40f03cd12_z.jpg" /></a></p></div>
+	<div itemprop="articleBody" class="article-body"><p>普段はMacVim-Kaoriyaを配布されているdmgからインストールしていて使用している。</p>
+<p>配布されているdmgでは、Python2/Python3とも有効かされているが、jedi-vimがどうしてもPython2.7で実行されてしまうので、Python3のコード編集時に補完がうまくいかない。</p>
+<p>Python2を無効化、Python3を有効化してビルドしてみた。</p>
+<p>|:---|----|
+| os | Mac OS X 10.9.5 |
+| macvim-kaoriya | 7.4 | </p>
+<h2>1. cmigemoをインストール</h2>
+<div class="highlight"><pre>$ brew install cmigemo
+</pre></div>
+
+
+<h2>2. libiconvのビルド・インストール</h2>
+<p>libiconvを'-arch i386 -arch x86_64'でビルド・インストールする</p>
+<div class="highlight"><pre>$ wget http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.14.tar.gz
+$ tar xzf libiconv-1.14.tar.gz
+$ cd libiconv-1.14
+$ CFLAGS=&#39;-arch i386 -arch x86_64&#39; CCFLAGS=&#39;-arch i386 -arch x86_64&#39; CXXFLAGS=&#39;-arch i386 -arch x86_64&#39; ./configure
+$ make
+$ sudo make install
+</pre></div>
+
+
+<h2>3. macvim-kaoriyaのソースを取得</h2>
+<div class="highlight"><pre>$ git clone git://github.com/splhack/macvim.git
+$ cd macvim
+</pre></div>
+
+
+<h2>4. poファイルをビルドする</h2>
+<p>macvim/src/po ディレクトリでmakeを実行</p>
+<h2>5. ビルド用のShell Scriptを作成・実行する</h2>
+<p>解凍したmacvim-kaoriyaの直下に以下のシェルスクリプトを作る。
+mac_install.sh</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre>#! /bin/sh
+
+cd src
+CC=clang
+
+LIBS=&quot;-lmigemo&quot; LDFLAGS=-L/usr/local/lib ./configure --enable-python3interp --enable-luainterp --with-lua-prefix=/opt/local LUA_PREFIX=/opt/local -enable-multibyte --with-features=huge --enable-cscope --enable-migemo
+
+make
+</pre></div>
+</td></tr></table>
+
+<h2>5. 出来上がったMacVimをインストール</h2>
+<p>インストールして適当にMacVim3とかalias付けて使ってます。</p>
+<h1>参考</h1>
+<ul>
+<li><a href="https://code.google.com/p/macvim-kaoriya/wiki/Building?tm=4">MacVim-KaoriYaのビルド方法</a></li>
+<li><a href="https://github.com/b4winckler/macvim/wiki/Building#how-to-build-macvim">Building · b4winckler/macvim Wiki</a></li>
+<li><a href="https://blog.wwwjfy.net/2011/03/02/compile-vim-7-3-in-mac-os-x-10-6-6/">Compile vim 7.3 in Mac OS X 10.6.6</a></li>
+<li><a href="http://muryoimpl.com/blog/2013/06/27/compile-macvim/">Macvimを自分でコンパイルした(mac) - なんか書いていこうぜー.com</a></li>
+</ul></div>
 	<hr>
 	<h2>Comments</h2>
 <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'meganehouser'; 
-    var disqus_title = 'Pelicanでblogを始めました';
+    var disqus_title = 'macvim-kaoriyaをソースからビルド';
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
