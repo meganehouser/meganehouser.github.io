@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>ぶりとだいこん</title><link href="http://meganehouser.github.io/" rel="alternate"></link><link href="http://meganehouser.github.io/feeds/all.atom.xml" rel="self"></link><id>http://meganehouser.github.io/</id><updated>2014-12-02T00:00:00+09:00</updated><entry><title>カジュアルF#</title><link href="http://meganehouser.github.io/2014-12-02_casual-fsharp.html" rel="alternate"></link><updated>2014-12-02T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2014-12-02:2014-12-02_casual-fsharp.html</id><summary type="html">&lt;p&gt;社内Advent Calendar用に書いた記事&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>ぶりとだいこん</title><link href="http://meganehouser.github.io/" rel="alternate"></link><link href="http://meganehouser.github.io/feeds/programming.atom.xml" rel="self"></link><id>http://meganehouser.github.io/</id><updated>2014-12-02T00:00:00+09:00</updated><entry><title>カジュアルF#</title><link href="http://meganehouser.github.io/2014-12-02_casual-fsharp.html" rel="alternate"></link><updated>2014-12-02T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2014-12-02:2014-12-02_casual-fsharp.html</id><summary type="html">&lt;p&gt;社内Advent Calendar用に書いた記事&lt;/p&gt;
 &lt;h3&gt;目次&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="#whoareyou"&gt;お前誰よ&lt;/a&gt;&lt;/li&gt;
@@ -251,72 +251,4 @@ F#はLinuxでもMacでも書けるよ。&lt;br&gt;
 あとF#の強力な抽象化の機能と、シンプルに書ける言語表現力は魅力だよ。&lt;/p&gt;
 &lt;h3&gt;言い訳&lt;/h3&gt;
 &lt;p&gt;（駆け足で紹介したので説明不足や厳密にいうと不正確な部分もあると思います。
-疑問、指摘などあればコメントお願いします。）&lt;/p&gt;</summary><category term="fsharp"></category></entry><entry><title>THETA360試し取り</title><link href="http://meganehouser.github.io/2014-11-30_first-theta360.html" rel="alternate"></link><updated>2014-11-30T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2014-11-30:2014-11-30_first-theta360.html</id><summary type="html">&lt;p&gt;THETA360を購入したので試しに取ってみた。&lt;/p&gt;
-&lt;p&gt;1プッシュでぐるりと周囲の全てが記録される間隔、被写体と撮影者の位置の違い（自らが撮影場所のど真ん中に踏み込む）のが新鮮だ。&lt;/p&gt;
-&lt;blockquote data-width="500" data-height="375" class="ricoh-theta-spherical-image" &gt;Post from RICOH THETA. - &lt;a href="https://theta360.com/s/aLn" target="_blank"&gt;Spherical Image - RICOH THETA&lt;/a&gt;&lt;/blockquote&gt;
-
-&lt;script async src="https://theta360.com/widgets.js" charset="utf-8"&gt;&lt;/script&gt;</summary><category term="THETA360"></category></entry><entry><title>macvim-kaoriyaをソースからビルド</title><link href="http://meganehouser.github.io/2014-11-29_build-macvim-kaoriya.html" rel="alternate"></link><updated>2014-11-29T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2014-11-29:2014-11-29_build-macvim-kaoriya.html</id><summary type="html">&lt;p&gt;普段はMacVim-Kaoriyaを配布されているdmgからインストールしていて使用している。&lt;/p&gt;
-&lt;p&gt;配布されているdmgでは、Python2/Python3とも有効かされているが、jedi-vimがどうしてもPython2.7で実行されてしまうので、Python3のコード編集時に補完がうまくいかない。&lt;/p&gt;
-&lt;p&gt;Python2を無効化、Python3を有効化してビルドしてみた。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;環境&lt;ul&gt;
-&lt;li&gt;Mac OS X 10.9.5&lt;/li&gt;
-&lt;li&gt;macvim-kaoriya 7.4 &lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2&gt;1. cmigemoをインストール&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ brew install cmigemo
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h2&gt;2. libiconvのビルド・インストール&lt;/h2&gt;
-&lt;p&gt;libiconvを'-arch i386 -arch x86_64'でビルド・インストールする&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ wget http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.14.tar.gz
-$ tar xzf libiconv-1.14.tar.gz
-$ cd libiconv-1.14
-$ CFLAGS=&amp;#39;-arch i386 -arch x86_64&amp;#39; CCFLAGS=&amp;#39;-arch i386 -arch x86_64&amp;#39; CXXFLAGS=&amp;#39;-arch i386 -arch x86_64&amp;#39; ./configure
-$ make
-$ sudo make install
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h2&gt;3. macvim-kaoriyaのソースを取得&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ git clone git://github.com/splhack/macvim.git
-$ cd macvim
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h2&gt;4. poファイルをビルドする&lt;/h2&gt;
-&lt;p&gt;macvim/src/po ディレクトリでmakeを実行&lt;/p&gt;
-&lt;h2&gt;5. ビルド用のShell Scriptを作成・実行する&lt;/h2&gt;
-&lt;p&gt;解凍したmacvim-kaoriyaの直下に以下のシェルスクリプトを作る。
-mac_install.sh&lt;/p&gt;
-&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
-2
-3
-4
-5
-6
-7
-8&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;#! /bin/sh
-
-cd src
-CC=clang
-
-LIBS=&amp;quot;-lmigemo&amp;quot; LDFLAGS=-L/usr/local/lib ./configure --enable-python3interp --enable-luainterp --with-lua-prefix=/opt/local LUA_PREFIX=/opt/local -enable-multibyte --with-features=huge --enable-cscope --enable-migemo
-
-make
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-
-&lt;h2&gt;5. 出来上がったMacVimをインストール&lt;/h2&gt;
-&lt;p&gt;インストールして適当にMacVim3とかalias付けて使ってます。&lt;/p&gt;
-&lt;h1&gt;参考&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://code.google.com/p/macvim-kaoriya/wiki/Building?tm=4"&gt;MacVim-KaoriYaのビルド方法&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/b4winckler/macvim/wiki/Building#how-to-build-macvim"&gt;Building · b4winckler/macvim Wiki&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://blog.wwwjfy.net/2011/03/02/compile-vim-7-3-in-mac-os-x-10-6-6/"&gt;Compile vim 7.3 in Mac OS X 10.6.6&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="http://muryoimpl.com/blog/2013/06/27/compile-macvim/"&gt;Macvimを自分でコンパイルした(mac) - なんか書いていこうぜー.com&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</summary><category term="vim macvim"></category></entry><entry><title>Pelicanでblogを始めました</title><link href="http://meganehouser.github.io/2014-11-15_first-article.html" rel="alternate"></link><updated>2014-11-15T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2014-11-15:2014-11-15_first-article.html</id><summary type="html">&lt;p&gt;夕焼けの歌を聴いた
-&lt;a href="https://www.flickr.com/photos/125573348@N07/14737390253"&gt;&lt;img alt="夕焼け" src="https://farm6.staticflickr.com/5571/14737390253_d40f03cd12_z.jpg" /&gt;&lt;/a&gt;&lt;/p&gt;</summary><category term="E-PL2"></category></entry></feed>
+疑問、指摘などあればコメントお願いします。）&lt;/p&gt;</summary><category term="fsharp"></category></entry></feed>
