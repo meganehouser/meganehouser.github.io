@@ -63,7 +63,7 @@ val it: string = &amp;quot;14:10:12&amp;quot;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;1行目のopenは名前空間のインポート。C#でいうuseに相当する。
+&lt;p&gt;1行目のopenは名前空間のインポート。C#でいうusingに相当する。
 入力した部分を実行するには、行末に";;"を入力してEnterする。&lt;/p&gt;
 &lt;p&gt;正規表現を試してみるのにも便利だろう。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&amp;gt; open System.Text.RegularExpressions;;
