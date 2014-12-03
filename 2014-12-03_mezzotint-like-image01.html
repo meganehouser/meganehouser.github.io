@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>銅版画のようなイメージを作りたい その1 — ぶりとだいこん</title>
+	<meta name="description" content="Title: 銅版画のようなイメージを作りたい その1; Date: 2014-12-03; Author: meganehouser">
+	<meta name="author" content="meganehouser">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+		<script src="http://meganehouser.github.io/theme/html5.js"></script>
+		<![endif]-->
+	<link href="http://meganehouser.github.io/theme/css/ipython.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/simplex/bootstrap.min.css" rel="stylesheet">
+	<link href="http://meganehouser.github.io/theme/css/local.css" rel="stylesheet">
+	<link href="http://meganehouser.github.io/theme/css/pygments.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+	<div class="page-header">
+		<h1><a href="http://meganehouser.github.io">ぶりとだいこん</a>
+			<br><small>ゆっくり歩け、そしてたっぷり水を飲めってね。</small></h1>
+	</div>
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="text-center article-header">
+		<h1 itemprop="name headline" class="article-title">銅版画のようなイメージを作りたい その1</h1>
+		<span itemprop="author" itemscope itemtype="http://schema.org/Person">
+			<h4 itemprop="name">meganehouser</h4>
+		</span>
+		<time datetime="2014-12-03T00:00:00" itemprop="datePublished">Wed 03 December 2014</time>
+	</div>
+	<div>
+		Category:
+		<span itemprop="articleSection">
+			<a href="http://meganehouser.github.io/category/image.html" rel="category">image</a>
+		</span>
+	</div>
+ 
+	<div>
+		Tags:
+		<span itemprop="keywords">
+			<a href="http://meganehouser.github.io/tag/mezzotint.html" rel="tag">mezzotint</a>
+		</span>
+		<span itemprop="keywords">
+			<a href="http://meganehouser.github.io/tag/quil.html" rel="tag">quil</a>
+		</span>
+		<span itemprop="keywords">
+			<a href="http://meganehouser.github.io/tag/processing.html" rel="tag">processing</a>
+		</span>
+	</div>
+	<div itemprop="articleBody" class="article-body"><p>浜口陽三の多色刷りのメゾチントが好きだ。なんとかしてProcessingでメゾチント風味を表現できないか。</p>
+<h3>メゾチントの手法</h3>
+<ol>
+<li>版の面全体に縦横斜めに無数の線を刻む。(目立て)
+   (目の細かさで濃淡の表現が可能)</li>
+<li>目を金属のへら(バーニッシャー、スクレーパー)で削って絵を描く。
+   (目を残した部分にインクが残り、色が載る)</li>
+<li>多色刷りの場合は1. と 2.を色数分作る</li>
+</ol>
+<h3>試してみたこと</h3>
+<p>目立てを縦横斜めのstroke-weightが0.1のlineをで再現。lineはランダムで消したりずらしたりしている。</p>
+<p>メゾチントの質感は出ていないがおもしろい感じになった。</p>
+<p>次は濃淡をどのように表現するか。</p>
+<p><a href="https://www.flickr.com/photos/125573348@N07/15751621509" title="hanga-like by megane houser, on Flickr"><img src="https://farm8.staticflickr.com/7467/15751621509_fc19d782c9.jpg" width="357" height="500" alt="hanga-like"></a></p>
+<div class="highlight"><pre><span class="p">(</span><span class="kd">ns </span><span class="nv">hanga.core</span>
+  <span class="p">(</span><span class="ss">:require</span> <span class="p">[</span><span class="nv">quil.core</span> <span class="ss">:as</span> <span class="nv">q</span><span class="p">]))</span>
+
+<span class="p">(</span><span class="k">def </span><span class="nv">canvas-len</span> <span class="mi">300</span><span class="p">)</span>
+<span class="p">(</span><span class="kd">defn </span><span class="nv">c-red</span> <span class="p">[]</span> <span class="p">(</span><span class="nf">q/color</span> <span class="mi">172</span> <span class="mi">46</span> <span class="mi">43</span> <span class="mi">100</span><span class="p">))</span>
+<span class="p">(</span><span class="kd">defn </span><span class="nv">c-green</span> <span class="p">[]</span> <span class="p">(</span><span class="nf">q/color</span> <span class="mi">48</span>, <span class="mi">100</span>, <span class="mi">84</span> <span class="mi">100</span><span class="p">))</span>
+<span class="p">(</span><span class="kd">defn </span><span class="nv">c-blue</span> <span class="p">[]</span> <span class="p">(</span><span class="nf">q/color</span> <span class="mi">40</span>, <span class="mi">48</span>, <span class="mi">90</span> <span class="mi">100</span><span class="p">))</span>
+<span class="p">(</span><span class="k">def </span><span class="nv">colors</span> <span class="p">[</span><span class="nv">c-green</span> <span class="nv">c-blue</span> <span class="nv">c-red</span><span class="p">])</span>
+<span class="p">(</span><span class="kd">defn </span><span class="nv">back</span> <span class="p">[]</span> <span class="p">(</span><span class="nf">q/color</span> <span class="mi">9</span>, <span class="mi">13</span>, <span class="mi">11</span><span class="p">))</span>
+
+<span class="p">(</span><span class="k">def </span><span class="nv">dark</span> <span class="p">[</span><span class="mf">0.2</span> <span class="mf">0.7</span><span class="p">])</span>
+<span class="p">(</span><span class="k">def </span><span class="nv">middle</span> <span class="p">[</span><span class="mf">0.3</span> <span class="mf">0.7</span><span class="p">])</span>
+<span class="p">(</span><span class="k">def </span><span class="nv">light</span> <span class="p">[</span><span class="mf">0.4</span>  <span class="mf">0.6</span><span class="p">])</span>
+
+<span class="p">(</span><span class="kd">defn </span><span class="nv">rand-bool</span> 
+  <span class="p">([]</span> <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nb">rand-int </span><span class="mi">2</span><span class="p">)</span> <span class="mi">0</span><span class="p">)</span> <span class="nv">true</span> <span class="nv">false</span><span class="p">))</span>
+  <span class="p">([</span><span class="nv">p</span><span class="p">]</span> <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">&lt; </span><span class="p">(</span><span class="nf">rand</span><span class="p">)</span> <span class="nv">p</span><span class="p">)</span> <span class="nv">true</span> <span class="nv">false</span><span class="p">)))</span>
+
+<span class="p">(</span><span class="kd">defn </span><span class="nv">gauss-rand</span> <span class="p">[]</span>
+  <span class="p">(</span><span class="nb">* </span><span class="p">(</span><span class="nf">q/random-gaussian</span><span class="p">)</span> <span class="mf">1.5</span><span class="p">))</span>
+
+<span class="p">(</span><span class="kd">defn </span><span class="nv">rand-line</span> <span class="p">[</span><span class="nv">x1</span> <span class="nv">y1</span> <span class="nv">x2</span> <span class="nv">y2</span> <span class="nv">rough</span><span class="p">]</span>
+  <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nf">rand-bool</span> <span class="nv">rough</span><span class="p">)</span>
+    <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">x1</span> <span class="p">(</span><span class="nb">+ </span><span class="p">(</span><span class="nf">gauss-rand</span><span class="p">)</span> <span class="nv">x1</span><span class="p">)</span>
+          <span class="nv">x2</span> <span class="p">(</span><span class="nb">+ </span><span class="p">(</span><span class="nf">gauss-rand</span><span class="p">)</span> <span class="nv">x2</span><span class="p">)</span>
+          <span class="nv">y1</span> <span class="p">(</span><span class="nb">+ </span><span class="p">(</span><span class="nf">gauss-rand</span><span class="p">)</span> <span class="nv">y1</span><span class="p">)</span>
+          <span class="nv">y2</span> <span class="p">(</span><span class="nb">+ </span><span class="p">(</span><span class="nf">gauss-rand</span><span class="p">)</span> <span class="nv">y2</span><span class="p">)]</span>
+      <span class="p">(</span><span class="nf">q/line</span> <span class="nv">x1</span> <span class="nv">y1</span> <span class="nv">x2</span> <span class="nv">y2</span><span class="p">))))</span>
+
+<span class="p">(</span><span class="kd">defn </span><span class="nv">sort-side</span> <span class="p">[</span><span class="nv">w</span> <span class="nv">h</span><span class="p">]</span>
+  <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">&gt; </span><span class="nv">w</span> <span class="nv">h</span><span class="p">)</span> <span class="p">[</span><span class="ss">:w</span> <span class="ss">:h</span><span class="p">]</span> <span class="p">[</span><span class="ss">:h</span> <span class="ss">:w</span><span class="p">]))</span>
+
+<span class="p">(</span><span class="kd">defn </span><span class="nv">square</span> <span class="p">[</span><span class="nv">x</span> <span class="nv">y</span> <span class="nv">width</span> <span class="nv">height</span> <span class="p">[</span><span class="nv">r1</span> <span class="nv">r2</span><span class="p">]</span> <span class="nv">rotate</span><span class="p">]</span>
+  <span class="p">(</span><span class="nf">q/stroke-weight</span> <span class="mf">0.1</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">q/with-translation</span> <span class="p">[</span><span class="nv">x</span> <span class="nv">y</span><span class="p">]</span>
+    <span class="p">(</span><span class="nf">q/with-rotation</span> <span class="p">[(</span><span class="k">if </span><span class="nv">rotate</span> <span class="p">(</span><span class="nb">- </span><span class="p">(</span><span class="nb">/ </span><span class="nv">q/PI</span> <span class="mi">4</span><span class="p">))</span> <span class="mi">0</span><span class="p">)]</span>
+      <span class="p">(</span><span class="nb">doseq </span><span class="p">[</span><span class="nv">i</span> <span class="p">(</span><span class="nb">range </span><span class="mi">0</span> <span class="nv">width</span> <span class="nv">r1</span><span class="p">)]</span>
+        <span class="p">(</span><span class="nf">rand-line</span> <span class="nv">i</span> <span class="mi">0</span> <span class="nv">i</span> <span class="nv">height</span> <span class="nv">r2</span><span class="p">))</span>
+
+      <span class="p">(</span><span class="nb">doseq </span><span class="p">[</span><span class="nv">i</span> <span class="p">(</span><span class="nb">range </span><span class="mi">0</span> <span class="nv">height</span> <span class="nv">r1</span><span class="p">)]</span>
+        <span class="p">(</span><span class="nf">rand-line</span> <span class="mi">0</span> <span class="nv">i</span> <span class="nv">width</span> <span class="nv">i</span> <span class="nv">r2</span><span class="p">))</span>
+
+      <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">size</span> <span class="p">{</span><span class="ss">:w</span> <span class="nv">width</span> <span class="ss">:h</span> <span class="nv">height</span><span class="p">}</span>
+            <span class="p">[</span><span class="nv">long-side</span> <span class="nv">short-side</span><span class="p">]</span> <span class="p">(</span><span class="nf">sort-side</span> <span class="nv">width</span> <span class="nv">height</span><span class="p">)]</span>
+        <span class="p">(</span><span class="nb">doseq </span><span class="p">[</span><span class="nv">i</span> <span class="p">(</span><span class="nb">range </span><span class="mi">0</span> <span class="p">(</span><span class="nf">short-side</span> <span class="nv">size</span><span class="p">)</span> <span class="nv">r1</span><span class="p">)]</span>
+          <span class="p">(</span><span class="nf">rand-line</span> <span class="nv">i</span> <span class="mi">0</span> <span class="mi">0</span> <span class="nv">i</span> <span class="nv">r2</span><span class="p">)</span>
+          <span class="p">(</span><span class="nf">rand-line</span> <span class="p">(</span><span class="nb">- </span><span class="nv">width</span> <span class="nv">i</span><span class="p">)</span> <span class="mi">0</span> <span class="nv">width</span> <span class="nv">i</span> <span class="nv">r2</span><span class="p">)</span>
+          <span class="p">(</span><span class="nf">rand-line</span> <span class="mi">0</span> <span class="p">(</span><span class="nb">- </span><span class="nv">height</span> <span class="nv">i</span><span class="p">)</span> <span class="nv">i</span> <span class="nv">height</span> <span class="nv">r2</span><span class="p">)</span>
+          <span class="p">(</span><span class="nf">rand-line</span> <span class="nv">width</span> <span class="p">(</span><span class="nb">- </span><span class="nv">height</span> <span class="nv">i</span><span class="p">)</span> <span class="p">(</span><span class="nb">- </span><span class="nv">width</span> <span class="nv">i</span><span class="p">)</span> <span class="nv">height</span> <span class="nv">r2</span><span class="p">))</span>
+        <span class="p">(</span><span class="nb">doseq </span><span class="p">[</span><span class="nv">i</span> <span class="p">(</span><span class="nb">range </span><span class="mi">0</span> <span class="p">(</span><span class="nb">- </span><span class="p">(</span><span class="nf">long-side</span> <span class="nv">size</span><span class="p">)</span> <span class="p">(</span><span class="nf">short-side</span> <span class="nv">size</span><span class="p">))</span> <span class="nv">r1</span><span class="p">)]</span>
+          <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">= </span><span class="nv">long-side</span> <span class="ss">:w</span><span class="p">)</span>
+            <span class="p">(</span><span class="nf">do</span>
+              <span class="p">(</span><span class="nf">rand-line</span> <span class="nv">i</span> <span class="mi">0</span> <span class="p">(</span><span class="nb">+ </span><span class="nv">height</span> <span class="nv">i</span><span class="p">)</span> <span class="nv">height</span> <span class="nv">r2</span><span class="p">)</span>
+              <span class="p">(</span><span class="nf">rand-line</span> <span class="p">(</span><span class="nb">+ </span><span class="nv">height</span> <span class="nv">i</span><span class="p">)</span> <span class="mi">0</span> <span class="nv">i</span> <span class="nv">height</span> <span class="nv">r2</span><span class="p">))</span>
+            <span class="p">(</span><span class="nf">do</span>
+              <span class="p">(</span><span class="nf">rand-line</span> <span class="mi">0</span> <span class="nv">i</span> <span class="nv">width</span> <span class="p">(</span><span class="nb">+ </span><span class="nv">width</span> <span class="nv">i</span><span class="p">)</span> <span class="nv">r2</span><span class="p">)</span>
+              <span class="p">(</span><span class="nf">rand-line</span> <span class="mi">0</span> <span class="p">(</span><span class="nb">+ </span><span class="nv">width</span> <span class="nv">i</span><span class="p">)</span> <span class="nv">width</span> <span class="nv">i</span> <span class="nv">r2</span><span class="p">))))))))</span>
+
+
+<span class="p">(</span><span class="kd">defn </span><span class="nv">odd</span> <span class="p">[</span><span class="nv">n</span><span class="p">]</span> <span class="p">(</span><span class="nb">= </span><span class="p">(</span><span class="nb">rem </span><span class="nv">n</span> <span class="mi">2</span><span class="p">)</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="p">(</span><span class="kd">defn </span><span class="nv">bg</span> <span class="p">[]</span>
+  <span class="p">(</span><span class="nf">q/stroke</span> <span class="p">(</span><span class="nf">back</span><span class="p">))</span>
+  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">unit</span> <span class="p">(</span><span class="nb">/ </span><span class="p">(</span><span class="nf">q/height</span><span class="p">)</span> <span class="mi">5</span><span class="p">)]</span>
+    <span class="p">(</span><span class="nb">doseq </span><span class="p">[</span><span class="nv">i</span> <span class="p">(</span><span class="nb">range </span><span class="mi">5</span><span class="p">)]</span>
+      <span class="p">(</span><span class="nf">square</span> <span class="mi">0</span> <span class="p">(</span><span class="nb">* </span><span class="nv">unit</span> <span class="nv">i</span><span class="p">)</span> <span class="p">(</span><span class="nf">q/width</span><span class="p">)</span> <span class="nv">unit</span> <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nf">odd</span> <span class="nv">i</span><span class="p">)</span> <span class="nv">middle</span> <span class="nv">dark</span><span class="p">)</span> <span class="nv">false</span><span class="p">))))</span>
+
+
+<span class="p">(</span><span class="kd">defn </span><span class="nv">setup</span> <span class="p">[]</span>
+  <span class="p">(</span><span class="nf">q/smooth</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">q/background</span> <span class="mi">255</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">q/stroke</span> <span class="mi">0</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">bg</span><span class="p">)</span>
+
+  <span class="p">(</span><span class="nb">doseq </span><span class="p">[</span><span class="nv">i</span> <span class="p">(</span><span class="nb">range </span><span class="mi">3</span><span class="p">)]</span>
+    <span class="p">(</span><span class="nf">q/stroke</span> <span class="p">((</span><span class="nb">nth </span><span class="nv">colors</span> <span class="nv">i</span><span class="p">)))</span>
+    <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">w</span> <span class="p">(</span><span class="nb">+ </span><span class="p">(</span><span class="nb">rand-int </span><span class="mi">300</span><span class="p">)</span> <span class="mi">100</span><span class="p">)</span>
+          <span class="nv">h</span> <span class="p">(</span><span class="nb">+ </span><span class="p">(</span><span class="nb">rand-int </span><span class="mi">300</span><span class="p">)</span> <span class="mi">100</span><span class="p">)</span>
+          <span class="nv">x</span> <span class="p">(</span><span class="nb">- </span><span class="p">(</span><span class="nb">+ </span><span class="p">(</span><span class="nb">/ </span><span class="p">(</span><span class="nf">q/width</span><span class="p">)</span> <span class="mi">2</span><span class="p">)</span> <span class="p">(</span><span class="nb">- </span><span class="p">(</span><span class="nb">rand-int </span><span class="mi">200</span><span class="p">)</span> <span class="mi">100</span><span class="p">))</span> <span class="p">(</span><span class="nb">/ </span><span class="nv">w</span> <span class="mi">2</span><span class="p">))</span>
+          <span class="nv">y</span> <span class="p">(</span><span class="nb">- </span><span class="p">(</span><span class="nb">+ </span><span class="p">(</span><span class="nb">/ </span><span class="p">(</span><span class="nf">q/height</span><span class="p">)</span> <span class="mi">2</span><span class="p">)</span> <span class="p">(</span><span class="nb">- </span><span class="p">(</span><span class="nb">rand-int </span><span class="mi">300</span><span class="p">)</span> <span class="mi">150</span><span class="p">))</span> <span class="p">(</span><span class="nb">/ </span><span class="nv">h</span> <span class="mi">2</span><span class="p">))]</span>
+    <span class="p">(</span><span class="nf">square</span> <span class="nv">x</span> <span class="nv">y</span> <span class="nv">w</span> <span class="nv">h</span> <span class="nv">dark</span> <span class="p">(</span><span class="nf">rand-bool</span><span class="p">)))))</span>
+
+<span class="p">(</span><span class="kd">defn </span><span class="nv">mouse-pressed</span> <span class="p">[]</span>
+  <span class="p">(</span><span class="nf">q/save</span> <span class="s">&quot;image.jpg&quot;</span><span class="p">))</span>
+
+<span class="p">(</span><span class="kd">defn </span><span class="nv">start-sketch</span> <span class="p">[]</span>
+  <span class="p">(</span><span class="nf">q/sketch</span>
+    <span class="ss">:title</span> <span class="s">&quot;hanga&quot;</span>
+    <span class="ss">:size</span> <span class="p">[</span><span class="mi">500</span> <span class="mi">700</span><span class="p">]</span>
+    <span class="ss">:setup</span> <span class="nv">setup</span>
+    <span class="ss">:mouse-pressed</span> <span class="nv">mouse-pressed</span>
+    <span class="ss">:features</span> <span class="p">[</span><span class="ss">:exit-on-close</span><span class="p">]))</span>
+
+<span class="p">(</span><span class="kd">defn </span><span class="nv">-main</span> <span class="p">[</span><span class="o">&amp;</span> <span class="nv">args</span><span class="p">]</span>
+  <span class="p">(</span><span class="nf">start-sketch</span><span class="p">))</span>
+</pre></div></div>
+	<hr>
+	<h2>Comments</h2>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'meganehouser'; 
+    var disqus_title = '銅版画のようなイメージを作りたい その1';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+		</div>
+	</div> 	<!-- <hr> -->
+</div> <!-- /container -->
+<footer class="aw-footer bg-danger">
+	<div class="container"> <!-- footer -->
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1">
+				<div class="row">
+					<div class="col-md-3">
+						<h4>Navigation</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="http://meganehouser.github.io">ぶりとだいこん</a></li>
+							<li><a href="http://meganehouser.github.io/feeds/all.atom.xml"><i class="fa fa-rss "></i> atom</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Author</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="http://twitter.com/meganehouser">twitter</a></li>
+							<li><a href="https://github.com/meganehouser">github</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Categories</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="http://meganehouser.github.io/category/image.html">image (1)</a></li>
+							<li><a href="http://meganehouser.github.io/category/photo.html">photo (2)</a></li>
+							<li><a href="http://meganehouser.github.io/category/programming.html">programming (1)</a></li>
+							<li><a href="http://meganehouser.github.io/category/tips.html">tips (1)</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Links</h4>
+						<ul class="list-unstyled my-list-style">
+							<li><a href="http://meganehouser.hatenablog.com/">ぶりとだいこん(旧)</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 text-center center-block aw-bottom">
+			<p>&copy; meganehouser 2014</p>
+			<p>Powered by Pelican</p>
+		</div>
+	</div>
+</div>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+	$("div.collapseheader").click(function () {
+		$header = $(this).children("span").first();
+		$codearea = $(this).children(".input_area");
+		$codearea.slideToggle(500, function () {
+			$header.text(function () {
+				return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+			});
+		});
+	});
+});
+</script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-56794608-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+ 
+</body>
+</html>
