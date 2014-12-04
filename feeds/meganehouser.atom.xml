@@ -9,7 +9,7 @@
 &lt;li&gt;多色刷りの場合は1. と 2.を色数分作る&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h3&gt;試してみたこと&lt;/h3&gt;
-&lt;p&gt;目立てを縦横斜めのstroke-weightが0.1のlineをで再現。lineはランダムで消したりずらしたりしている。&lt;/p&gt;
+&lt;p&gt;目立てを縦横斜めのstroke-weightが0.1のlineで再現。lineはランダムで消したりずらしたりしている。&lt;/p&gt;
 &lt;p&gt;メゾチントの質感は出ていないがおもしろい感じになった。&lt;/p&gt;
 &lt;p&gt;次は濃淡をどのように表現するか。&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://www.flickr.com/photos/125573348@N07/15751621509" title="hanga-like by megane houser, on Flickr"&gt;&lt;img src="https://farm8.staticflickr.com/7467/15751621509_fc19d782c9.jpg" width="357" height="500" alt="hanga-like"&gt;&lt;/a&gt;&lt;/p&gt;
@@ -350,10 +350,12 @@ F#では軽量構文と冗語構文が用意されており、デフォルトで
 &lt;h1 id='conclusion'&gt;まとめ&lt;/h1&gt;
 
 &lt;p&gt;F#はREPLやスクリプトとしてカジュアルに使用できる！&lt;/p&gt;
-&lt;p&gt;個人的には、仕事で開発する場合はC#が多く、F#はREPLやスクリプトで以下のような補助的なタスクに使用している。
-&lt;em&gt; REPLで.NET Frameworkのクラスの挙動を確認
-&lt;/em&gt; スクリプトで作成中のC#アプリケーションまたはライブラリをアドホックに呼び出す
-* スクリプトでテストデータを生成する&lt;/p&gt;
+&lt;p&gt;個人的には、仕事で開発する場合はC#が多く、F#はREPLやスクリプトで以下のような補助的なタスクに使用している。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;REPLで.NET Frameworkのクラスの挙動を確認&lt;/li&gt;
+&lt;li&gt;スクリプトで作成中のC#アプリケーションまたはライブラリをアドホックに呼び出す&lt;/li&gt;
+&lt;li&gt;スクリプトでテストデータを生成する&lt;/li&gt;
+&lt;/ul&gt;
 &lt;p&gt;Q: それってPowerShellでもよくない？
 &lt;div style="font-size:40px"&gt;A: F#の方が楽しいから&lt;/div&gt;
 F#はLinuxでもMacでも書けるよ。&lt;br&gt;
@@ -361,7 +363,7 @@ F#はLinuxでもMacでも書けるよ。&lt;br&gt;
 &lt;h3&gt;言い訳&lt;/h3&gt;
 &lt;p&gt;（駆け足で紹介したので説明不足や厳密にいうと不正確な部分もあると思います。
 疑問、指摘などあればコメントお願いします。）&lt;/p&gt;</summary><category term="fsharp"></category></entry><entry><title>THETA360試し取り</title><link href="http://meganehouser.github.io/2014-11-30_first-theta360.html" rel="alternate"></link><updated>2014-11-30T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2014-11-30:2014-11-30_first-theta360.html</id><summary type="html">&lt;p&gt;THETA360を購入したので試しに取ってみた。&lt;/p&gt;
-&lt;p&gt;1プッシュでぐるりと周囲の全てが記録される間隔、被写体と撮影者の位置の違い（自らが撮影場所のど真ん中に踏み込む）のが新鮮だ。&lt;/p&gt;
+&lt;p&gt;1プッシュでぐるりと周囲の全てが記録される感覚、通常のカメラとの被写体と撮影者の位置の違い（自らが撮影場所のど真ん中に踏み込む）のが新鮮だ。&lt;/p&gt;
 &lt;blockquote data-width="500" data-height="375" class="ricoh-theta-spherical-image" &gt;Post from RICOH THETA. - &lt;a href="https://theta360.com/s/aLn" target="_blank"&gt;Spherical Image - RICOH THETA&lt;/a&gt;&lt;/blockquote&gt;
 
 &lt;script async src="https://theta360.com/widgets.js" charset="utf-8"&gt;&lt;/script&gt;</summary><category term="THETA360"></category></entry><entry><title>macvim-kaoriyaをソースからビルド</title><link href="http://meganehouser.github.io/2014-11-29_build-macvim-kaoriya.html" rel="alternate"></link><updated>2014-11-29T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2014-11-29:2014-11-29_build-macvim-kaoriya.html</id><summary type="html">&lt;p&gt;普段はMacVim-Kaoriyaを配布されているdmgからインストールしていて使用している。&lt;/p&gt;

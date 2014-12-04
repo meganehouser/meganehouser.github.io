@@ -241,10 +241,12 @@ F#では軽量構文と冗語構文が用意されており、デフォルトで
 &lt;h1 id='conclusion'&gt;まとめ&lt;/h1&gt;
 
 &lt;p&gt;F#はREPLやスクリプトとしてカジュアルに使用できる！&lt;/p&gt;
-&lt;p&gt;個人的には、仕事で開発する場合はC#が多く、F#はREPLやスクリプトで以下のような補助的なタスクに使用している。
-&lt;em&gt; REPLで.NET Frameworkのクラスの挙動を確認
-&lt;/em&gt; スクリプトで作成中のC#アプリケーションまたはライブラリをアドホックに呼び出す
-* スクリプトでテストデータを生成する&lt;/p&gt;
+&lt;p&gt;個人的には、仕事で開発する場合はC#が多く、F#はREPLやスクリプトで以下のような補助的なタスクに使用している。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;REPLで.NET Frameworkのクラスの挙動を確認&lt;/li&gt;
+&lt;li&gt;スクリプトで作成中のC#アプリケーションまたはライブラリをアドホックに呼び出す&lt;/li&gt;
+&lt;li&gt;スクリプトでテストデータを生成する&lt;/li&gt;
+&lt;/ul&gt;
 &lt;p&gt;Q: それってPowerShellでもよくない？
 &lt;div style="font-size:40px"&gt;A: F#の方が楽しいから&lt;/div&gt;
 F#はLinuxでもMacでも書けるよ。&lt;br&gt;

@@ -9,7 +9,7 @@
 &lt;li&gt;多色刷りの場合は1. と 2.を色数分作る&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h3&gt;試してみたこと&lt;/h3&gt;
-&lt;p&gt;目立てを縦横斜めのstroke-weightが0.1のlineをで再現。lineはランダムで消したりずらしたりしている。&lt;/p&gt;
+&lt;p&gt;目立てを縦横斜めのstroke-weightが0.1のlineで再現。lineはランダムで消したりずらしたりしている。&lt;/p&gt;
 &lt;p&gt;メゾチントの質感は出ていないがおもしろい感じになった。&lt;/p&gt;
 &lt;p&gt;次は濃淡をどのように表現するか。&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://www.flickr.com/photos/125573348@N07/15751621509" title="hanga-like by megane houser, on Flickr"&gt;&lt;img src="https://farm8.staticflickr.com/7467/15751621509_fc19d782c9.jpg" width="357" height="500" alt="hanga-like"&gt;&lt;/a&gt;&lt;/p&gt;
