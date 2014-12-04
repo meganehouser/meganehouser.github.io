@@ -1,5 +1,5 @@
 Title: Pelicanでblogを始めました
-Tags: photo
+Tags: E-PL2
 Summary: 夕焼けの歌を聴いた
 
 夕焼けの歌を聴いた

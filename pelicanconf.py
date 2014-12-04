@@ -24,9 +24,7 @@ CATEGORY_FEED_ATOM = None
 TRANSLATION_FEED_ATOM = None
 
 # Blogroll
-LINKS = (('Pelican', 'http://getpelican.com/'),
-         ('Python.org', 'http://python.org/'),
-         ('Jinja2', 'http://jinja.pocoo.org/'),)
+LINKS = (('ぶりとだいこん(旧)', 'http://meganehouser.hatenablog.com/'),)
 
 # Social widget
 SOCIAL = (('twitter', 'http://twitter.com/meganehouser'),
@@ -43,3 +41,5 @@ SLUGIFY_SOURCE = 'basename'
 
 YEAR_ARCHIVE_SAVE_AS = 'posts/{date:%Y}/index.html'
 MONTH_ARCHIVE_SAVE_AS = 'posts/{date:%Y}/{date:%b}/index.html'
+
+MD_EXTENSIONS = ['codehilite(css_class=highlight, guess_lang=False)', 'extra']
