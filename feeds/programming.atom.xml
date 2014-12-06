@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>ぶりとだいこん</title><link href="http://meganehouser.github.io/" rel="alternate"></link><link href="http://meganehouser.github.io/feeds/programming.atom.xml" rel="self"></link><id>http://meganehouser.github.io/</id><updated>2014-12-02T00:00:00+09:00</updated><entry><title>カジュアルF#</title><link href="http://meganehouser.github.io/2014-12-02_casual-fsharp.html" rel="alternate"></link><updated>2014-12-02T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2014-12-02:2014-12-02_casual-fsharp.html</id><summary type="html">&lt;p&gt;社内Advent Calendar用に書いた記事&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>ぶりとだいこん</title><link href="http://meganehouser.github.io/" rel="alternate"></link><link href="http://meganehouser.github.io/feeds/programming.atom.xml" rel="self"></link><id>http://meganehouser.github.io/</id><updated>2014-12-06T00:00:00+09:00</updated><entry><title>F#でTHETA360を制御</title><link href="http://meganehouser.github.io/2014-12-06_theta360-fsharp.html" rel="alternate"></link><updated>2014-12-06T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2014-12-06:2014-12-06_theta360-fsharp.html</id><summary type="html">&lt;p&gt;RICOH THETA 360はAPIが公開されているので、F#で制御するコードを書いてみることにした。&lt;/p&gt;
+&lt;p&gt;THETAのAPIはPTP-IPという規格に沿っている。
+ただし、PTP-IPの規格書は法人しか入手できないため、THETAのSDKに入っているコード(Android, iOS向け)を参考にして書くなどする必要がある。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://www.cipa.jp/ptp-ip/index_j.html"&gt;PTP-IP -CIPA&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://developers.theta360.com/ja/forums/viewtopic.php?f=5&amp;amp;t=9"&gt;法人ではないため、PTP-IPドキュメントが入手できません。 | RICOH THETA Developers&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;コードを公開している先人もいらっしゃるのでそれを参考にさせていただいた。（というかほぼ移植）&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://d.hatena.ne.jp/tako-two/20131201/1385911498"&gt;シャッターを切って画像のダウンロードも - Tako can fry!&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Wi-Fiで接続し、下記のF#スクリプトを実行すると、接続-&amp;gt;シャッター-&amp;gt;切断、の流れを実行する。&lt;br&gt;
+なお、作っている途中に興味が他に映ってしまったため、シャッターを切るところまでしか実装していない…
+&lt;script src="https://gist.github.com/meganehouser/b86e208c5e2b887c2789.js"&gt;&lt;/script&gt;&lt;/p&gt;</summary><category term="fsharp"></category></entry><entry><title>カジュアルF#</title><link href="http://meganehouser.github.io/2014-12-02_casual-fsharp.html" rel="alternate"></link><updated>2014-12-02T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2014-12-02:2014-12-02_casual-fsharp.html</id><summary type="html">&lt;p&gt;社内Advent Calendar用に書いた記事&lt;/p&gt;
 &lt;h3&gt;目次&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="#whoareyou"&gt;お前誰よ&lt;/a&gt;&lt;/li&gt;

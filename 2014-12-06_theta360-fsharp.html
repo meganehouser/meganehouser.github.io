@@ -2,8 +2,8 @@
 <html lang="ja">
 <head>
 	<meta charset="utf-8">
-	<title>THETA360試し取り — ぶりとだいこん</title>
-	<meta name="description" content="Title: THETA360試し取り; Date: 2014-11-30; Author: meganehouser">
+	<title>F#でTHETA360を制御 — ぶりとだいこん</title>
+	<meta name="description" content="Title: F#でTHETA360を制御; Date: 2014-12-06; Author: meganehouser">
 	<meta name="author" content="meganehouser">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -27,36 +27,45 @@
 		<div class="col-md-8 col-md-offset-2">
 <div class="article" itemscope itemtype="http://schema.org/BlogPosting">
 	<div class="text-center article-header">
-		<h1 itemprop="name headline" class="article-title">THETA360試し取り</h1>
+		<h1 itemprop="name headline" class="article-title">F#でTHETA360を制御</h1>
 		<span itemprop="author" itemscope itemtype="http://schema.org/Person">
 			<h4 itemprop="name">meganehouser</h4>
 		</span>
-		<time datetime="2014-11-30T00:00:00" itemprop="datePublished">Sun 30 November 2014</time>
+		<time datetime="2014-12-06T00:00:00" itemprop="datePublished">Sat 06 December 2014</time>
 	</div>
 	<div>
 		Category:
 		<span itemprop="articleSection">
-			<a href="http://meganehouser.github.io/category/photo.html" rel="category">photo</a>
+			<a href="http://meganehouser.github.io/category/programming.html" rel="category">programming</a>
 		</span>
 	</div>
  
 	<div>
 		Tags:
 		<span itemprop="keywords">
-			<a href="http://meganehouser.github.io/tag/theta360.html" rel="tag">THETA360</a>
+			<a href="http://meganehouser.github.io/tag/fsharp.html" rel="tag">fsharp</a>
 		</span>
 	</div>
-	<div itemprop="articleBody" class="article-body"><p>THETA360を購入したので試しに取ってみた。</p>
-<p>1プッシュでぐるりと周囲の全てが記録される感覚、通常のカメラとの被写体と撮影者の位置の違い（自らが撮影場所のど真ん中に踏み込む）のが新鮮だ。</p>
-<blockquote data-width="500" data-height="375" class="ricoh-theta-spherical-image" >Post from RICOH THETA. - <a href="https://theta360.com/s/aLn" target="_blank">Spherical Image - RICOH THETA</a></blockquote>
-
-<script async src="https://theta360.com/widgets.js" charset="utf-8"></script></div>
+	<div itemprop="articleBody" class="article-body"><p>RICOH THETA 360はAPIが公開されているので、F#で制御するコードを書いてみることにした。</p>
+<p>THETAのAPIはPTP-IPという規格に沿っている。
+ただし、PTP-IPの規格書は法人しか入手できないため、THETAのSDKに入っているコード(Android, iOS向け)を参考にして書くなどする必要がある。</p>
+<ul>
+<li><a href="http://www.cipa.jp/ptp-ip/index_j.html">PTP-IP -CIPA</a></li>
+<li><a href="https://developers.theta360.com/ja/forums/viewtopic.php?f=5&amp;t=9">法人ではないため、PTP-IPドキュメントが入手できません。 | RICOH THETA Developers</a></li>
+</ul>
+<p>コードを公開している先人もいらっしゃるのでそれを参考にさせていただいた。（というかほぼ移植）</p>
+<ul>
+<li><a href="http://d.hatena.ne.jp/tako-two/20131201/1385911498">シャッターを切って画像のダウンロードも - Tako can fry!</a></li>
+</ul>
+<p>Wi-Fiで接続し、下記のF#スクリプトを実行すると、接続-&gt;シャッター-&gt;切断、の流れを実行する。<br>
+なお、作っている途中に興味が他に映ってしまったため、シャッターを切るところまでしか実装していない…
+<script src="https://gist.github.com/meganehouser/b86e208c5e2b887c2789.js"></script></p></div>
 	<hr>
 	<h2>Comments</h2>
 <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'meganehouser'; 
-    var disqus_title = 'THETA360試し取り';
+    var disqus_title = 'F#でTHETA360を制御';
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
