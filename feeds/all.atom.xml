@@ -1,5 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>ぶりとだいこん</title><link href="http://meganehouser.github.io/" rel="alternate"></link><link href="http://meganehouser.github.io/feeds/all.atom.xml" rel="self"></link><id>http://meganehouser.github.io/</id><updated>2014-12-06T00:00:00+09:00</updated><entry><title>F#でTHETA360を制御</title><link href="http://meganehouser.github.io/2014-12-06_theta360-fsharp.html" rel="alternate"></link><updated>2014-12-06T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2014-12-06:2014-12-06_theta360-fsharp.html</id><summary type="html">&lt;p&gt;RICOH THETA 360はAPIが公開されているので、F#で制御するコードを書いてみることにした。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>ぶりとだいこん</title><link href="http://meganehouser.github.io/" rel="alternate"></link><link href="http://meganehouser.github.io/feeds/all.atom.xml" rel="self"></link><id>http://meganehouser.github.io/</id><updated>2014-12-30T00:00:00+09:00</updated><entry><title>Quil -&gt; Movie -&gt; Youtube</title><link href="http://meganehouser.github.io/2014-12-30_quil-movie-youtube.html" rel="alternate"></link><updated>2014-12-30T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2014-12-30:2014-12-30_quil-movie-youtube.html</id><summary type="html">&lt;p&gt;写真とQuil(Processing)を組み合わせたものに興味があり、試しに動画化、YouTubeにアップロードしてみた。&lt;/p&gt;
+&lt;h2&gt;1. Quilのスケッチからフレームごとの画像を作成する&lt;/h2&gt;
+&lt;p&gt;今回、動画を作ったコード。
+&lt;script src="https://gist.github.com/meganehouser/0507cbb86075878a5ed4.js"&gt;&lt;/script&gt;&lt;/p&gt;
+&lt;p&gt;ポイントはdraw関数内の以下の部分。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;; -- 略 -- &lt;/span&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;q/save-frame&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;frames/####.jpg&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;save-frameで現在のフレームを保存する。&lt;/p&gt;
+&lt;h2&gt;2. フレームごとの画像を動画に変換する&lt;/h2&gt;
+&lt;p&gt;Processingに付属しているツール、MovieMakerを使用した。&lt;/p&gt;
+&lt;p&gt;スケッチはQuilで書いてるのに片手落ちだが、手軽だからよしとする。&lt;/p&gt;
+&lt;p&gt;MovieMakerで画像を保存したフォルダを指定すればよい。&lt;/p&gt;
+&lt;h2&gt;3. YouTube にアップロードする&lt;/h2&gt;
+&lt;p&gt;&lt;iframe width="640" height="390" src="//www.youtube.com/embed/o4CmVlCiasU" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;
+&lt;p&gt;最初はVineにアップロードしようとしたが、VineのAPIは非公開、かつVineにPCから動画をアップロードできるVineClientは不審な通信をしてるらしいので無難にYouTubeにしといた。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;参考&lt;br&gt;
+&lt;a href="view-source:http://minidoga.jp/blog/20140327.html"&gt;PCからVine投稿できるChrome機能拡張に不審な通信【Vineユーザー検索のミニ動画JP】&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary><category term="quil"></category><category term="processing"></category><category term="YouTube"></category></entry><entry><title>F#でTHETA360を制御</title><link href="http://meganehouser.github.io/2014-12-06_theta360-fsharp.html" rel="alternate"></link><updated>2014-12-06T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2014-12-06:2014-12-06_theta360-fsharp.html</id><summary type="html">&lt;p&gt;RICOH THETA 360はAPIが公開されているので、F#で制御するコードを書いてみることにした。&lt;/p&gt;
 &lt;p&gt;THETAのAPIはPTP-IPという規格に沿っている。
 ただし、PTP-IPの規格書は法人しか入手できないため、THETAのSDKに入っているコード(Android, iOS向け)を参考にして書くなどする必要がある。&lt;/p&gt;
 &lt;ul&gt;
