@@ -2,8 +2,8 @@
 <html lang="ja">
 <head>
 	<meta charset="utf-8">
-	<title>Pelicanでblogを始めました — ぶりとだいこん</title>
-	<meta name="description" content="Title: Pelicanでblogを始めました; Date: 2014-11-15; Author: meganehouser">
+	<title>ドロネー三角形分割の羊 — ぶりとだいこん</title>
+	<meta name="description" content="Title: ドロネー三角形分割の羊; Date: 2015-01-01; Author: meganehouser">
 	<meta name="author" content="meganehouser">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -27,33 +27,63 @@
 		<div class="col-md-8 col-md-offset-2">
 <div class="article" itemscope itemtype="http://schema.org/BlogPosting">
 	<div class="text-center article-header">
-		<h1 itemprop="name headline" class="article-title">Pelicanでblogを始めました</h1>
+		<h1 itemprop="name headline" class="article-title">ドロネー三角形分割の羊</h1>
 		<span itemprop="author" itemscope itemtype="http://schema.org/Person">
 			<h4 itemprop="name">meganehouser</h4>
 		</span>
-		<time datetime="2014-11-15T00:00:00" itemprop="datePublished">Sat 15 November 2014</time>
+		<time datetime="2015-01-01T00:00:00" itemprop="datePublished">Thu 01 January 2015</time>
 	</div>
 	<div>
 		Category:
 		<span itemprop="articleSection">
-			<a href="http://meganehouser.github.io/category/photo.html" rel="category">photo</a>
+			<a href="http://meganehouser.github.io/category/image.html" rel="category">image</a>
 		</span>
 	</div>
  
 	<div>
 		Tags:
 		<span itemprop="keywords">
-			<a href="http://meganehouser.github.io/tag/e-pl2.html" rel="tag">E-PL2</a>
+			<a href="http://meganehouser.github.io/tag/computational-geometry.html" rel="tag">computational geometry</a>
+		</span>
+		<span itemprop="keywords">
+			<a href="http://meganehouser.github.io/tag/quil.html" rel="tag">quil</a>
+		</span>
+		<span itemprop="keywords">
+			<a href="http://meganehouser.github.io/tag/processing.html" rel="tag">processing</a>
 		</span>
 	</div>
-	<div itemprop="articleBody" class="article-body"><p>夕焼けの歌を聴いた
-<a href="https://www.flickr.com/photos/125573348@N07/14737390253"><img alt="夕焼け" src="https://farm6.staticflickr.com/5571/14737390253_d40f03cd12_z.jpg" /></a></p></div>
+	<div itemprop="articleBody" class="article-body"><p>あけましておめでとうございます。ドロネー三角形分割で羊を書いてみた。</p>
+<p><a href="https://www.flickr.com/photos/125573348@N07/16151453002" title="delauny by megane houser, on Flickr"><img src="https://farm8.staticflickr.com/7518/16151453002_e77a1c43e3_o.jpg" width="1000" height="800" alt="delauny"></a></p>
+<p>コードは以下。
+<script src="https://gist.github.com/meganehouser/2322ebd7b3f16857b3fe.js"></script></p>
+<p>ドロネー三角形分割はdelauney.cljに実装してある。</p>
+<div class="highlight"><pre><span class="p">(</span><span class="kd">defn </span><span class="nv">delaunay-diagram</span> <span class="p">[</span><span class="nv">points</span><span class="p">]</span>
+  <span class="s">&quot;点の集合をドロネー三角分割する&quot;</span>
+  <span class="c1">;--- 略 ---</span>
+</pre></div>
+
+
+<p>上記の関数にPointレコードのベクターを引数に呼び出すと、ドロネー三角形分割済みのTriangleレコードのベクターが返ってくる。</p>
+<p>レコードの定義は以下のようになっている。</p>
+<div class="highlight"><pre><span class="p">(</span><span class="kd">defrecord </span><span class="nv">Point</span> <span class="p">[</span><span class="nv">x</span> <span class="nv">y</span><span class="p">])</span>
+<span class="p">(</span><span class="kd">defrecord </span><span class="nv">Triangle</span> <span class="p">[</span><span class="nv">p1</span> <span class="nv">p2</span> <span class="nv">p3</span><span class="p">])</span>
+</pre></div>
+
+
+<p>また、アルゴリズムや実装方法について以下を参考にさせていただいた。</p>
+<h3>参考</h3>
+<ul>
+<li><a href="http://qiita.com/edo_m18/items/7b3c70ed97bac52b2203">グラフィック - ドロネー三角形分割を自前で実装してみる - Qiita</a></li>
+<li><a href="http://www.riken.jp/brict/Ijiri/study/DelaunayTriangulation.htm">制約付きドロネー三角形分割</a></li>
+<li><a href="http://tercel-sakuragaoka.blogspot.jp/2011/06/processingdelaunay_3958.html">Tercel::Diary: ProcessingでDelaunay分割(解説篇)</a></li>
+<li><a href="http://katsura-kotonoha.sakura.ne.jp/prog/c/tip00030.shtml">点が三角形内に含まれるか調べる－C/C++－水無瀬の部屋</a></li>
+</ul></div>
 	<hr>
 	<h2>Comments</h2>
 <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'meganehouser'; 
-    var disqus_title = 'Pelicanでblogを始めました';
+    var disqus_title = 'ドロネー三角形分割の羊';
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
