@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>ぶりとだいこん</title><link href="http://meganehouser.github.io/" rel="alternate"></link><link href="http://meganehouser.github.io/feeds/all.atom.xml" rel="self"></link><id>http://meganehouser.github.io/</id><updated>2015-01-01T00:00:00+09:00</updated><entry><title>ドロネー三角形分割の羊</title><link href="http://meganehouser.github.io/2015-01-01_sheep.html" rel="alternate"></link><updated>2015-01-01T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2015-01-01:2015-01-01_sheep.html</id><summary type="html">&lt;p&gt;あけましておめでとうございます。ドロネー三角形分割で羊を書いてみた。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>ぶりとだいこん</title><link href="http://meganehouser.github.io/" rel="alternate"></link><link href="http://meganehouser.github.io/feeds/all.atom.xml" rel="self"></link><id>http://meganehouser.github.io/</id><updated>2015-01-10T00:00:00+09:00</updated><entry><title>Scheme in Rust</title><link href="http://meganehouser.github.io/2015-01-10.html" rel="alternate"></link><updated>2015-01-10T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2015-01-10:2015-01-10.html</id><summary type="html">&lt;p&gt;Rust 1.0 alpha がリリースされたのでRustを書いてみた。&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://blogs.msdn.com/b/ashleyf/archive/2010/09/24/fscheme-0-0-0.aspx"&gt;FScheme - Scheme in F# - Code Monkey Have Fun - Site Home - MSDN Blogs&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;このサイトを参考にSchemeをさわりだけ実装。 減算・乗算・if式が実行可能。&lt;/p&gt;
+&lt;p&gt;今までGCある言語しか使ってこなかった身としては結構つらいところある。 
+C/C++の素養があればもっとスムーズに始められと思われる。&lt;/p&gt;
+&lt;p&gt;enumにclosure入れるのとかやっとの事で理解できた。&lt;/p&gt;
+&lt;p&gt;次はRust製のゲームエンジン&lt;a href="http://www.piston.rs/"&gt;piston&lt;/a&gt;触ってみたい。&lt;/p&gt;
+&lt;script src="https://gist.github.com/meganehouser/e8eee004304fbda7d4a8.js"&gt;&lt;/script&gt;</summary><category term="rust"></category></entry><entry><title>ドロネー三角形分割の羊</title><link href="http://meganehouser.github.io/2015-01-01_sheep.html" rel="alternate"></link><updated>2015-01-01T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2015-01-01:2015-01-01_sheep.html</id><summary type="html">&lt;p&gt;あけましておめでとうございます。ドロネー三角形分割で羊を書いてみた。&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://www.flickr.com/photos/125573348@N07/16151453002" title="delauny by megane houser, on Flickr"&gt;&lt;img src="https://farm8.staticflickr.com/7518/16151453002_e77a1c43e3_o.jpg" width="1000" height="800" alt="delauny"&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;コードは以下。
 &lt;script src="https://gist.github.com/meganehouser/2322ebd7b3f16857b3fe.js"&gt;&lt;/script&gt;&lt;/p&gt;

@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>ぶりとだいこん</title><link>http://meganehouser.github.io/</link><description></description><atom:link href="http://meganehouser.github.io/feeds/meganehouser.rss.xml" rel="self"></atom:link><lastBuildDate>Thu, 01 Jan 2015 00:00:00 +0900</lastBuildDate><item><title>ドロネー三角形分割の羊</title><link>http://meganehouser.github.io/2015-01-01_sheep.html</link><description>&lt;p&gt;あけましておめでとうございます。ドロネー三角形分割で羊を書いてみた。&lt;/p&gt;
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>ぶりとだいこん</title><link>http://meganehouser.github.io/</link><description></description><atom:link href="http://meganehouser.github.io/feeds/meganehouser.rss.xml" rel="self"></atom:link><lastBuildDate>Sat, 10 Jan 2015 00:00:00 +0900</lastBuildDate><item><title>Scheme in Rust</title><link>http://meganehouser.github.io/2015-01-10.html</link><description>&lt;p&gt;Rust 1.0 alpha がリリースされたのでRustを書いてみた。&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://blogs.msdn.com/b/ashleyf/archive/2010/09/24/fscheme-0-0-0.aspx"&gt;FScheme - Scheme in F# - Code Monkey Have Fun - Site Home - MSDN Blogs&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;このサイトを参考にSchemeをさわりだけ実装。 減算・乗算・if式が実行可能。&lt;/p&gt;
+&lt;p&gt;今までGCある言語しか使ってこなかった身としては結構つらいところある。 
+C/C++の素養があればもっとスムーズに始められと思われる。&lt;/p&gt;
+&lt;p&gt;enumにclosure入れるのとかやっとの事で理解できた。&lt;/p&gt;
+&lt;p&gt;次はRust製のゲームエンジン&lt;a href="http://www.piston.rs/"&gt;piston&lt;/a&gt;触ってみたい。&lt;/p&gt;
+&lt;script src="https://gist.github.com/meganehouser/e8eee004304fbda7d4a8.js"&gt;&lt;/script&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">meganehouser</dc:creator><pubDate>Sat, 10 Jan 2015 00:00:00 +0900</pubDate><guid>tag:meganehouser.github.io,2015-01-10:2015-01-10.html</guid><category>rust</category></item><item><title>ドロネー三角形分割の羊</title><link>http://meganehouser.github.io/2015-01-01_sheep.html</link><description>&lt;p&gt;あけましておめでとうございます。ドロネー三角形分割で羊を書いてみた。&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://www.flickr.com/photos/125573348@N07/16151453002" title="delauny by megane houser, on Flickr"&gt;&lt;img src="https://farm8.staticflickr.com/7518/16151453002_e77a1c43e3_o.jpg" width="1000" height="800" alt="delauny"&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;コードは以下。
 &lt;script src="https://gist.github.com/meganehouser/2322ebd7b3f16857b3fe.js"&gt;&lt;/script&gt;&lt;/p&gt;

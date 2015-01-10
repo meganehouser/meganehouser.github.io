@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>ぶりとだいこん</title><link href="http://meganehouser.github.io/" rel="alternate"></link><link href="http://meganehouser.github.io/feeds/programming.atom.xml" rel="self"></link><id>http://meganehouser.github.io/</id><updated>2014-12-06T00:00:00+09:00</updated><entry><title>F#でTHETA360を制御</title><link href="http://meganehouser.github.io/2014-12-06_theta360-fsharp.html" rel="alternate"></link><updated>2014-12-06T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2014-12-06:2014-12-06_theta360-fsharp.html</id><summary type="html">&lt;p&gt;RICOH THETA 360はAPIが公開されているので、F#で制御するコードを書いてみることにした。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>ぶりとだいこん</title><link href="http://meganehouser.github.io/" rel="alternate"></link><link href="http://meganehouser.github.io/feeds/programming.atom.xml" rel="self"></link><id>http://meganehouser.github.io/</id><updated>2015-01-10T00:00:00+09:00</updated><entry><title>Scheme in Rust</title><link href="http://meganehouser.github.io/2015-01-10.html" rel="alternate"></link><updated>2015-01-10T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2015-01-10:2015-01-10.html</id><summary type="html">&lt;p&gt;Rust 1.0 alpha がリリースされたのでRustを書いてみた。&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://blogs.msdn.com/b/ashleyf/archive/2010/09/24/fscheme-0-0-0.aspx"&gt;FScheme - Scheme in F# - Code Monkey Have Fun - Site Home - MSDN Blogs&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;このサイトを参考にSchemeをさわりだけ実装。 減算・乗算・if式が実行可能。&lt;/p&gt;
+&lt;p&gt;今までGCある言語しか使ってこなかった身としては結構つらいところある。 
+C/C++の素養があればもっとスムーズに始められと思われる。&lt;/p&gt;
+&lt;p&gt;enumにclosure入れるのとかやっとの事で理解できた。&lt;/p&gt;
+&lt;p&gt;次はRust製のゲームエンジン&lt;a href="http://www.piston.rs/"&gt;piston&lt;/a&gt;触ってみたい。&lt;/p&gt;
+&lt;script src="https://gist.github.com/meganehouser/e8eee004304fbda7d4a8.js"&gt;&lt;/script&gt;</summary><category term="rust"></category></entry><entry><title>F#でTHETA360を制御</title><link href="http://meganehouser.github.io/2014-12-06_theta360-fsharp.html" rel="alternate"></link><updated>2014-12-06T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2014-12-06:2014-12-06_theta360-fsharp.html</id><summary type="html">&lt;p&gt;RICOH THETA 360はAPIが公開されているので、F#で制御するコードを書いてみることにした。&lt;/p&gt;
 &lt;p&gt;THETAのAPIはPTP-IPという規格に沿っている。
 ただし、PTP-IPの規格書は法人しか入手できないため、THETAのSDKに入っているコード(Android, iOS向け)を参考にして書くなどする必要がある。&lt;/p&gt;
 &lt;ul&gt;
