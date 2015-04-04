@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>ぶりとだいこん</title><link href="http://meganehouser.github.io/" rel="alternate"></link><link href="http://meganehouser.github.io/feeds/programming.atom.xml" rel="self"></link><id>http://meganehouser.github.io/</id><updated>2015-01-10T00:00:00+09:00</updated><entry><title>Scheme in Rust</title><link href="http://meganehouser.github.io/2015-01-10.html" rel="alternate"></link><updated>2015-01-10T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2015-01-10:2015-01-10.html</id><summary type="html">&lt;p&gt;Rust 1.0 alpha がリリースされたのでRustを書いてみた。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>ぶりとだいこん</title><link href="http://meganehouser.github.io/" rel="alternate"></link><link href="http://meganehouser.github.io/feeds/programming.atom.xml" rel="self"></link><id>http://meganehouser.github.io/</id><updated>2015-04-04T00:00:00+09:00</updated><entry><title>Hello World の代わりにLED風数字</title><link href="http://meganehouser.github.io/2015-04-04_led-numbers.html" rel="alternate"></link><updated>2015-04-04T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2015-04-04:2015-04-04_led-numbers.html</id><summary type="html">&lt;h3&gt;概要&lt;/h3&gt;
+&lt;p&gt;こんな記事を見かけたので書いてみることにした。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://blagrants.blogspot.jp/2015/04/led-is-my-new-hello-world-clojure-time.html"&gt;Blag's bag of rants: LED is my new Hello World - Clojure Time&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;標準入力で数字を入力すると、LED風に表示するものだ。&lt;/p&gt;
+&lt;h3&gt;Python&lt;/h3&gt;
+&lt;script src="https://gist.github.com/meganehouser/179da869944c5f2a47eb.js"&gt;&lt;/script&gt;
+
+&lt;h3&gt;Rust&lt;/h3&gt;
+&lt;p&gt;リリースされたばかりのBeta 1.0.0を入れたらunstableな機能が使えなくなったのでnightlyでやった。&lt;/p&gt;
+&lt;script src="https://gist.github.com/meganehouser/14d255f336189b6f4603.js"&gt;&lt;/script&gt;
+
+&lt;h3&gt;F&lt;/h3&gt;
+&lt;script src="https://gist.github.com/meganehouser/457c0b149b8e866205e6.js"&gt;&lt;/script&gt;</summary><category term="fsharp"></category><category term="rust"></category><category term="python"></category></entry><entry><title>Scheme in Rust</title><link href="http://meganehouser.github.io/2015-01-10.html" rel="alternate"></link><updated>2015-01-10T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2015-01-10:2015-01-10.html</id><summary type="html">&lt;p&gt;Rust 1.0 alpha がリリースされたのでRustを書いてみた。&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://blogs.msdn.com/b/ashleyf/archive/2010/09/24/fscheme-0-0-0.aspx"&gt;FScheme - Scheme in F# - Code Monkey Have Fun - Site Home - MSDN Blogs&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;このサイトを参考にSchemeをさわりだけ実装。 減算・乗算・if式が実行可能。&lt;/p&gt;
 &lt;p&gt;今までGCある言語しか使ってこなかった身としては結構つらいところある。 
