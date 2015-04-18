@@ -12,7 +12,7 @@
 &lt;p&gt;リリースされたばかりのBeta 1.0.0を入れたらunstableな機能が使えなくなったのでnightlyでやった。&lt;/p&gt;
 &lt;script src="https://gist.github.com/meganehouser/14d255f336189b6f4603.js"&gt;&lt;/script&gt;
 
-&lt;h3&gt;F&lt;/h3&gt;
+&lt;h3&gt;FSharp&lt;/h3&gt;
 &lt;script src="https://gist.github.com/meganehouser/457c0b149b8e866205e6.js"&gt;&lt;/script&gt;</summary><category term="fsharp"></category><category term="rust"></category><category term="python"></category></entry><entry><title>Scheme in Rust</title><link href="http://meganehouser.github.io/2015-01-10.html" rel="alternate"></link><updated>2015-01-10T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2015-01-10:2015-01-10.html</id><summary type="html">&lt;p&gt;Rust 1.0 alpha がリリースされたのでRustを書いてみた。&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://blogs.msdn.com/b/ashleyf/archive/2010/09/24/fscheme-0-0-0.aspx"&gt;FScheme - Scheme in F# - Code Monkey Have Fun - Site Home - MSDN Blogs&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;このサイトを参考にSchemeをさわりだけ実装。 減算・乗算・if式が実行可能。&lt;/p&gt;
