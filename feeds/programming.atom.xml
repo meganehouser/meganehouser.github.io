@@ -1,5 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>ぶりとだいこん</title><link href="http://meganehouser.github.io/" rel="alternate"></link><link href="http://meganehouser.github.io/feeds/programming.atom.xml" rel="self"></link><id>http://meganehouser.github.io/</id><updated>2015-04-04T00:00:00+09:00</updated><entry><title>Hello World の代わりにLED風数字</title><link href="http://meganehouser.github.io/2015-04-04_led-numbers.html" rel="alternate"></link><updated>2015-04-04T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2015-04-04:2015-04-04_led-numbers.html</id><summary type="html">&lt;h3&gt;概要&lt;/h3&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>ぶりとだいこん</title><link href="http://meganehouser.github.io/" rel="alternate"></link><link href="http://meganehouser.github.io/feeds/programming.atom.xml" rel="self"></link><id>http://meganehouser.github.io/</id><updated>2015-04-19T00:00:00+09:00</updated><entry><title>mdファイルを表示する簡易Webサーバ</title><link href="http://meganehouser.github.io/2015-04-19_md-view.html" rel="alternate"></link><updated>2015-04-19T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2015-04-19:2015-04-19_md-view.html</id><summary type="html">&lt;h2&gt;概要&lt;/h2&gt;
+&lt;p&gt;Pythonでは、コマンドラインからモジュールを実行することで簡易的なWebサーバを起動できる。&lt;/p&gt;
+&lt;p&gt;Markdownファイルだった場合はhtmlに変換して、簡易mdビューアとして使用したい。&lt;/p&gt;
+&lt;h2&gt;方法&lt;/h2&gt;
+&lt;p&gt;Python3.4のhttp.server.py 内のSimpleHTTPRequestHandlerを継承し、send_headメソッドをオーバーライドした。&lt;/p&gt;
+&lt;p&gt;変更箇所は以下。他の部分は元のsend_headをそのまま持ってきている。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;endswith&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;.md&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;ctype&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;text/html&amp;#39;&lt;/span&gt;
+    &lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;rt&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;encoding&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;utf-8-sig&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;fs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fstat&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fileno&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt; 
+    &lt;span class="n"&gt;md&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;markdown&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;markdown&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="n"&gt;extensions&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;markdown.extensions.extra&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+    &lt;span class="n"&gt;bs&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;md&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;encode&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;length&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;BytesIO&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;拡張子がmdだった場合に&lt;a href="https://pypi.python.org/pypi/Markdown"&gt;Markdown&lt;/a&gt;を使用してhtmlに変換している。&lt;/p&gt;
+&lt;p&gt;それだけだと芸がないので、-o (open) オプションをつけると、自動でブラウザで開くようにした。&lt;/p&gt;
+&lt;p&gt;以下の関数を別スレッドで起動している。
+headリクエストを投げ、200で返ってきたらサーバが起動したとみなしブラウザでページを開いている。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;boot&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bind&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;port&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;filepath&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="n"&gt;con&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;HTTPConnection&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bind&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;port&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="n"&gt;con&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;HEAD&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="n"&gt;res&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;con&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getresponse&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;res&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;status&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="n"&gt;webbrowser&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;http://{}:{}/{}&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;bind&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;port&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;filepath&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+                &lt;span class="k"&gt;break&lt;/span&gt;
+            &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sleep&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;except&lt;/span&gt; &lt;span class="n"&gt;ConnectionRefusedError&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="k"&gt;pass&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;ブラウザを開くのには標準モジュールのwebbrowserを使用している。
+Python3系統で導入された、空を飛べる標準モジュール"antigravity"でも使われているものだ。
+知らない人は以下を実行してみよう。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;antigravity&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;cgi&lt;/h2&gt;
+&lt;p&gt;python3.4のhttpのモジュールのserver.pyを読んでいて気付いたのだが、いつの間にかコマンドラインから簡易CGIサーバを起動する方法が復活していた。&lt;/p&gt;
+&lt;p&gt;試しにcgi-binディレクトリを作り以下のファイルを置く。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#! /usr/bin/env python3&lt;/span&gt;
+
+&lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Content-Type: text/html&lt;/span&gt;&lt;span class="se"&gt;\n\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&amp;lt;html&amp;gt;&amp;lt;h2&amp;gt;Hello&amp;lt;/h2&amp;gt;&amp;lt;br&amp;gt;from Python3&amp;lt;/html&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;ファイルに実行のパーミッションを付加してから、以下のコマンドでCGIサーバを起動。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;python http.server --cgi
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;http://localhost:8000/cgi-bin/hello.py で実行。&lt;/p&gt;
+&lt;h2&gt;スクリプト全文&lt;/h2&gt;
+&lt;p&gt;MarkDownを表示できる簡易サーバのスクリプト全文は以下。&lt;/p&gt;
+&lt;script src="https://gist.github.com/meganehouser/271852d192e64c9e688e.js"&gt;&lt;/script&gt;</summary><category term="python"></category></entry><entry><title>Hello World の代わりにLED風数字</title><link href="http://meganehouser.github.io/2015-04-04_led-numbers.html" rel="alternate"></link><updated>2015-04-04T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2015-04-04:2015-04-04_led-numbers.html</id><summary type="html">&lt;h3&gt;概要&lt;/h3&gt;
 &lt;p&gt;こんな記事を見かけたので書いてみることにした。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://blagrants.blogspot.jp/2015/04/led-is-my-new-hello-world-clojure-time.html"&gt;Blag's bag of rants: LED is my new Hello World - Clojure Time&lt;/a&gt;&lt;/li&gt;
