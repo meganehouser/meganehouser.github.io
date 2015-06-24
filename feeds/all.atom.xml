@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>ぶりとだいこん</title><link href="http://meganehouser.github.io/" rel="alternate"></link><link href="http://meganehouser.github.io/feeds/all.atom.xml" rel="self"></link><id>http://meganehouser.github.io/</id><updated>2015-04-19T00:00:00+09:00</updated><entry><title>mdファイルを表示する簡易Webサーバ</title><link href="http://meganehouser.github.io/2015-04-19_md-view.html" rel="alternate"></link><updated>2015-04-19T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2015-04-19:2015-04-19_md-view.html</id><summary type="html">&lt;h2&gt;概要&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>ぶりとだいこん</title><link href="http://meganehouser.github.io/" rel="alternate"></link><link href="http://meganehouser.github.io/feeds/all.atom.xml" rel="self"></link><id>http://meganehouser.github.io/</id><updated>2015-06-24T00:00:00+09:00</updated><entry><title>紫陽花とファインダー</title><link href="http://meganehouser.github.io/2015-06-24_hydrangea.html" rel="alternate"></link><updated>2015-06-24T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2015-06-24:2015-06-24_hydrangea.html</id><summary type="html">&lt;p&gt;&lt;a href="https://www.flickr.com/photos/125573348@N07/18858969771" title="Untitled by megane houser, on Flickr"&gt;
+&lt;img src="https://c2.staticflickr.com/6/5601/18858969771_5a903030ea_z.jpg" width="640" height="480" alt="Untitled"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.flickr.com/photos/125573348@N07/18670429259" title="Untitled by megane houser, on Flickr"&gt;
+&lt;img src="https://c2.staticflickr.com/6/5574/18670429259_e94551f77d_z.jpg" width="640" height="480" alt="Untitled"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.flickr.com/photos/125573348@N07/18856059785" title="Untitled by megane houser, on Flickr"&gt;
+&lt;img src="https://c2.staticflickr.com/6/5535/18856059785_f763fb02a1_z.jpg" width="640" height="480" alt="Untitled"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.flickr.com/photos/125573348@N07/18852065732" title="Untitled by megane houser, on Flickr"&gt;
+&lt;img src="https://c2.staticflickr.com/6/5463/18852065732_d9203e3940_z.jpg" width="640" height="480" alt="Untitled"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.flickr.com/photos/125573348@N07/18857457185" title="Untitled by megane houser, on Flickr"&gt;
+&lt;img src="https://c2.staticflickr.com/6/5482/18857457185_596e8fa110_z.jpg" width="640" height="480" alt="Untitled"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;写真を撮るのは楽しい。でも、懐古趣味みたいで嫌なのだが、学生時代にアナログカメラを持ち歩いていた時の方が楽しめていた感じがする。&lt;/p&gt;
+&lt;p&gt;銀塩からデジタルになり、色や質感が変わったこともあるのだが、個人的にはファインダーが大きな要素だったのではと思っている。&lt;/p&gt;
+&lt;p&gt;ファインダーに目を押し付け、暗がりから世界を覗き込む感じが好きだった。
+ファインダーを通した世界は一種の異化作用が働き、僕は少しでも新鮮な感動を定着させようと、四角の枠で切り取られた光景に集中することができた。&lt;/p&gt;
+&lt;p&gt;ライブビューが全盛となり、ファインダーがなかったり、オプションになってしまったのは、残念なのだった。
+外付けのファインダー買うかな。&lt;/p&gt;</summary><category term="E-PL2"></category></entry><entry><title>mdファイルを表示する簡易Webサーバ</title><link href="http://meganehouser.github.io/2015-04-19_md-view.html" rel="alternate"></link><updated>2015-04-19T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2015-04-19:2015-04-19_md-view.html</id><summary type="html">&lt;h2&gt;概要&lt;/h2&gt;
 &lt;p&gt;Pythonでは、コマンドラインからモジュールを実行することで簡易的なWebサーバを起動できる。&lt;/p&gt;
 &lt;p&gt;Markdownファイルだった場合はhtmlに変換して、簡易mdビューアとして使用したい。&lt;/p&gt;
 &lt;h2&gt;方法&lt;/h2&gt;
