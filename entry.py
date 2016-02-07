@@ -24,7 +24,6 @@ def make_photos(api_key, album, userid, tag):
 
     def get_json(text):
         json_txt = r.text.replace('jsonFlickrApi(', '').replace(')', '')
-        print(json_txt)
         return jd.decode(json_txt)
 
     query = {'method': 'flickr.photosets.getPhotos',
@@ -44,7 +43,6 @@ def make_photos(api_key, album, userid, tag):
         link_query['photo_id'] = pid
         r = requests.post(FLICKR_URL, link_query)
         j = get_json(r.text)
-        print(j)
         photo_links.append(j['sizes']['size'][5])
     return photo_links
 
@@ -66,13 +64,13 @@ def make_entry(content_dir, category, tags, date, suffix, content):
 
         return filepath
 
-
 if __name__ == '__main__':
     parser = ArgumentParser()
     parser.add_argument("-c", "--category", help="define category")
     parser.add_argument("-d", "--date", help="define date")
     parser.add_argument("-s", "--suffix", help="add file name suffix")
-    parser.add_argument("-e", "--edit", help="edit the blog entry")
+    parser.add_argument("-e", "--edit", action='store_true',
+                        help="edit the blog entry")
     parser.add_argument("-p", "--photo", action='store_true',
                         help="make a photo link entry")
     parser.add_argument("-t", "--tag", help="photo tag")
@@ -104,8 +102,10 @@ if __name__ == '__main__':
         album = os.environ['Flickr_ALBUM']
         userid = os.environ['Flickr_USER']
         photos = make_photos(api_key, album, userid, args.tag)
-        link_fmt = "<a href='{0}' width=640 height=480 alt='untitled'>{1}" \
-                   "</a>{2}"
+
+        link_fmt = "<a href='{0}' title='untitled by meganehouser on Flickr'>" \
+                   "<img src='{1}' width=640 height=480 alt='untitled'>" \
+                   "</a>{2}{2}"
         for p in photos:
             content += link_fmt.format(p['url'], p['source'], os.linesep)
 
