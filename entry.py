@@ -43,7 +43,9 @@ def make_photos(api_key, album, userid, tag):
         link_query['photo_id'] = pid
         r = requests.post(FLICKR_URL, link_query)
         j = get_json(r.text)
-        photo_links.append(j['sizes']['size'][5])
+        photo_link = j['sizes']['size'][5]
+        photo_link['photo_id'] = pid
+        photo_links.append(photo_link)
     return photo_links
 
 
@@ -103,11 +105,12 @@ if __name__ == '__main__':
         userid = os.environ['Flickr_USER']
         photos = make_photos(api_key, album, userid, args.tag)
 
-        link_fmt = "<a href='{0}' title='untitled by meganehouser on Flickr'>" \
-                   "<img src='{1}' width=640 height=480 alt='untitled'>" \
-                   "</a>{2}{2}"
+        link_fmt = "<a href='https://www.flickr.com/photos/{0}/{1}'" \
+                   " title='untitled by meganehouser on Flickr'>" \
+                   "<img src='{2}' width=640 height=480 alt='untitled'>" \
+                   "</a>{3}{3}"
         for p in photos:
-            content += link_fmt.format(p['url'], p['source'], os.linesep)
+            content += link_fmt.format(userid, p['photo_id'], p['source'], os.linesep)
 
     content_dir = './content'
     if 'blog_dir' in os.environ:
