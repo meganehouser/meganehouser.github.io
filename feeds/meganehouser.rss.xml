@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>ぶりとだいこん</title><link>http://meganehouser.github.io/</link><description></description><atom:link href="http://meganehouser.github.io/feeds/meganehouser.rss.xml" rel="self"></atom:link><lastBuildDate>Tue, 08 Mar 2016 00:00:00 +0900</lastBuildDate><item><title>つたや一粋庵のさくらプリン</title><link>http://meganehouser.github.io/2016-03-08_sakura-pudding.html</link><description>&lt;p&gt;近所の和菓子屋の春の菓子。
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>ぶりとだいこん</title><link>http://meganehouser.github.io/</link><description></description><atom:link href="http://meganehouser.github.io/feeds/meganehouser.rss.xml" rel="self"></atom:link><lastBuildDate>Tue, 08 Mar 2016 00:00:00 +0900</lastBuildDate><item><title>low-levelのライブラリのソースを読む</title><link>http://meganehouser.github.io/2016-03-08_rust-libs.html</link><description>&lt;p&gt;最近、&lt;a href="https://www.rust-lang.org/"&gt;Rust&lt;/a&gt;をポチポチ触っている。
+今まではC#/F#/Python/Clojureなどを書いてきていたので、ちょっとlow-levelよりのものに触れてみたくなったので。&lt;/p&gt;
+&lt;p&gt;Rustのライブラリを読んでいると、low-levelの知見のキーワードが得られて良い。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/aturon/crossbeam"&gt;aturon/crossbeam&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;並列・並行実行のライブラリ。内部でlock-freeなデータ構造や、Epoch-based relcamationな仕組みを実装している。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/dpc/mioco"&gt;dpc/mioco&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;コルーチンを実装しているライブラリ。&lt;/p&gt;
+&lt;p&gt;インラインアセンブリでyeild相当の処理を実装している&lt;a href="https://github.com/zonyitoo/context-rs"&gt;context-rs&lt;/a&gt;を内部で使用している。&lt;/p&gt;
+&lt;p&gt;個人的には、今はRustでプロキシサーバを書いてみている。
+ロジックとメモリの扱いやOwnership, lifetimeも併せて考える必要があるので、業務ロジック部分などは、F#くらいの抽象度の方が集中できると感じた。&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">meganehouser</dc:creator><pubDate>Tue, 08 Mar 2016 00:00:00 +0900</pubDate><guid>tag:meganehouser.github.io,2016-03-08:2016-03-08_rust-libs.html</guid><category>Rust</category></item><item><title>つたや一粋庵のさくらプリン</title><link>http://meganehouser.github.io/2016-03-08_sakura-pudding.html</link><description>&lt;p&gt;近所の和菓子屋の春の菓子。
 桜の花と金箔があしらわれたゼリー部分がスノードームのようで美しい一品だ。
 桃色の色味も春を感じさせる。
 春めいた気候になってきて、日向の中で食べるのぴったりなのだった。&lt;/p&gt;

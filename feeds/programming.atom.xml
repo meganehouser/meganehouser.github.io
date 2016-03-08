@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>ぶりとだいこん</title><link href="http://meganehouser.github.io/" rel="alternate"></link><link href="http://meganehouser.github.io/feeds/programming.atom.xml" rel="self"></link><id>http://meganehouser.github.io/</id><updated>2015-04-19T00:00:00+09:00</updated><entry><title>mdファイルを表示する簡易Webサーバ</title><link href="http://meganehouser.github.io/2015-04-19_md-view.html" rel="alternate"></link><updated>2015-04-19T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2015-04-19:2015-04-19_md-view.html</id><summary type="html">&lt;h2&gt;概要&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>ぶりとだいこん</title><link href="http://meganehouser.github.io/" rel="alternate"></link><link href="http://meganehouser.github.io/feeds/programming.atom.xml" rel="self"></link><id>http://meganehouser.github.io/</id><updated>2016-03-08T00:00:00+09:00</updated><entry><title>low-levelのライブラリのソースを読む</title><link href="http://meganehouser.github.io/2016-03-08_rust-libs.html" rel="alternate"></link><updated>2016-03-08T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2016-03-08:2016-03-08_rust-libs.html</id><summary type="html">&lt;p&gt;最近、&lt;a href="https://www.rust-lang.org/"&gt;Rust&lt;/a&gt;をポチポチ触っている。
+今まではC#/F#/Python/Clojureなどを書いてきていたので、ちょっとlow-levelよりのものに触れてみたくなったので。&lt;/p&gt;
+&lt;p&gt;Rustのライブラリを読んでいると、low-levelの知見のキーワードが得られて良い。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/aturon/crossbeam"&gt;aturon/crossbeam&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;並列・並行実行のライブラリ。内部でlock-freeなデータ構造や、Epoch-based relcamationな仕組みを実装している。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/dpc/mioco"&gt;dpc/mioco&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;コルーチンを実装しているライブラリ。&lt;/p&gt;
+&lt;p&gt;インラインアセンブリでyeild相当の処理を実装している&lt;a href="https://github.com/zonyitoo/context-rs"&gt;context-rs&lt;/a&gt;を内部で使用している。&lt;/p&gt;
+&lt;p&gt;個人的には、今はRustでプロキシサーバを書いてみている。
+ロジックとメモリの扱いやOwnership, lifetimeも併せて考える必要があるので、業務ロジック部分などは、F#くらいの抽象度の方が集中できると感じた。&lt;/p&gt;</summary><category term="Rust"></category></entry><entry><title>mdファイルを表示する簡易Webサーバ</title><link href="http://meganehouser.github.io/2015-04-19_md-view.html" rel="alternate"></link><updated>2015-04-19T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2015-04-19:2015-04-19_md-view.html</id><summary type="html">&lt;h2&gt;概要&lt;/h2&gt;
 &lt;p&gt;Pythonでは、コマンドラインからモジュールを実行することで簡易的なWebサーバを起動できる。&lt;/p&gt;
 &lt;p&gt;Markdownファイルだった場合はhtmlに変換して、簡易mdビューアとして使用したい。&lt;/p&gt;
 &lt;h2&gt;方法&lt;/h2&gt;
