@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 	<meta charset="utf-8">
-	<title>OSXでOpenTKをビルドする — ぶりとだいこん</title>
+	<title>OSXでOpenTKをビルドする — きんつば</title>
 	<meta name="description" content="Title: OSXでOpenTKをビルドする; Date: 2016-07-11; Author: meganehouser">
 	<meta name="author" content="meganehouser">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,8 +20,8 @@
 <body>
 <div class="container">
 	<div class="page-header">
-		<h1><a href="http://meganehouser.github.io">ぶりとだいこん</a>
-			<br><small>ゆっくり歩け、そしてたっぷり水を飲めってね。</small></h1>
+		<h1><a href="http://meganehouser.github.io">きんつば</a>
+			<br><small>Pythonとかやるソフトウェアエンジニア</small></h1>
 	</div>
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2">
@@ -31,7 +31,7 @@
 		<span itemprop="author" itemscope itemtype="http://schema.org/Person">
 			<h4 itemprop="name">meganehouser</h4>
 		</span>
-		<time datetime="2016-07-11T00:00:00" itemprop="datePublished">Mon 11 July 2016</time>
+		<time datetime="2016-07-11T00:00:00+09:00" itemprop="datePublished">Mon 11 July 2016</time>
 	</div>
 	<div>
 		Category:
@@ -62,9 +62,9 @@ OpenGLのラッパーを書くのもだるいので、既存の.NET Framework用
 <p>以下、ソースからのビルドのメモ。
 (環境はMacBook Air Mid-2012, El Capitan)</p>
 <p>MonoとNuGetがインストールされていない場合は、インストールしておく。</p>
-<div class="highlight"><pre>$ wget https://github.com/opentk/opentk/archive/develop.zip
+<div class="highlight"><pre><span></span>$ wget https://github.com/opentk/opentk/archive/develop.zip
 $ unzip develop.zip
-$ cd opentk-develop
+$ <span class="nb">cd</span> opentk-develop
 $ mono nuget restore OpenTK.sln
 $ xbuild OpenTK.sln
 </pre></div>
@@ -73,75 +73,75 @@ $ xbuild OpenTK.sln
 <p>GLWidgetはビルドエラーになるけどOpenTK.dllはビルドできているので問題ない。
 OpenTK.dllをコピーしてプロジェクトに参照追加する。</p>
 <p>以下はOpenGLの<a href="http://www.opengl-tutorial.org/jp/beginners-tutorials/tutorial-2-the-first-triangle/">opengl-tutorialの2</a>をOpenTKで実装した例。</p>
-<div class="highlight"><pre><span class="k">open</span> <span class="nc">System</span>
-<span class="k">open</span> <span class="nn">System</span><span class="p">.</span><span class="nc">IO</span>
-<span class="k">open</span> <span class="nc">OpenTK</span>
-<span class="k">open</span> <span class="nn">OpenTK</span><span class="p">.</span><span class="nc">Graphics</span>
-<span class="k">open</span> <span class="nn">OpenTK</span><span class="p">.</span><span class="nn">Graphics</span><span class="p">.</span><span class="nc">OpenGL4</span>
+<div class="highlight"><pre><span></span><span class="k">open</span> <span class="nn">System</span>
+<span class="k">open</span> <span class="nn">System.IO</span>
+<span class="k">open</span> <span class="nn">OpenTK</span>
+<span class="k">open</span> <span class="nn">OpenTK.Graphics</span>
+<span class="k">open</span> <span class="nn">OpenTK.Graphics.OpenGL4</span>
 
-<span class="o">[&lt;</span><span class="nc">AutoOpen</span><span class="o">&gt;]</span>
-<span class="k">module</span> <span class="nc">Shaders</span> <span class="o">=</span>
-    <span class="k">let</span> <span class="n">loadShaders</span><span class="o">(</span><span class="n">vFile</span><span class="o">:</span> <span class="kt">string</span><span class="o">,</span> <span class="n">fFile</span><span class="o">:</span> <span class="kt">string</span><span class="o">)</span> <span class="o">=</span>
-        <span class="k">let</span> <span class="n">programId</span> <span class="o">=</span> <span class="nn">GL</span><span class="p">.</span><span class="nc">CreateProgram</span><span class="bp">()</span>
+<span class="o">[&lt;</span><span class="n">AutoOpen</span><span class="o">&gt;]</span>
+<span class="k">module</span> <span class="nn">Shaders</span> <span class="o">=</span>
+    <span class="k">let</span> <span class="nv">loadShaders</span><span class="o">(</span><span class="n">vFile</span><span class="o">:</span> <span class="kt">string</span><span class="o">,</span> <span class="n">fFile</span><span class="o">:</span> <span class="kt">string</span><span class="o">)</span> <span class="o">=</span>
+        <span class="k">let</span> <span class="nv">programId</span> <span class="o">=</span> <span class="nn">GL</span><span class="p">.</span><span class="n">CreateProgram</span><span class="bp">()</span>
 
-        <span class="k">let</span> <span class="n">vertexShaderId</span> <span class="o">=</span> <span class="nn">GL</span><span class="p">.</span><span class="nc">CreateShader</span><span class="o">(</span><span class="nn">ShaderType</span><span class="p">.</span><span class="nc">VertexShader</span><span class="o">)</span>
-        <span class="nn">GL</span><span class="p">.</span><span class="nc">ShaderSource</span><span class="o">(</span><span class="n">vertexShaderId</span><span class="o">,</span> <span class="nn">File</span><span class="p">.</span><span class="nc">ReadAllText</span><span class="o">(</span><span class="n">vFile</span><span class="o">))</span>
-        <span class="nn">GL</span><span class="p">.</span><span class="nc">CompileShader</span><span class="o">(</span><span class="n">vertexShaderId</span><span class="o">)</span>
-        <span class="nn">GL</span><span class="p">.</span><span class="nc">AttachShader</span><span class="o">(</span><span class="n">programId</span><span class="o">,</span> <span class="n">vertexShaderId</span><span class="o">)</span>
+        <span class="k">let</span> <span class="nv">vertexShaderId</span> <span class="o">=</span> <span class="nn">GL</span><span class="p">.</span><span class="n">CreateShader</span><span class="o">(</span><span class="nn">ShaderType</span><span class="p">.</span><span class="n">VertexShader</span><span class="o">)</span>
+        <span class="nn">GL</span><span class="p">.</span><span class="n">ShaderSource</span><span class="o">(</span><span class="n">vertexShaderId</span><span class="o">,</span> <span class="nn">File</span><span class="p">.</span><span class="n">ReadAllText</span><span class="o">(</span><span class="n">vFile</span><span class="o">))</span>
+        <span class="nn">GL</span><span class="p">.</span><span class="n">CompileShader</span><span class="o">(</span><span class="n">vertexShaderId</span><span class="o">)</span>
+        <span class="nn">GL</span><span class="p">.</span><span class="n">AttachShader</span><span class="o">(</span><span class="n">programId</span><span class="o">,</span> <span class="n">vertexShaderId</span><span class="o">)</span>
 
-        <span class="k">let</span> <span class="n">fragmentShaderId</span> <span class="o">=</span> <span class="nn">GL</span><span class="p">.</span><span class="nc">CreateShader</span><span class="o">(</span><span class="nn">ShaderType</span><span class="p">.</span><span class="nc">FragmentShader</span><span class="o">)</span> 
-        <span class="nn">GL</span><span class="p">.</span><span class="nc">ShaderSource</span><span class="o">(</span><span class="n">fragmentShaderId</span><span class="o">,</span> <span class="nn">File</span><span class="p">.</span><span class="nc">ReadAllText</span><span class="o">(</span><span class="n">fFile</span><span class="o">))</span>
-        <span class="nn">GL</span><span class="p">.</span><span class="nc">CompileShader</span><span class="o">(</span><span class="n">fragmentShaderId</span><span class="o">)</span>
-        <span class="nn">GL</span><span class="p">.</span><span class="nc">AttachShader</span><span class="o">(</span><span class="n">programId</span><span class="o">,</span> <span class="n">fragmentShaderId</span><span class="o">)</span>
+        <span class="k">let</span> <span class="nv">fragmentShaderId</span> <span class="o">=</span> <span class="nn">GL</span><span class="p">.</span><span class="n">CreateShader</span><span class="o">(</span><span class="nn">ShaderType</span><span class="p">.</span><span class="n">FragmentShader</span><span class="o">)</span> 
+        <span class="nn">GL</span><span class="p">.</span><span class="n">ShaderSource</span><span class="o">(</span><span class="n">fragmentShaderId</span><span class="o">,</span> <span class="nn">File</span><span class="p">.</span><span class="n">ReadAllText</span><span class="o">(</span><span class="n">fFile</span><span class="o">))</span>
+        <span class="nn">GL</span><span class="p">.</span><span class="n">CompileShader</span><span class="o">(</span><span class="n">fragmentShaderId</span><span class="o">)</span>
+        <span class="nn">GL</span><span class="p">.</span><span class="n">AttachShader</span><span class="o">(</span><span class="n">programId</span><span class="o">,</span> <span class="n">fragmentShaderId</span><span class="o">)</span>
 
-        <span class="nn">GL</span><span class="p">.</span><span class="nc">LinkProgram</span><span class="o">(</span><span class="n">programId</span><span class="o">)</span>
-        <span class="k">let</span> <span class="n">attributeCount</span> <span class="o">=</span> <span class="nn">GL</span><span class="p">.</span><span class="nc">GetProgram</span><span class="o">(</span><span class="n">programId</span><span class="o">,</span> <span class="nn">GetProgramParameterName</span><span class="p">.</span><span class="nc">ActiveAttributes</span><span class="o">)</span>
-        <span class="k">let</span> <span class="n">uniformCount</span> <span class="o">=</span> <span class="nn">GL</span><span class="p">.</span><span class="nc">GetProgram</span><span class="o">(</span><span class="n">programId</span><span class="o">,</span> <span class="nn">GetProgramParameterName</span><span class="p">.</span><span class="nc">ActiveUniforms</span><span class="o">)</span>
-        <span class="nn">GL</span><span class="p">.</span><span class="nc">DeleteShader</span><span class="o">(</span><span class="n">vertexShaderId</span><span class="o">)</span>
-        <span class="nn">GL</span><span class="p">.</span><span class="nc">DeleteShader</span><span class="o">(</span><span class="n">fragmentShaderId</span><span class="o">)</span>
+        <span class="nn">GL</span><span class="p">.</span><span class="n">LinkProgram</span><span class="o">(</span><span class="n">programId</span><span class="o">)</span>
+        <span class="k">let</span> <span class="nv">attributeCount</span> <span class="o">=</span> <span class="nn">GL</span><span class="p">.</span><span class="n">GetProgram</span><span class="o">(</span><span class="n">programId</span><span class="o">,</span> <span class="nn">GetProgramParameterName</span><span class="p">.</span><span class="n">ActiveAttributes</span><span class="o">)</span>
+        <span class="k">let</span> <span class="nv">uniformCount</span> <span class="o">=</span> <span class="nn">GL</span><span class="p">.</span><span class="n">GetProgram</span><span class="o">(</span><span class="n">programId</span><span class="o">,</span> <span class="nn">GetProgramParameterName</span><span class="p">.</span><span class="n">ActiveUniforms</span><span class="o">)</span>
+        <span class="nn">GL</span><span class="p">.</span><span class="n">DeleteShader</span><span class="o">(</span><span class="n">vertexShaderId</span><span class="o">)</span>
+        <span class="nn">GL</span><span class="p">.</span><span class="n">DeleteShader</span><span class="o">(</span><span class="n">fragmentShaderId</span><span class="o">)</span>
         <span class="n">programId</span>
 
 
 <span class="k">type</span> <span class="nc">MyWindow</span><span class="bp">()</span> <span class="o">=</span> 
-    <span class="k">inherit</span> <span class="nc">GameWindow</span><span class="o">(</span><span class="mi">800</span><span class="o">,</span> <span class="mi">600</span><span class="o">,</span> <span class="nn">GraphicsMode</span><span class="p">.</span><span class="nc">Default</span><span class="o">,</span> <span class="s2">&quot;opengl-tutorial02&quot;</span><span class="o">,</span> <span class="nn">GameWindowFlags</span><span class="p">.</span><span class="nc">Default</span><span class="o">,</span> <span class="nn">DisplayDevice</span><span class="p">.</span><span class="nc">Default</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="nn">GraphicsContextFlags</span><span class="p">.</span><span class="nc">Default</span><span class="o">)</span>
-    <span class="k">let</span> <span class="n">initEvent</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Event</span><span class="o">&lt;</span><span class="nc">EventArgs</span><span class="o">&gt;</span><span class="bp">()</span>
+    <span class="k">inherit</span> <span class="n">GameWindow</span><span class="o">(</span><span class="mi">800</span><span class="o">,</span> <span class="mi">600</span><span class="o">,</span> <span class="nn">GraphicsMode</span><span class="p">.</span><span class="n">Default</span><span class="o">,</span> <span class="s">&quot;opengl-tutorial02&quot;</span><span class="o">,</span> <span class="nn">GameWindowFlags</span><span class="p">.</span><span class="n">Default</span><span class="o">,</span> <span class="nn">DisplayDevice</span><span class="p">.</span><span class="n">Default</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="nn">GraphicsContextFlags</span><span class="p">.</span><span class="n">Default</span><span class="o">)</span>
+    <span class="k">let</span> <span class="nv">initEvent</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Event</span><span class="o">&lt;</span><span class="n">EventArgs</span><span class="o">&gt;</span><span class="bp">()</span>
 
-    <span class="k">member</span> <span class="n">gl</span><span class="o">.</span><span class="nc">OnInit</span> <span class="o">=</span> <span class="n">initEvent</span><span class="o">.</span><span class="nc">Publish</span>
+    <span class="k">member</span> <span class="n">gl</span><span class="p">.</span><span class="nf">OnInit</span> <span class="o">=</span> <span class="n">initEvent</span><span class="o">.</span><span class="n">Publish</span>
 
-    <span class="k">override</span> <span class="n">gl</span><span class="o">.</span><span class="nc">OnLoad</span><span class="o">(</span><span class="n">e</span><span class="o">:</span> <span class="nc">EventArgs</span><span class="o">)</span> <span class="o">=</span>
-        <span class="k">base</span><span class="o">.</span><span class="nc">OnLoad</span><span class="o">(</span><span class="n">e</span><span class="o">)</span>
-        <span class="n">initEvent</span><span class="o">.</span><span class="nc">Trigger</span><span class="o">(</span><span class="n">e</span><span class="o">)</span>
-        <span class="n">gl</span><span class="o">.</span><span class="nc">SwapBuffers</span><span class="bp">()</span>
+    <span class="k">override</span> <span class="n">gl</span><span class="p">.</span><span class="nf">OnLoad</span><span class="o">(</span><span class="n">e</span><span class="o">:</span> <span class="n">EventArgs</span><span class="o">)</span> <span class="o">=</span>
+        <span class="k">base</span><span class="o">.</span><span class="n">OnLoad</span><span class="o">(</span><span class="n">e</span><span class="o">)</span>
+        <span class="n">initEvent</span><span class="o">.</span><span class="n">Trigger</span><span class="o">(</span><span class="n">e</span><span class="o">)</span>
+        <span class="n">gl</span><span class="o">.</span><span class="n">SwapBuffers</span><span class="bp">()</span>
 
-<span class="k">module</span> <span class="nc">Main</span> <span class="o">=</span>
-    <span class="o">[&lt;</span><span class="nc">EntryPoint</span><span class="o">&gt;]</span>
-    <span class="k">let</span> <span class="n">main</span> <span class="o">_</span> <span class="o">=</span> 
-        <span class="k">use</span> <span class="n">window</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MyWindow</span><span class="bp">()</span>
-        <span class="n">window</span><span class="o">.</span><span class="nc">OnInit</span>
+<span class="k">module</span> <span class="nn">Main</span> <span class="o">=</span>
+    <span class="o">[&lt;</span><span class="n">EntryPoint</span><span class="o">&gt;]</span>
+    <span class="k">let</span> <span class="nv">main</span> <span class="o">_</span> <span class="o">=</span> 
+        <span class="k">use</span> <span class="n">window</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MyWindow</span><span class="bp">()</span>
+        <span class="n">window</span><span class="o">.</span><span class="n">OnInit</span>
         <span class="o">|&gt;</span> <span class="nn">Observable</span><span class="p">.</span><span class="n">subscribe</span><span class="o">(</span><span class="k">fun</span> <span class="o">_</span> <span class="o">-&gt;</span>
-            <span class="k">let</span> <span class="n">programId</span> <span class="o">=</span> <span class="n">loadShaders</span><span class="o">(</span> <span class="s2">&quot;SimpleVertexShader.vertexshader&quot;</span><span class="o">,</span> <span class="s2">&quot;SimpleFragmentShader.fragmentshader&quot;</span> <span class="o">)</span>
-            <span class="nn">GL</span><span class="p">.</span><span class="nc">ClearColor</span><span class="o">(</span><span class="mi">0</span><span class="o">.</span><span class="n">f</span><span class="o">,</span> <span class="mi">0</span><span class="o">.</span><span class="n">f</span><span class="o">,</span> <span class="mi">0</span><span class="o">.</span><span class="mi">4</span><span class="n">f</span><span class="o">,</span> <span class="mi">0</span><span class="o">.</span><span class="n">f</span><span class="o">)</span>
-            <span class="nn">GL</span><span class="p">.</span><span class="nc">UseProgram</span><span class="o">(</span><span class="n">programId</span><span class="o">)</span>
-            <span class="k">let</span> <span class="n">arr</span><span class="o">:</span> <span class="kt">uint32</span> <span class="o">=</span> <span class="nn">GL</span><span class="p">.</span><span class="nc">GenVertexArrays</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
-            <span class="nn">GL</span><span class="p">.</span><span class="nc">BindVertexArray</span><span class="o">(</span><span class="n">arr</span><span class="o">)</span> 
+            <span class="k">let</span> <span class="nv">programId</span> <span class="o">=</span> <span class="n">loadShaders</span><span class="o">(</span> <span class="s">&quot;SimpleVertexShader.vertexshader&quot;</span><span class="o">,</span> <span class="s">&quot;SimpleFragmentShader.fragmentshader&quot;</span> <span class="o">)</span>
+            <span class="nn">GL</span><span class="p">.</span><span class="n">ClearColor</span><span class="o">(</span><span class="mi">0</span><span class="o">.</span><span class="n">f</span><span class="o">,</span> <span class="mi">0</span><span class="o">.</span><span class="n">f</span><span class="o">,</span> <span class="mi">0</span><span class="o">.</span><span class="mi">4</span><span class="n">f</span><span class="o">,</span> <span class="mi">0</span><span class="o">.</span><span class="n">f</span><span class="o">)</span>
+            <span class="nn">GL</span><span class="p">.</span><span class="n">UseProgram</span><span class="o">(</span><span class="n">programId</span><span class="o">)</span>
+            <span class="k">let</span> <span class="nv">arr</span><span class="o">:</span> <span class="kt">uint32</span> <span class="o">=</span> <span class="nn">GL</span><span class="p">.</span><span class="n">GenVertexArrays</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
+            <span class="nn">GL</span><span class="p">.</span><span class="n">BindVertexArray</span><span class="o">(</span><span class="n">arr</span><span class="o">)</span> 
 
-            <span class="k">let</span> <span class="k">mutable</span> <span class="n">data</span> <span class="o">=</span> <span class="o">[|</span> <span class="o">-</span><span class="mi">1</span><span class="o">.</span><span class="n">f</span><span class="o">;</span> <span class="o">-</span><span class="mi">1</span><span class="o">.</span><span class="n">f</span><span class="o">;</span> <span class="mi">0</span><span class="o">.</span><span class="n">f</span><span class="o">;</span> 
+            <span class="k">let</span> <span class="nv">mutable</span> <span class="n">data</span> <span class="o">=</span> <span class="o">[|</span> <span class="o">-</span><span class="mi">1</span><span class="o">.</span><span class="n">f</span><span class="o">;</span> <span class="o">-</span><span class="mi">1</span><span class="o">.</span><span class="n">f</span><span class="o">;</span> <span class="mi">0</span><span class="o">.</span><span class="n">f</span><span class="o">;</span> 
                                    <span class="mi">1</span><span class="o">.</span><span class="n">f</span><span class="o">;</span> <span class="o">-</span><span class="mi">1</span><span class="o">.</span><span class="n">f</span><span class="o">;</span> <span class="mi">0</span><span class="o">.</span><span class="n">f</span><span class="o">;</span> 
                                    <span class="mi">0</span><span class="o">.</span><span class="n">f</span><span class="o">;</span>  <span class="mi">1</span><span class="o">.</span><span class="n">f</span><span class="o">;</span> <span class="mi">0</span><span class="o">.</span><span class="n">f</span> <span class="o">|]</span> 
-            <span class="k">let</span> <span class="n">buffer</span><span class="o">:</span> <span class="kt">uint32</span> <span class="o">=</span> <span class="nn">GL</span><span class="p">.</span><span class="nc">GenBuffers</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
-            <span class="nn">GL</span><span class="p">.</span><span class="nc">BindBuffer</span><span class="o">(</span><span class="nn">BufferTarget</span><span class="p">.</span><span class="nc">ArrayBuffer</span><span class="o">,</span> <span class="n">buffer</span><span class="o">)</span>
-            <span class="k">let</span> <span class="n">size</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="nc">Length</span> <span class="o">*</span> <span class="n">sizeof</span><span class="o">&lt;</span><span class="kt">float32</span><span class="o">&gt;</span>
-            <span class="nn">GL</span><span class="p">.</span><span class="nc">BufferData</span><span class="o">&lt;</span><span class="kt">float32</span><span class="o">&gt;(</span><span class="nn">BufferTarget</span><span class="p">.</span><span class="nc">ArrayBuffer</span><span class="o">,</span> <span class="nc">IntPtr</span><span class="o">(</span><span class="n">size</span><span class="o">),</span> <span class="n">data</span><span class="o">,</span> <span class="nn">BufferUsageHint</span><span class="p">.</span><span class="nc">StaticDraw</span><span class="o">)</span>
+            <span class="k">let</span> <span class="nv">buffer</span><span class="o">:</span> <span class="kt">uint32</span> <span class="o">=</span> <span class="nn">GL</span><span class="p">.</span><span class="n">GenBuffers</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
+            <span class="nn">GL</span><span class="p">.</span><span class="n">BindBuffer</span><span class="o">(</span><span class="nn">BufferTarget</span><span class="p">.</span><span class="n">ArrayBuffer</span><span class="o">,</span> <span class="n">buffer</span><span class="o">)</span>
+            <span class="k">let</span> <span class="nv">size</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">Length</span> <span class="o">*</span> <span class="n">sizeof</span><span class="o">&lt;</span><span class="kt">float32</span><span class="o">&gt;</span>
+            <span class="nn">GL</span><span class="p">.</span><span class="n">BufferData</span><span class="o">&lt;</span><span class="kt">float32</span><span class="o">&gt;(</span><span class="nn">BufferTarget</span><span class="p">.</span><span class="n">ArrayBuffer</span><span class="o">,</span> <span class="n">IntPtr</span><span class="o">(</span><span class="n">size</span><span class="o">),</span> <span class="n">data</span><span class="o">,</span> <span class="nn">BufferUsageHint</span><span class="p">.</span><span class="n">StaticDraw</span><span class="o">)</span>
 
-            <span class="nn">GL</span><span class="p">.</span><span class="nc">Clear</span><span class="o">(</span><span class="nn">ClearBufferMask</span><span class="p">.</span><span class="nc">ColorBufferBit</span> <span class="o">|||</span> <span class="nn">ClearBufferMask</span><span class="p">.</span><span class="nc">DepthBufferBit</span><span class="o">)</span>
-            <span class="nn">GL</span><span class="p">.</span><span class="nc">EnableVertexAttribArray</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span>
-            <span class="nn">GL</span><span class="p">.</span><span class="nc">BindBuffer</span><span class="o">(</span><span class="nn">BufferTarget</span><span class="p">.</span><span class="nc">ArrayBuffer</span><span class="o">,</span> <span class="n">buffer</span><span class="o">)</span>
-            <span class="nn">GL</span><span class="p">.</span><span class="nc">VertexAttribPointer</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="nn">VertexAttribPointerType</span><span class="p">.</span><span class="nc">Float</span><span class="o">,</span> <span class="bp">false</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">)</span>
-            <span class="nn">GL</span><span class="p">.</span><span class="nc">DrawArrays</span><span class="o">(</span><span class="nn">PrimitiveType</span><span class="p">.</span><span class="nc">Triangles</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">3</span><span class="o">)</span>
-            <span class="nn">GL</span><span class="p">.</span><span class="nc">DisableVertexAttribArray</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span>
+            <span class="nn">GL</span><span class="p">.</span><span class="n">Clear</span><span class="o">(</span><span class="nn">ClearBufferMask</span><span class="p">.</span><span class="n">ColorBufferBit</span> <span class="o">|||</span> <span class="nn">ClearBufferMask</span><span class="p">.</span><span class="n">DepthBufferBit</span><span class="o">)</span>
+            <span class="nn">GL</span><span class="p">.</span><span class="n">EnableVertexAttribArray</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span>
+            <span class="nn">GL</span><span class="p">.</span><span class="n">BindBuffer</span><span class="o">(</span><span class="nn">BufferTarget</span><span class="p">.</span><span class="n">ArrayBuffer</span><span class="o">,</span> <span class="n">buffer</span><span class="o">)</span>
+            <span class="nn">GL</span><span class="p">.</span><span class="n">VertexAttribPointer</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="nn">VertexAttribPointerType</span><span class="p">.</span><span class="n">Float</span><span class="o">,</span> <span class="k">false</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">)</span>
+            <span class="nn">GL</span><span class="p">.</span><span class="n">DrawArrays</span><span class="o">(</span><span class="nn">PrimitiveType</span><span class="p">.</span><span class="n">Triangles</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">3</span><span class="o">)</span>
+            <span class="nn">GL</span><span class="p">.</span><span class="n">DisableVertexAttribArray</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span>
         <span class="o">)</span>
 
-        <span class="n">window</span><span class="o">.</span><span class="nc">Run</span><span class="o">(</span><span class="mi">30</span><span class="o">.</span><span class="mi">0</span><span class="o">)</span>
+        <span class="n">window</span><span class="o">.</span><span class="n">Run</span><span class="o">(</span><span class="mi">30</span><span class="o">.</span><span class="mi">0</span><span class="o">)</span>
         <span class="mi">0</span>
 </pre></div></div>
 	<hr>
@@ -170,7 +170,7 @@ OpenTK.dllをコピーしてプロジェクトに参照追加する。</p>
 					<div class="col-md-3">
 						<h4>Navigation</h4>
 						<ul class="list-unstyled my-list-style">
-							<li><a href="http://meganehouser.github.io">ぶりとだいこん</a></li>
+							<li><a href="http://meganehouser.github.io">きんつば</a></li>
 							<li><a href="http://meganehouser.github.io/feeds/all.atom.xml"><i class="fa fa-rss "></i> atom</a></li>
 						</ul>
 					</div>
@@ -194,7 +194,7 @@ OpenTK.dllをコピーしてプロジェクトに参照追加する。</p>
 					<div class="col-md-3">
 						<h4>Links</h4>
 						<ul class="list-unstyled my-list-style">
-							<li><a href="http://meganehouser.hatenablog.com/">ぶりとだいこん(旧)</a></li>
+							<li><a href="http://meganehouser.hatenablog.com/">ぶりとだいこん</a></li>
 						</ul>
 					</div>
 				</div>

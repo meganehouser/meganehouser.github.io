@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 	<meta charset="utf-8">
-	<title>macvim-kaoriyaをソースからビルド — ぶりとだいこん</title>
+	<title>macvim-kaoriyaをソースからビルド — きんつば</title>
 	<meta name="description" content="Title: macvim-kaoriyaをソースからビルド; Date: 2014-11-29; Author: meganehouser">
 	<meta name="author" content="meganehouser">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,8 +20,8 @@
 <body>
 <div class="container">
 	<div class="page-header">
-		<h1><a href="http://meganehouser.github.io">ぶりとだいこん</a>
-			<br><small>ゆっくり歩け、そしてたっぷり水を飲めってね。</small></h1>
+		<h1><a href="http://meganehouser.github.io">きんつば</a>
+			<br><small>Pythonとかやるソフトウェアエンジニア</small></h1>
 	</div>
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2">
@@ -31,7 +31,7 @@
 		<span itemprop="author" itemscope itemtype="http://schema.org/Person">
 			<h4 itemprop="name">meganehouser</h4>
 		</span>
-		<time datetime="2014-11-29T00:00:00" itemprop="datePublished">Sat 29 November 2014</time>
+		<time datetime="2014-11-29T00:00:00+09:00" itemprop="datePublished">Sat 29 November 2014</time>
 	</div>
 	<div>
 		Category:
@@ -57,24 +57,24 @@
 </li>
 </ul>
 <h2>1. cmigemoをインストール</h2>
-<div class="highlight"><pre>$ brew install cmigemo
+<div class="highlight"><pre><span></span>$ brew install cmigemo
 </pre></div>
 
 
 <h2>2. libiconvのビルド・インストール</h2>
 <p>libiconvを'-arch i386 -arch x86_64'でビルド・インストールする</p>
-<div class="highlight"><pre>$ wget http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.14.tar.gz
+<div class="highlight"><pre><span></span>$ wget http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.14.tar.gz
 $ tar xzf libiconv-1.14.tar.gz
-$ cd libiconv-1.14
-$ CFLAGS=&#39;-arch i386 -arch x86_64&#39; CCFLAGS=&#39;-arch i386 -arch x86_64&#39; CXXFLAGS=&#39;-arch i386 -arch x86_64&#39; ./configure
+$ <span class="nb">cd</span> libiconv-1.14
+$ <span class="nv">CFLAGS</span><span class="o">=</span><span class="s1">&#39;-arch i386 -arch x86_64&#39;</span> <span class="nv">CCFLAGS</span><span class="o">=</span><span class="s1">&#39;-arch i386 -arch x86_64&#39;</span> <span class="nv">CXXFLAGS</span><span class="o">=</span><span class="s1">&#39;-arch i386 -arch x86_64&#39;</span> ./configure
 $ make
 $ sudo make install
 </pre></div>
 
 
 <h2>3. macvim-kaoriyaのソースを取得</h2>
-<div class="highlight"><pre>$ git clone git://github.com/splhack/macvim.git
-$ cd macvim
+<div class="highlight"><pre><span></span>$ git clone git://github.com/splhack/macvim.git
+$ <span class="nb">cd</span> macvim
 </pre></div>
 
 
@@ -90,12 +90,12 @@ mac_install.sh</p>
 5
 6
 7
-8</pre></div></td><td class="code"><div class="highlight"><pre>#! /bin/sh
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#! /bin/sh</span>
 
-cd src
-CC=clang
+<span class="nb">cd</span> src
+<span class="nv">CC</span><span class="o">=</span>clang
 
-LIBS=&quot;-lmigemo&quot; LDFLAGS=-L/usr/local/lib ./configure --enable-python3interp --enable-luainterp --with-lua-prefix=/opt/local LUA_PREFIX=/opt/local -enable-multibyte --with-features=huge --enable-cscope --enable-migemo
+<span class="nv">LIBS</span><span class="o">=</span><span class="s2">&quot;-lmigemo&quot;</span> <span class="nv">LDFLAGS</span><span class="o">=</span>-L/usr/local/lib ./configure --enable-python3interp --enable-luainterp --with-lua-prefix<span class="o">=</span>/opt/local <span class="nv">LUA_PREFIX</span><span class="o">=</span>/opt/local -enable-multibyte --with-features<span class="o">=</span>huge --enable-cscope --enable-migemo
 
 make
 </pre></div>
@@ -136,7 +136,7 @@ make
 					<div class="col-md-3">
 						<h4>Navigation</h4>
 						<ul class="list-unstyled my-list-style">
-							<li><a href="http://meganehouser.github.io">ぶりとだいこん</a></li>
+							<li><a href="http://meganehouser.github.io">きんつば</a></li>
 							<li><a href="http://meganehouser.github.io/feeds/all.atom.xml"><i class="fa fa-rss "></i> atom</a></li>
 						</ul>
 					</div>
@@ -160,7 +160,7 @@ make
 					<div class="col-md-3">
 						<h4>Links</h4>
 						<ul class="list-unstyled my-list-style">
-							<li><a href="http://meganehouser.hatenablog.com/">ぶりとだいこん(旧)</a></li>
+							<li><a href="http://meganehouser.hatenablog.com/">ぶりとだいこん</a></li>
 						</ul>
 					</div>
 				</div>

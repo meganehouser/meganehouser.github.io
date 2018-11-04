@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>ぶりとだいこん</title><link href="http://meganehouser.github.io/" rel="alternate"></link><link href="http://meganehouser.github.io/feeds/tips.atom.xml" rel="self"></link><id>http://meganehouser.github.io/</id><updated>2014-11-29T00:00:00+09:00</updated><entry><title>macvim-kaoriyaをソースからビルド</title><link href="http://meganehouser.github.io/2014-11-29_build-macvim-kaoriya.html" rel="alternate"></link><updated>2014-11-29T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2014-11-29:2014-11-29_build-macvim-kaoriya.html</id><summary type="html">&lt;p&gt;普段はMacVim-Kaoriyaを配布されているdmgからインストールしていて使用している。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>きんつば - tips</title><link href="http://meganehouser.github.io/" rel="alternate"></link><link href="http://meganehouser.github.io/feeds/tips.atom.xml" rel="self"></link><id>http://meganehouser.github.io/</id><updated>2014-11-29T00:00:00+09:00</updated><entry><title>macvim-kaoriyaをソースからビルド</title><link href="http://meganehouser.github.io/2014-11-29_build-macvim-kaoriya.html" rel="alternate"></link><published>2014-11-29T00:00:00+09:00</published><updated>2014-11-29T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2014-11-29:/2014-11-29_build-macvim-kaoriya.html</id><summary type="html">&lt;p&gt;Python2を無効化、Python3を有効化してビルドしてみた。&lt;/p&gt;</summary><content type="html">&lt;p&gt;普段はMacVim-Kaoriyaを配布されているdmgからインストールしていて使用している。&lt;/p&gt;
 &lt;p&gt;配布されているdmgでは、Python2/Python3とも有効かされているが、jedi-vimがどうしてもPython2.7で実行されてしまうので、Python3のコード編集時に補完がうまくいかない。&lt;/p&gt;
 &lt;p&gt;Python2を無効化、Python3を有効化してビルドしてみた。&lt;/p&gt;
 &lt;ul&gt;
@@ -10,24 +10,24 @@
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2&gt;1. cmigemoをインストール&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ brew install cmigemo
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ brew install cmigemo
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;2. libiconvのビルド・インストール&lt;/h2&gt;
 &lt;p&gt;libiconvを'-arch i386 -arch x86_64'でビルド・インストールする&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ wget http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.14.tar.gz
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ wget http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.14.tar.gz
 $ tar xzf libiconv-1.14.tar.gz
-$ cd libiconv-1.14
-$ CFLAGS=&amp;#39;-arch i386 -arch x86_64&amp;#39; CCFLAGS=&amp;#39;-arch i386 -arch x86_64&amp;#39; CXXFLAGS=&amp;#39;-arch i386 -arch x86_64&amp;#39; ./configure
+$ &lt;span class="nb"&gt;cd&lt;/span&gt; libiconv-1.14
+$ &lt;span class="nv"&gt;CFLAGS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;-arch i386 -arch x86_64&amp;#39;&lt;/span&gt; &lt;span class="nv"&gt;CCFLAGS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;-arch i386 -arch x86_64&amp;#39;&lt;/span&gt; &lt;span class="nv"&gt;CXXFLAGS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;-arch i386 -arch x86_64&amp;#39;&lt;/span&gt; ./configure
 $ make
 $ sudo make install
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;3. macvim-kaoriyaのソースを取得&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ git clone git://github.com/splhack/macvim.git
-$ cd macvim
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ git clone git://github.com/splhack/macvim.git
+$ &lt;span class="nb"&gt;cd&lt;/span&gt; macvim
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -43,12 +43,12 @@ mac_install.sh&lt;/p&gt;
 5
 6
 7
-8&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;#! /bin/sh
+8&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#! /bin/sh&lt;/span&gt;
 
-cd src
-CC=clang
+&lt;span class="nb"&gt;cd&lt;/span&gt; src
+&lt;span class="nv"&gt;CC&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;clang
 
-LIBS=&amp;quot;-lmigemo&amp;quot; LDFLAGS=-L/usr/local/lib ./configure --enable-python3interp --enable-luainterp --with-lua-prefix=/opt/local LUA_PREFIX=/opt/local -enable-multibyte --with-features=huge --enable-cscope --enable-migemo
+&lt;span class="nv"&gt;LIBS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;-lmigemo&amp;quot;&lt;/span&gt; &lt;span class="nv"&gt;LDFLAGS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;-L/usr/local/lib ./configure --enable-python3interp --enable-luainterp --with-lua-prefix&lt;span class="o"&gt;=&lt;/span&gt;/opt/local &lt;span class="nv"&gt;LUA_PREFIX&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/opt/local -enable-multibyte --with-features&lt;span class="o"&gt;=&lt;/span&gt;huge --enable-cscope --enable-migemo
 
 make
 &lt;/pre&gt;&lt;/div&gt;
@@ -62,4 +62,4 @@ make
 &lt;li&gt;&lt;a href="https://github.com/b4winckler/macvim/wiki/Building#how-to-build-macvim"&gt;Building · b4winckler/macvim Wiki&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://blog.wwwjfy.net/2011/03/02/compile-vim-7-3-in-mac-os-x-10-6-6/"&gt;Compile vim 7.3 in Mac OS X 10.6.6&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://muryoimpl.com/blog/2013/06/27/compile-macvim/"&gt;Macvimを自分でコンパイルした(mac) - なんか書いていこうぜー.com&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</summary><category term="vim macvim"></category></entry></feed>
+&lt;/ul&gt;</content><category term="vim macvim"></category></entry></feed>

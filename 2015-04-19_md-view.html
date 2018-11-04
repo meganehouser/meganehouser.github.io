@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 	<meta charset="utf-8">
-	<title>mdファイルを表示する簡易Webサーバ — ぶりとだいこん</title>
+	<title>mdファイルを表示する簡易Webサーバ — きんつば</title>
 	<meta name="description" content="Title: mdファイルを表示する簡易Webサーバ; Date: 2015-04-19; Author: meganehouser">
 	<meta name="author" content="meganehouser">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,8 +20,8 @@
 <body>
 <div class="container">
 	<div class="page-header">
-		<h1><a href="http://meganehouser.github.io">ぶりとだいこん</a>
-			<br><small>ゆっくり歩け、そしてたっぷり水を飲めってね。</small></h1>
+		<h1><a href="http://meganehouser.github.io">きんつば</a>
+			<br><small>Pythonとかやるソフトウェアエンジニア</small></h1>
 	</div>
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2">
@@ -31,7 +31,7 @@
 		<span itemprop="author" itemscope itemtype="http://schema.org/Person">
 			<h4 itemprop="name">meganehouser</h4>
 		</span>
-		<time datetime="2015-04-19T00:00:00" itemprop="datePublished">Sun 19 April 2015</time>
+		<time datetime="2015-04-19T00:00:00+09:00" itemprop="datePublished">Sun 19 April 2015</time>
 	</div>
 	<div>
 		Category:
@@ -52,11 +52,11 @@
 <h2>方法</h2>
 <p>Python3.4のhttp.server.py 内のSimpleHTTPRequestHandlerを継承し、send_headメソッドをオーバーライドした。</p>
 <p>変更箇所は以下。他の部分は元のsend_headをそのまま持ってきている。</p>
-<div class="highlight"><pre><span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">&#39;.md&#39;</span><span class="p">):</span>
-    <span class="n">ctype</span> <span class="o">=</span> <span class="s">&#39;text/html&#39;</span>
-    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s">&#39;rt&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s">&#39;utf-8-sig&#39;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.md&#39;</span><span class="p">):</span>
+    <span class="n">ctype</span> <span class="o">=</span> <span class="s1">&#39;text/html&#39;</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;rt&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8-sig&#39;</span><span class="p">)</span>
     <span class="n">fs</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">fstat</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">fileno</span><span class="p">())</span> 
-    <span class="n">md</span> <span class="o">=</span> <span class="n">markdown</span><span class="o">.</span><span class="n">markdown</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span> <span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;markdown.extensions.extra&#39;</span><span class="p">])</span>
+    <span class="n">md</span> <span class="o">=</span> <span class="n">markdown</span><span class="o">.</span><span class="n">markdown</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span> <span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;markdown.extensions.extra&#39;</span><span class="p">])</span>
     <span class="n">bs</span> <span class="o">=</span> <span class="n">md</span><span class="o">.</span><span class="n">encode</span><span class="p">()</span>
     <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">bs</span><span class="p">)</span>
     <span class="n">f</span> <span class="o">=</span> <span class="n">BytesIO</span><span class="p">(</span><span class="n">bs</span><span class="p">)</span>
@@ -67,14 +67,14 @@
 <p>それだけだと芸がないので、-o (open) オプションをつけると、自動でブラウザで開くようにした。</p>
 <p>以下の関数を別スレッドで起動している。
 headリクエストを投げ、200で返ってきたらサーバが起動したとみなしブラウザでページを開いている。</p>
-<div class="highlight"><pre><span class="k">def</span> <span class="nf">boot</span><span class="p">(</span><span class="n">bind</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">filepath</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">boot</span><span class="p">(</span><span class="n">bind</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">filepath</span><span class="p">):</span>
     <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">con</span> <span class="o">=</span> <span class="n">HTTPConnection</span><span class="p">(</span><span class="n">bind</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
-            <span class="n">con</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="s">&#39;HEAD&#39;</span><span class="p">,</span> <span class="s">&#39;/&#39;</span><span class="p">)</span>
+            <span class="n">con</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="s1">&#39;HEAD&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">)</span>
             <span class="n">res</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">getresponse</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
-                <span class="n">webbrowser</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;http://{}:{}/{}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">bind</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">filepath</span><span class="p">))</span>
+                <span class="n">webbrowser</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;http://{}:{}/{}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">bind</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">filepath</span><span class="p">))</span>
                 <span class="k">break</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
@@ -86,22 +86,22 @@ headリクエストを投げ、200で返ってきたらサーバが起動した�
 <p>ブラウザを開くのには標準モジュールのwebbrowserを使用している。
 Python3系統で導入された、空を飛べる標準モジュール"antigravity"でも使われているものだ。
 知らない人は以下を実行してみよう。</p>
-<div class="highlight"><pre><span class="kn">import</span> <span class="nn">antigravity</span>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">antigravity</span>
 </pre></div>
 
 
 <h2>cgi</h2>
 <p>python3.4のhttpのモジュールのserver.pyを読んでいて気付いたのだが、いつの間にかコマンドラインから簡易CGIサーバを起動する方法が復活していた。</p>
 <p>試しにcgi-binディレクトリを作り以下のファイルを置く。</p>
-<div class="highlight"><pre><span class="c">#! /usr/bin/env python3</span>
+<div class="highlight"><pre><span></span><span class="ch">#! /usr/bin/env python3</span>
 
-<span class="k">print</span><span class="p">(</span><span class="s">&quot;Content-Type: text/html</span><span class="se">\n\n</span><span class="s">&quot;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s">&quot;&lt;html&gt;&lt;h2&gt;Hello&lt;/h2&gt;&lt;br&gt;from Python3&lt;/html&gt;&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Content-Type: text/html</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;&lt;html&gt;&lt;h2&gt;Hello&lt;/h2&gt;&lt;br&gt;from Python3&lt;/html&gt;&quot;</span><span class="p">)</span>
 </pre></div>
 
 
 <p>ファイルに実行のパーミッションを付加してから、以下のコマンドでCGIサーバを起動。</p>
-<div class="highlight"><pre>python http.server --cgi
+<div class="highlight"><pre><span></span>python http.server --cgi
 </pre></div>
 
 
@@ -135,7 +135,7 @@ Python3系統で導入された、空を飛べる標準モジュール"antigravi
 					<div class="col-md-3">
 						<h4>Navigation</h4>
 						<ul class="list-unstyled my-list-style">
-							<li><a href="http://meganehouser.github.io">ぶりとだいこん</a></li>
+							<li><a href="http://meganehouser.github.io">きんつば</a></li>
 							<li><a href="http://meganehouser.github.io/feeds/all.atom.xml"><i class="fa fa-rss "></i> atom</a></li>
 						</ul>
 					</div>
@@ -159,7 +159,7 @@ Python3系統で導入された、空を飛べる標準モジュール"antigravi
 					<div class="col-md-3">
 						<h4>Links</h4>
 						<ul class="list-unstyled my-list-style">
-							<li><a href="http://meganehouser.hatenablog.com/">ぶりとだいこん(旧)</a></li>
+							<li><a href="http://meganehouser.hatenablog.com/">ぶりとだいこん</a></li>
 						</ul>
 					</div>
 				</div>
