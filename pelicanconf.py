@@ -3,9 +3,9 @@
 from __future__ import unicode_literals
 
 AUTHOR = 'meganehouser'
-SITENAME = 'ぶりとだいこん'
-SITEURL = ''
-DISCRIPTION = 'ゆっくり歩け、そしてたっぷり水を飲めってね。'
+SITENAME = 'きんつば'
+SITEURL = 'http://meganehouser.github.io'
+DISCRIPTION = 'Pythonとかやるソフトウェアエンジニア'
 
 PATH = 'content'
 
@@ -24,7 +24,7 @@ CATEGORY_FEED_ATOM = None
 TRANSLATION_FEED_ATOM = None
 
 # Blogroll
-LINKS = (('ぶりとだいこん(旧)', 'http://meganehouser.hatenablog.com/'),)
+LINKS = (('ぶりとだいこん', 'http://meganehouser.hatenablog.com/'),)
 
 # Social widget
 SOCIAL = (('twitter', 'http://twitter.com/meganehouser'),
@@ -41,5 +41,3 @@ SLUGIFY_SOURCE = 'basename'
 
 YEAR_ARCHIVE_SAVE_AS = 'posts/{date:%Y}/index.html'
 MONTH_ARCHIVE_SAVE_AS = 'posts/{date:%Y}/{date:%b}/index.html'
-
-MD_EXTENSIONS = ['codehilite(css_class=highlight, guess_lang=False)', 'extra']

@@ -4,7 +4,8 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-pelican = "*"
+pelican = ">=3.7"
+markdown = ">=3.0"
 
 [dev-packages]
 
