@@ -1,5 +1,8 @@
 # Created by https://www.gitignore.io
 
+# pipenv
+.venv/
+
 ### Python ###
 # Byte-compiled / optimized / DLL files
 __pycache__/
