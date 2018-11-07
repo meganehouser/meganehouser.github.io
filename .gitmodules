@@ -1,0 +1,3 @@
+[submodule "theme/attila"]
+	path = theme/attila
+	url = https://github.com/arulrajnet/attila.git
