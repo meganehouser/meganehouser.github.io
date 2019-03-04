@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
+  <title>F#でTHETA360を制御</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+  <link href="http://meganehouser.github.io/" rel="canonical" />
+
+  <!-- Feed -->
+        <link href="http://meganehouser.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="きんつば Full Atom Feed" />
+
+  <link href="http://meganehouser.github.io/theme/css/style.css" type="text/css" rel="stylesheet" />
+
+  <!-- Code highlight color scheme -->
+      <link href="http://meganehouser.github.io/theme/css/code_blocks/github.css" rel="stylesheet">
+
+
+  <!-- Custom fonts -->
+  <link href='https://fonts.googleapis.com/css?family=Montserrat:400,300' rel='stylesheet' type='text/css' />
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css" />
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+
+  <link href="http://meganehouser.github.io/2014-12-06_theta360-fsharp.html" rel="canonical" />
+
+    <meta name="description" content="F#でTHETA360のシャッターを切ります。">
+
+    <meta name="author" content="meganehouser">
+
+    <meta name="tags" content="fsharp">
+
+
+
+
+<!-- Open Graph -->
+<meta property="og:site_name" content="きんつば"/>
+<meta property="og:title" content="F#でTHETA360を制御"/>
+<meta property="og:description" content="F#でTHETA360のシャッターを切ります。"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="http://meganehouser.github.io/2014-12-06_theta360-fsharp.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2014-12-06 00:00:00+09:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="http://meganehouser.github.io/author/meganehouser.html">
+<meta property="article:section" content="programming"/>
+<meta property="article:tag" content="fsharp"/>
+<meta property="og:image" content="http://meganehouser.github.io//images/cover.jpg">
+
+<!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@meganehouser">
+    <meta name="twitter:title" content="F#でTHETA360を制御">
+    <meta name="twitter:url" content="http://meganehouser.github.io/2014-12-06_theta360-fsharp.html">
+
+        <meta name="twitter:image:src" content="http://meganehouser.github.io//images/cover.jpg">
+
+      <meta name="twitter:description" content="F#でTHETA360のシャッターを切ります。">
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "F#でTHETA360を制御",
+  "headline": "F#でTHETA360を制御",
+  "datePublished": "2014-12-06 00:00:00+09:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "meganehouser",
+    "url": "http://meganehouser.github.io/author/meganehouser.html"
+  },
+  "image": "http://meganehouser.github.io//images/cover.jpg",
+  "url": "http://meganehouser.github.io/2014-12-06_theta360-fsharp.html",
+  "description": "F#でTHETA360のシャッターを切ります。"
+}
+</script>
+</head>
+<!-- TODO : Body class -->
+<body class="home-template">
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+
+
+    </ul>
+  </div>
+</nav>
+    <!-- Progressbar -->
+    <div class="progress-container">
+        <span class="progress-bar"></span>
+    </div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header id="post-header" class="has-cover">
+      <div class="inner">
+        <nav id="navigation">
+            <span id="home-button" class="nav-button">
+                <a class="home-button" href="http://meganehouser.github.io/" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
+            </span>
+          <span id="menu-button" class="nav-button">
+            <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
+          </span>
+        </nav>
+        <h1 class="post-title">F#でTHETA360を制御</h1>
+        <!-- TODO : Proper class for headline -->
+        <span class="post-meta">
+                <a href="http://meganehouser.github.io/author/meganehouser.html">Meganehouser</a>
+            | <time datetime="Sat 06 December 2014">Sat 06 December 2014</time>
+        </span>
+        <!-- TODO : Modified check -->
+            <div class="post-cover cover" style="background-image: url('http://meganehouser.github.io//images/cover.jpg')">
+      </div>
+    </header>
+
+  <section id="wrapper">
+    <a class="hidden-close"></a>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+        <div class="inner">
+            <section class="post-content">
+                <p>RICOH THETA 360はAPIが公開されているので、F#で制御するコードを書いてみることにした。</p>
+<p>THETAのAPIはPTP-IPという規格に沿っている。
+ただし、PTP-IPの規格書は法人しか入手できないため、THETAのSDKに入っているコード(Android, iOS向け)を参考にして書くなどする必要がある。</p>
+<ul>
+<li><a href="http://www.cipa.jp/ptp-ip/index_j.html">PTP-IP -CIPA</a></li>
+<li><a href="https://developers.theta360.com/ja/forums/viewtopic.php?f=5&amp;t=9">法人ではないため、PTP-IPドキュメントが入手できません。 | RICOH THETA Developers</a></li>
+</ul>
+<p>コードを公開している先人もいらっしゃるのでそれを参考にさせていただいた。（というかほぼ移植）</p>
+<ul>
+<li><a href="http://d.hatena.ne.jp/tako-two/20131201/1385911498">シャッターを切って画像のダウンロードも - Tako can fry!</a></li>
+</ul>
+<p>Wi-Fiで接続し、下記のF#スクリプトを実行すると、接続-&gt;シャッター-&gt;切断、の流れを実行する。<br>
+なお、作っている途中に興味が他に映ってしまったため、シャッターを切るところまでしか実装していない…
+<script src="https://gist.github.com/meganehouser/b86e208c5e2b887c2789.js"></script></p>
+            </section>
+
+            <section class="post-info">
+                <div class="post-share">
+                    <a class="twitter" href="https://twitter.com/share?text=F#でTHETA360を制御&amp;url=http://meganehouser.github.io/2014-12-06_theta360-fsharp.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
+                    </a>
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://meganehouser.github.io/2014-12-06_theta360-fsharp.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
+                    </a>
+                    <a class="googleplus" href="https://plus.google.com/share?url=http://meganehouser.github.io/2014-12-06_theta360-fsharp.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
+                    </a>
+                    <div class="clear"></div>
+                </div>
+
+                <aside class="post-tags">
+<a href="http://meganehouser.github.io/tag/fsharp.html">fsharp</a>                </aside>
+
+                <div class="clear"></div>
+
+
+                </section>
+
+                <script type="text/javascript">
+                    var disqus = 'meganehouser';
+                    var disqus_shortname = 'meganehouser';
+                    var disqus_identifier = '/2014-12-06_theta360-fsharp.html';
+                    var disqus_url = 'http://meganehouser.github.io/2014-12-06_theta360-fsharp.html';
+                </script>
+                <noscript>Please enable JavaScript to view the comments.</noscript>
+                <section class="post-comments">
+                        <a id="show-disqus" class="post-comments-activate" data-disqus-identifier="/2014-12-06_theta360-fsharp.html" >Show Comments</a>
+                    <div id="disqus_thread"></div>
+                </section>
+
+                <aside class="post-nav">
+                    <div class="clear"></div>
+                </aside>
+
+            </div>
+        </article>
+    </main>
+      <!-- TODO : Body class -->
+    <div id="body-class" style="display: none;" class=""></div>
+
+    <footer id="footer">
+      <div class="inner">
+        <section class="credits">
+
+
+          <span class="credits-theme">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow">Attila</a></span>
+          <span class="credits-software">Published with <a href="https://github.com/getpelican/pelican" rel="nofollow">Pelican</a></span>
+        </section>
+      </div>
+    </footer>
+  </section>
+
+  <script type="text/javascript" src="http://meganehouser.github.io/theme/js/script.js"></script>
+
+    <!-- Global Site Tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56794608-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-56794608-1', { 'anonymize_ip': true });
+    </script>
+<script type="text/javascript">
+    var disqus_shortname = 'meganehouser';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+</body>
+</html>
