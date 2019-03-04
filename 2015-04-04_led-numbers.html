@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
+  <title>Hello World の代わりにLED風数字</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+  <link href="http://meganehouser.github.io/" rel="canonical" />
+
+  <!-- Feed -->
+        <link href="http://meganehouser.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="きんつば Full Atom Feed" />
+
+  <link href="http://meganehouser.github.io/theme/css/style.css" type="text/css" rel="stylesheet" />
+
+  <!-- Code highlight color scheme -->
+      <link href="http://meganehouser.github.io/theme/css/code_blocks/github.css" rel="stylesheet">
+
+
+  <!-- Custom fonts -->
+  <link href='https://fonts.googleapis.com/css?family=Montserrat:400,300' rel='stylesheet' type='text/css' />
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css" />
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+
+  <link href="http://meganehouser.github.io/2015-04-04_led-numbers.html" rel="canonical" />
+
+    <meta name="description" content="Hello World の代わりにLED風数字を表示するコードを書くよ。">
+
+    <meta name="author" content="meganehouser">
+
+    <meta name="tags" content="fsharp">
+    <meta name="tags" content="rust">
+    <meta name="tags" content="python">
+
+
+
+
+<!-- Open Graph -->
+<meta property="og:site_name" content="きんつば"/>
+<meta property="og:title" content="Hello World の代わりにLED風数字"/>
+<meta property="og:description" content="Hello World の代わりにLED風数字を表示するコードを書くよ。"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="http://meganehouser.github.io/2015-04-04_led-numbers.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2015-04-04 00:00:00+09:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="http://meganehouser.github.io/author/meganehouser.html">
+<meta property="article:section" content="programming"/>
+<meta property="article:tag" content="fsharp"/>
+<meta property="article:tag" content="rust"/>
+<meta property="article:tag" content="python"/>
+<meta property="og:image" content="http://meganehouser.github.io//images/cover.jpg">
+
+<!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@meganehouser">
+    <meta name="twitter:title" content="Hello World の代わりにLED風数字">
+    <meta name="twitter:url" content="http://meganehouser.github.io/2015-04-04_led-numbers.html">
+
+        <meta name="twitter:image:src" content="http://meganehouser.github.io//images/cover.jpg">
+
+      <meta name="twitter:description" content="Hello World の代わりにLED風数字を表示するコードを書くよ。">
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "Hello World の代わりにLED風数字",
+  "headline": "Hello World の代わりにLED風数字",
+  "datePublished": "2015-04-04 00:00:00+09:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "meganehouser",
+    "url": "http://meganehouser.github.io/author/meganehouser.html"
+  },
+  "image": "http://meganehouser.github.io//images/cover.jpg",
+  "url": "http://meganehouser.github.io/2015-04-04_led-numbers.html",
+  "description": "Hello World の代わりにLED風数字を表示するコードを書くよ。"
+}
+</script>
+</head>
+<!-- TODO : Body class -->
+<body class="home-template">
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+
+
+    </ul>
+  </div>
+</nav>
+    <!-- Progressbar -->
+    <div class="progress-container">
+        <span class="progress-bar"></span>
+    </div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header id="post-header" class="has-cover">
+      <div class="inner">
+        <nav id="navigation">
+            <span id="home-button" class="nav-button">
+                <a class="home-button" href="http://meganehouser.github.io/" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
+            </span>
+          <span id="menu-button" class="nav-button">
+            <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
+          </span>
+        </nav>
+        <h1 class="post-title">Hello World の代わりにLED風数字</h1>
+        <!-- TODO : Proper class for headline -->
+        <span class="post-meta">
+                <a href="http://meganehouser.github.io/author/meganehouser.html">Meganehouser</a>
+            | <time datetime="Sat 04 April 2015">Sat 04 April 2015</time>
+        </span>
+        <!-- TODO : Modified check -->
+            <div class="post-cover cover" style="background-image: url('http://meganehouser.github.io//images/cover.jpg')">
+      </div>
+    </header>
+
+  <section id="wrapper">
+    <a class="hidden-close"></a>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+        <div class="inner">
+            <section class="post-content">
+                <h3>概要</h3>
+<p>こんな記事を見かけたので書いてみることにした。</p>
+<ul>
+<li><a href="http://blagrants.blogspot.jp/2015/04/led-is-my-new-hello-world-clojure-time.html">Blag's bag of rants: LED is my new Hello World - Clojure Time</a></li>
+</ul>
+<p>標準入力で数字を入力すると、LED風に表示するものだ。</p>
+<h3>Python</h3>
+<script src="https://gist.github.com/meganehouser/179da869944c5f2a47eb.js"></script>
+
+<h3>Rust</h3>
+<p>リリースされたばかりのBeta 1.0.0を入れたらunstableな機能が使えなくなったのでnightlyでやった。</p>
+<script src="https://gist.github.com/meganehouser/14d255f336189b6f4603.js"></script>
+
+<h3>FSharp</h3>
+<script src="https://gist.github.com/meganehouser/457c0b149b8e866205e6.js"></script>
+            </section>
+
+            <section class="post-info">
+                <div class="post-share">
+                    <a class="twitter" href="https://twitter.com/share?text=Hello World の代わりにLED風数字&amp;url=http://meganehouser.github.io/2015-04-04_led-numbers.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
+                    </a>
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://meganehouser.github.io/2015-04-04_led-numbers.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
+                    </a>
+                    <a class="googleplus" href="https://plus.google.com/share?url=http://meganehouser.github.io/2015-04-04_led-numbers.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
+                    </a>
+                    <div class="clear"></div>
+                </div>
+
+                <aside class="post-tags">
+<a href="http://meganehouser.github.io/tag/fsharp.html">fsharp</a><a href="http://meganehouser.github.io/tag/rust.html">rust</a><a href="http://meganehouser.github.io/tag/python.html">python</a>                </aside>
+
+                <div class="clear"></div>
+
+
+                </section>
+
+                <script type="text/javascript">
+                    var disqus = 'meganehouser';
+                    var disqus_shortname = 'meganehouser';
+                    var disqus_identifier = '/2015-04-04_led-numbers.html';
+                    var disqus_url = 'http://meganehouser.github.io/2015-04-04_led-numbers.html';
+                </script>
+                <noscript>Please enable JavaScript to view the comments.</noscript>
+                <section class="post-comments">
+                        <a id="show-disqus" class="post-comments-activate" data-disqus-identifier="/2015-04-04_led-numbers.html" >Show Comments</a>
+                    <div id="disqus_thread"></div>
+                </section>
+
+                <aside class="post-nav">
+                    <div class="clear"></div>
+                </aside>
+
+            </div>
+        </article>
+    </main>
+      <!-- TODO : Body class -->
+    <div id="body-class" style="display: none;" class=""></div>
+
+    <footer id="footer">
+      <div class="inner">
+        <section class="credits">
+
+
+          <span class="credits-theme">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow">Attila</a></span>
+          <span class="credits-software">Published with <a href="https://github.com/getpelican/pelican" rel="nofollow">Pelican</a></span>
+        </section>
+      </div>
+    </footer>
+  </section>
+
+  <script type="text/javascript" src="http://meganehouser.github.io/theme/js/script.js"></script>
+
+    <!-- Global Site Tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56794608-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-56794608-1', { 'anonymize_ip': true });
+    </script>
+<script type="text/javascript">
+    var disqus_shortname = 'meganehouser';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+</body>
+</html>
