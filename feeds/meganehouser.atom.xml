@@ -1,5 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>きんつば - meganehouser</title><link href="http://meganehouser.github.io/" rel="alternate"></link><link href="http://meganehouser.github.io/feeds/meganehouser.atom.xml" rel="self"></link><id>http://meganehouser.github.io/</id><updated>2016-07-11T00:00:00+09:00</updated><entry><title>OSXでOpenTKをビルドする</title><link href="http://meganehouser.github.io/2016-07-11_build_opentk_osx.html" rel="alternate"></link><published>2016-07-11T00:00:00+09:00</published><updated>2016-07-11T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2016-07-11:/2016-07-11_build_opentk_osx.html</id><summary type="html">&lt;p&gt;OpenTKのNugetパッケージはソース不明&lt;/p&gt;</summary><content type="html">&lt;p&gt;F#でProcessingのように簡単なAPIでビュジュアライゼーションできるツールを探していたけど良さそうなものがなかったので作ってみることにした。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>きんつば - meganehouser</title><link href="http://meganehouser.github.io/" rel="alternate"></link><link href="http://meganehouser.github.io/feeds/meganehouser.atom.xml" rel="self"></link><id>http://meganehouser.github.io/</id><updated>2019-03-04T00:00:00+09:00</updated><subtitle>Pythonとかやるソフトウェアエンジニア</subtitle><entry><title>MacでiHaskellを動かす</title><link href="http://meganehouser.github.io/2019-03-04_run_ihaskell.html" rel="alternate"></link><published>2019-03-04T00:00:00+09:00</published><updated>2019-03-04T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2019-03-04:/2019-03-04_run_ihaskell.html</id><summary type="html">&lt;p&gt;Jupyter notebookをHaskellで動かそうと[gibiansky/IHaskell: A Haskell kernel for IPythonでインストールするパッケージのバージョンを調整。なんとか動いた。&lt;/p&gt;
+&lt;p&gt;動く状態のrequirements.txtは以下。これを3.でpip installする時に使えば良い。.](https://github.com/gibiansky/IHaskell)をREADMEを見ながらinstallする。&lt;/p&gt;
+&lt;h1&gt;環境&lt;/h1&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;項目&lt;/th&gt;
+&lt;th&gt;値&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;OS&lt;/td&gt;
+&lt;td&gt;macOS Mojave 10.14.3&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Stack&lt;/td&gt;
+&lt;td&gt;1.9.3&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GHC&lt;/td&gt;
+&lt;td&gt;8.6.3&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h1&gt;手順&lt;/h1&gt;
+&lt;p&gt;README通りに進める。
+1. 依存するパッケージをインストール&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;brew install zeromq libmagic cairo pkg-config pango
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;python3とHaskell-stackはインストール済みだったので外した …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Jupyter notebookをHaskellで動かそうと[gibiansky/IHaskell: A Haskell kernel for IPythonでインストールするパッケージのバージョンを調整。なんとか動いた。&lt;/p&gt;
+&lt;p&gt;動く状態のrequirements.txtは以下。これを3.でpip installする時に使えば良い。.](https://github.com/gibiansky/IHaskell)をREADMEを見ながらinstallする。&lt;/p&gt;
+&lt;h1&gt;環境&lt;/h1&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;項目&lt;/th&gt;
+&lt;th&gt;値&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;OS&lt;/td&gt;
+&lt;td&gt;macOS Mojave 10.14.3&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Stack&lt;/td&gt;
+&lt;td&gt;1.9.3&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;GHC&lt;/td&gt;
+&lt;td&gt;8.6.3&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h1&gt;手順&lt;/h1&gt;
+&lt;p&gt;README通りに進める。
+1. 依存するパッケージをインストール&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;brew install zeromq libmagic cairo pkg-config pango
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;python3とHaskell-stackはインストール済みだったので外した。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;gitリポジトリをクローン&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git clone https://github.com/gibiansky/IHaskell
+cd IHaskell
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ol&gt;
+&lt;li&gt;依存するPythonパッケージをインストール&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;python3 -m venv .venv
+source .venv/bin/activate
+python3 -m pip install requirements.txt
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;ipythonのインストールでエラーになる。必要なバージョンのprompt-toolkitが他のパッケージのせいで入れられないため。
+入れるパッケージのバージョンを調整する必要がある。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Haskellでビルド&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;stack install --fast
+ihaskell install --stack
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ol&gt;
+&lt;li&gt;jupyter notebok起動&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;stack exec jupyter -- notebook
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Cellを実行しても戻り値が帰ってこない。
+ConsoleにWarningログが出ている。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://stackoverflow.com/questions/54963043/jupyter-notebook-no-connection-to-server-because-websocket-connection-fails"&gt;python - Jupyter notebook: No connection to server because websocket connection fails - Stack Overflow&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;最近リリースされたtornado 6.0がインストールされてしまっていて、非互換でこけているらしい。
+と、いうわけでtornadoは5系がインストールされる必要がある。&lt;/p&gt;
+&lt;h1&gt;対処&lt;/h1&gt;
+&lt;p&gt;Pythonでインストールするパッケージのバージョンを調整。なんとか動いた。&lt;/p&gt;
+&lt;p&gt;動く状態のrequirements.txtは以下。これを3.でpip installする時に使えば良い。&lt;/p&gt;
+&lt;script src="https://gist.github.com/meganehouser/32d8a93e3d8b13cbceb6a6f2eb339f1d.js"&gt;&lt;/script&gt;</content><category term="Haskell"></category></entry><entry><title>OSXでOpenTKをビルドする</title><link href="http://meganehouser.github.io/2016-07-11_build_opentk_osx.html" rel="alternate"></link><published>2016-07-11T00:00:00+09:00</published><updated>2016-07-11T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2016-07-11:/2016-07-11_build_opentk_osx.html</id><summary type="html">&lt;p&gt;OpenTKのNugetパッケージはソース不明&lt;/p&gt;</summary><content type="html">&lt;p&gt;F#でProcessingのように簡単なAPIでビュジュアライゼーションできるツールを探していたけど良さそうなものがなかったので作ってみることにした。&lt;/p&gt;
 &lt;p&gt;Processingのソースが参考にできるので描画にはProcessingでも使われているOpenGLを使うことにした。
 OpenGLのラッパーを書くのもだるいので、既存の.NET Framework用のラッパーであるOpenTKを使うことにした。&lt;/p&gt;
 &lt;p&gt;OpenTKはNuGet公式ソースでパッケージが配布され、6月に更新版がリリースされいるのだが、手元のMacBook Airで動かないし、公式サイトのリファレンスと名前空間やenum名などが変わっている。&lt;/p&gt;
