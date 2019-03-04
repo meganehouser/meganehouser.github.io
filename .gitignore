@@ -71,3 +71,6 @@ cache/
 
 # mac
 .DS_Store
+
+# vscode
+.vscode/

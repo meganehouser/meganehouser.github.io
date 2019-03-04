@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 AUTHOR = 'meganehouser'
 SITENAME = 'きんつば'
 SITEURL = 'http://meganehouser.github.io'
-DISCRIPTION = 'Pythonとかやるソフトウェアエンジニア'
+SITESUBTITLE = 'Pythonとかやるソフトウェアエンジニア'
 
 PATH = 'content'
 
@@ -35,9 +35,11 @@ DEFAULT_PAGINATION = 10
 # Uncomment following line if you want document-relative URLs when developing
 RELATIVE_URLS = True
 
-THEME = './theme'
+THEME = './theme/attila'
 
 SLUGIFY_SOURCE = 'basename'
 
 YEAR_ARCHIVE_SAVE_AS = 'posts/{date:%Y}/index.html'
 MONTH_ARCHIVE_SAVE_AS = 'posts/{date:%Y}/{date:%b}/index.html'
+
+HEADER_COVER = '/images/cover.jpg'
