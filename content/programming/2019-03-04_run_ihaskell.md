@@ -28,7 +28,7 @@ cd IHaskell
 ```
 python3 -m venv .venv
 source .venv/bin/activate
-python3 -m pip install requirements.txt
+python -m pip install requirements.txt
 ```
 ipythonのインストールでエラーになる。必要なバージョンのprompt-toolkitが他のパッケージのせいで入れられないため。
 入れるパッケージのバージョンを調整する必要がある。
