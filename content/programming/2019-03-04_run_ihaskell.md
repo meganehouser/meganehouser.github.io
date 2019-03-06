@@ -12,19 +12,24 @@ Jupyter notebookをHaskellで動かそうと[gibiansky/IHaskell: A Haskell kerne
 
 # 手順
 README通りに進める。
-1. 依存するパッケージをインストール
+
+## 1. 依存するパッケージをインストール
+
 ```
 brew install zeromq libmagic cairo pkg-config pango
 ```
+
 python3とHaskell-stackはインストール済みだったので外した。
 
-2. gitリポジトリをクローン
+## 2. gitリポジトリをクローン
+
 ```
 git clone https://github.com/gibiansky/IHaskell
 cd IHaskell
 ```
 
-3. 依存するPythonパッケージをインストール
+## 3. 依存するPythonパッケージをインストール
+
 ```
 python3 -m venv .venv
 source .venv/bin/activate
@@ -33,13 +38,16 @@ python -m pip install requirements.txt
 ipythonのインストールでエラーになる。必要なバージョンのprompt-toolkitが他のパッケージのせいで入れられないため。
 入れるパッケージのバージョンを調整する必要がある。
 
-4. Haskellでビルド
+## 4. Haskellでビルド、ihaskellをインストール
+
 ```
 stack install --fast
 ihaskell install --stack
 ```
+$HOME/.local/bin/配下に実行ファイルがコピーされるので、パスを通しておく。
 
-5. jupyter notebok起動
+## 5. jupyter notebok起動
+
 ```
 stack exec jupyter -- notebook
 ```
