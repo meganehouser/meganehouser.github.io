@@ -165,43 +165,36 @@
 </tbody>
 </table>
 <h1>手順</h1>
-<p>README通りに進める。
-1. 依存するパッケージをインストール</p>
+<p>README通りに進める。</p>
+<h2>1. 依存するパッケージをインストール</h2>
 <div class="highlight"><pre><span></span>brew install zeromq libmagic cairo pkg-config pango
 </pre></div>
 
 
 <p>python3とHaskell-stackはインストール済みだったので外した。</p>
-<ol>
-<li>gitリポジトリをクローン</li>
-</ol>
+<h2>2. gitリポジトリをクローン</h2>
 <div class="highlight"><pre><span></span>git clone https://github.com/gibiansky/IHaskell
 cd IHaskell
 </pre></div>
 
 
-<ol>
-<li>依存するPythonパッケージをインストール</li>
-</ol>
+<h2>3. 依存するPythonパッケージをインストール</h2>
 <div class="highlight"><pre><span></span>python3 -m venv .venv
 source .venv/bin/activate
-python3 -m pip install requirements.txt
+python -m pip install requirements.txt
 </pre></div>
 
 
 <p>ipythonのインストールでエラーになる。必要なバージョンのprompt-toolkitが他のパッケージのせいで入れられないため。
 入れるパッケージのバージョンを調整する必要がある。</p>
-<ol>
-<li>Haskellでビルド</li>
-</ol>
+<h2>4. Haskellでビルド、ihaskellをインストール</h2>
 <div class="highlight"><pre><span></span>stack install --fast
 ihaskell install --stack
 </pre></div>
 
 
-<ol>
-<li>jupyter notebok起動</li>
-</ol>
+<p>$HOME/.local/bin/配下に実行ファイルがコピーされるので、パスを通しておく。</p>
+<h2>5. jupyter notebok起動</h2>
 <div class="highlight"><pre><span></span>stack exec jupyter -- notebook
 </pre></div>
 

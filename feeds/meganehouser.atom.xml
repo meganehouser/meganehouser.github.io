@@ -24,18 +24,16 @@
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;h1&gt;手順&lt;/h1&gt;
-&lt;p&gt;README通りに進める。
-1. 依存するパッケージをインストール&lt;/p&gt;
+&lt;p&gt;README通りに進める。&lt;/p&gt;
+&lt;h2&gt;1. 依存するパッケージをインストール&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;brew install zeromq libmagic cairo pkg-config pango
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;python3とHaskell-stackはインストール済みだったので外した。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;gitリポジトリをクローン&lt;/li&gt;
-&lt;/ol&gt;
+&lt;h2&gt;2. gitリポジトリをクローン&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git clone https://github.com/gibiansky/IHaskell
-cd IHaskell …&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;Jupyter notebookをHaskellで動かそうと&lt;a href="https://github.com/gibiansky/IHaskell"&gt;gibiansky/IHaskell: A Haskell kernel for IPython.&lt;/a&gt;をREADMEを見ながらインストールしたが動作せず。動くようになったのでメモ。&lt;/p&gt;
+cd …&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;Jupyter notebookをHaskellで動かそうと&lt;a href="https://github.com/gibiansky/IHaskell"&gt;gibiansky/IHaskell: A Haskell kernel for IPython.&lt;/a&gt;をREADMEを見ながらインストールしたが動作せず。動くようになったのでメモ。&lt;/p&gt;
 &lt;h1&gt;環境&lt;/h1&gt;
 &lt;table&gt;
 &lt;thead&gt;
@@ -60,43 +58,36 @@ cd IHaskell …&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;J
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;h1&gt;手順&lt;/h1&gt;
-&lt;p&gt;README通りに進める。
-1. 依存するパッケージをインストール&lt;/p&gt;
+&lt;p&gt;README通りに進める。&lt;/p&gt;
+&lt;h2&gt;1. 依存するパッケージをインストール&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;brew install zeromq libmagic cairo pkg-config pango
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;python3とHaskell-stackはインストール済みだったので外した。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;gitリポジトリをクローン&lt;/li&gt;
-&lt;/ol&gt;
+&lt;h2&gt;2. gitリポジトリをクローン&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git clone https://github.com/gibiansky/IHaskell
 cd IHaskell
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;ol&gt;
-&lt;li&gt;依存するPythonパッケージをインストール&lt;/li&gt;
-&lt;/ol&gt;
+&lt;h2&gt;3. 依存するPythonパッケージをインストール&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;python3 -m venv .venv
 source .venv/bin/activate
-python3 -m pip install requirements.txt
+python -m pip install requirements.txt
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;ipythonのインストールでエラーになる。必要なバージョンのprompt-toolkitが他のパッケージのせいで入れられないため。
 入れるパッケージのバージョンを調整する必要がある。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Haskellでビルド&lt;/li&gt;
-&lt;/ol&gt;
+&lt;h2&gt;4. Haskellでビルド、ihaskellをインストール&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;stack install --fast
 ihaskell install --stack
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;ol&gt;
-&lt;li&gt;jupyter notebok起動&lt;/li&gt;
-&lt;/ol&gt;
+&lt;p&gt;$HOME/.local/bin/配下に実行ファイルがコピーされるので、パスを通しておく。&lt;/p&gt;
+&lt;h2&gt;5. jupyter notebok起動&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;stack exec jupyter -- notebook
 &lt;/pre&gt;&lt;/div&gt;
 
