@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>きんつば - meganehouser</title><link href="http://meganehouser.github.io/" rel="alternate"></link><link href="http://meganehouser.github.io/feeds/meganehouser.atom.xml" rel="self"></link><id>http://meganehouser.github.io/</id><updated>2019-03-04T00:00:00+09:00</updated><subtitle>Pythonとかやるソフトウェアエンジニア</subtitle><entry><title>MacでiHaskellを動かす</title><link href="http://meganehouser.github.io/2019-03-04_run_ihaskell.html" rel="alternate"></link><published>2019-03-04T00:00:00+09:00</published><updated>2019-03-04T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2019-03-04:/2019-03-04_run_ihaskell.html</id><summary type="html">&lt;p&gt;Jupyter notebookをHaskellで動かそうと&lt;a href="https://github.com/gibiansky/IHaskell"&gt;gibiansky/IHaskell: A Haskell kernel for IPython.&lt;/a&gt;をREADMEを見ながらインストールしたが動作せず。動くようになったのでメモ。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>きんつば - meganehouser</title><link href="http://meganehouser.github.io/" rel="alternate"></link><link href="http://meganehouser.github.io/feeds/meganehouser.atom.xml" rel="self"></link><id>http://meganehouser.github.io/</id><updated>2019-03-07T00:00:00+09:00</updated><subtitle>Pythonとかやるソフトウェアエンジニア</subtitle><entry><title>Meguro.LYAFGG#1 開催しました</title><link href="http://meganehouser.github.io/2019-03-07_meguro_lyahfgg_01.html" rel="alternate"></link><published>2019-03-07T00:00:00+09:00</published><updated>2019-03-07T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2019-03-07:/2019-03-07_meguro_lyahfgg_01.html</id><summary type="html">&lt;p&gt;&lt;a href="https://twitter.com/nnm_tech?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"&gt;んむて(@nnm_tech)さん | Twitter&lt;/a&gt;とすごいH本の原書を読む会を開催しました！&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://connpass.com/event/121177/"&gt;Meguro.LYAHFGG #1 - connpass&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;開催場所はラクスルさんの会議室をお借りしました。ありがとうございました。&lt;/li&gt;
+&lt;li&gt;今回は@nnm_techさんが本文および解説を行い、私や参加者の方々が随所で口を挟む形式で行われ、和やかな会にできたと思います。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;第二回から参加したい方、輪読担当やりたい方大歓迎です&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;以下、第一回目のノートです。
+- @nnm_techさんが作成したまとめに、私が補足と実行結果を追加したものです。
+&lt;script src="https://gist.github.com/meganehouser/c1ccebfc1a5efeed51fee633f14f8327.js"&gt;&lt;/script&gt;&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;a href="https://twitter.com/nnm_tech?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"&gt;んむて(@nnm_tech)さん | Twitter&lt;/a&gt;とすごいH本の原書を読む会を開催しました！&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://connpass.com/event/121177/"&gt;Meguro.LYAHFGG #1 - connpass&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;開催場所はラクスルさんの会議室をお借りしました。ありがとうございました。&lt;/li&gt;
+&lt;li&gt;今回は@nnm_techさんが本文および解説を行い、私や参加者の方々が随所で口を挟む形式で行われ、和やかな会にできたと思います。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;第二回から参加したい方、輪読担当やりたい方大歓迎です&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;以下、第一回目のノートです。
+- @nnm_techさんが作成したまとめに、私が補足と実行結果を追加したものです。
+&lt;script src="https://gist.github.com/meganehouser/c1ccebfc1a5efeed51fee633f14f8327.js"&gt;&lt;/script&gt;&lt;/p&gt;</content><category term="Haskell"></category><category term="Meguro.LYAFGG"></category></entry><entry><title>MacでiHaskellを動かす</title><link href="http://meganehouser.github.io/2019-03-04_run_ihaskell.html" rel="alternate"></link><published>2019-03-04T00:00:00+09:00</published><updated>2019-03-04T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2019-03-04:/2019-03-04_run_ihaskell.html</id><summary type="html">&lt;p&gt;Jupyter notebookをHaskellで動かそうと&lt;a href="https://github.com/gibiansky/IHaskell"&gt;gibiansky/IHaskell: A Haskell kernel for IPython.&lt;/a&gt;をREADMEを見ながらインストールしたが動作せず。動くようになったのでメモ。&lt;/p&gt;
 &lt;h1&gt;環境&lt;/h1&gt;
 &lt;table&gt;
 &lt;thead&gt;
