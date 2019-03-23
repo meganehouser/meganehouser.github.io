@@ -1,4 +1,4 @@
-Title: MacでiHaskellを動かす
+Title: MacでIHaskellを動かす
 Tags: Haskell
 
 Jupyter notebookをHaskellで動かそうと[gibiansky/IHaskell: A Haskell kernel for IPython.](https://github.com/gibiansky/IHaskell)をREADMEを見ながらインストールしたが動作せず。動くようになったのでメモ。
