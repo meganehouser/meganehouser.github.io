@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
 
-  <title>MacでIHaskellを動かす</title>
+  <title>Pythonの便利ツールpipx</title>
 
 
   <meta name="HandheldFriendly" content="True" />
@@ -37,48 +37,48 @@
   <![endif]-->
 
 
-  <link href="http://meganehouser.github.io/2019-03-04_run_ihaskell.html" rel="canonical" />
+  <link href="http://meganehouser.github.io/2019-03-24_pipx.html" rel="canonical" />
 
-    <meta name="description" content="Jupyter notebookをHaskellで動かそうとgibiansky/IHaskell: A Haskell kernel for IPython.をREADMEを見ながらインストールしたが動作せず。動くようになったのでメモ。 環境 項目 値 OS macOS...">
+    <meta name="description" content="Pythonパッケージの実行バイナリを分離された仮想環境にインストールする便利ツールpipxについて。">
 
     <meta name="author" content="meganehouser">
 
-    <meta name="tags" content="Haskell">
+    <meta name="tags" content="Python">
 
 
 
 
 <!-- Open Graph -->
 <meta property="og:site_name" content="きんつば"/>
-<meta property="og:title" content="MacでIHaskellを動かす"/>
-<meta property="og:description" content="Jupyter notebookをHaskellで動かそうとgibiansky/IHaskell: A Haskell kernel for IPython.をREADMEを見ながらインストールしたが動作せず。動くようになったのでメモ。 環境 項目 値 OS macOS..."/>
+<meta property="og:title" content="Pythonの便利ツールpipx"/>
+<meta property="og:description" content="Pythonパッケージの実行バイナリを分離された仮想環境にインストールする便利ツールpipxについて。"/>
 <meta property="og:locale" content="en_US"/>
-<meta property="og:url" content="http://meganehouser.github.io/2019-03-04_run_ihaskell.html"/>
+<meta property="og:url" content="http://meganehouser.github.io/2019-03-24_pipx.html"/>
 <meta property="og:type" content="article"/>
-<meta property="article:published_time" content="2019-03-04 00:00:00+09:00"/>
+<meta property="article:published_time" content="2019-03-24 00:00:00+09:00"/>
 <meta property="article:modified_time" content=""/>
 <meta property="article:author" content="http://meganehouser.github.io/author/meganehouser.html">
 <meta property="article:section" content="programming"/>
-<meta property="article:tag" content="Haskell"/>
+<meta property="article:tag" content="Python"/>
 <meta property="og:image" content="http://meganehouser.github.io//images/cover.jpg">
 
 <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@meganehouser">
-    <meta name="twitter:title" content="MacでIHaskellを動かす">
-    <meta name="twitter:url" content="http://meganehouser.github.io/2019-03-04_run_ihaskell.html">
+    <meta name="twitter:title" content="Pythonの便利ツールpipx">
+    <meta name="twitter:url" content="http://meganehouser.github.io/2019-03-24_pipx.html">
 
         <meta name="twitter:image:src" content="http://meganehouser.github.io//images/cover.jpg">
 
-      <meta name="twitter:description" content="Jupyter notebookをHaskellで動かそうとgibiansky/IHaskell: A Haskell kernel for IPython.をREADMEを見ながらインストールしたが動作せず。動くようになったのでメモ。 環境 項目 値 OS macOS...">
+      <meta name="twitter:description" content="Pythonパッケージの実行バイナリを分離された仮想環境にインストールする便利ツールpipxについて。">
 
 <script type="application/ld+json">
 {
   "@context": "http://schema.org",
   "@type": "Article",
-  "name": "MacでIHaskellを動かす",
-  "headline": "MacでIHaskellを動かす",
-  "datePublished": "2019-03-04 00:00:00+09:00",
+  "name": "Pythonの便利ツールpipx",
+  "headline": "Pythonの便利ツールpipx",
+  "datePublished": "2019-03-24 00:00:00+09:00",
   "dateModified": "",
   "author": {
     "@type": "Person",
@@ -86,8 +86,8 @@
     "url": "http://meganehouser.github.io/author/meganehouser.html"
   },
   "image": "http://meganehouser.github.io//images/cover.jpg",
-  "url": "http://meganehouser.github.io/2019-03-04_run_ihaskell.html",
-  "description": "Jupyter notebookをHaskellで動かそうとgibiansky/IHaskell: A Haskell kernel for IPython.をREADMEを見ながらインストールしたが動作せず。動くようになったのでメモ。 環境 項目 値 OS macOS..."
+  "url": "http://meganehouser.github.io/2019-03-24_pipx.html",
+  "description": "Pythonパッケージの実行バイナリを分離された仮想環境にインストールする便利ツールpipxについて。"
 }
 </script>
 </head>
@@ -121,11 +121,11 @@
             <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
           </span>
         </nav>
-        <h1 class="post-title">MacでIHaskellを動かす</h1>
+        <h1 class="post-title">Pythonの便利ツールpipx</h1>
         <!-- TODO : Proper class for headline -->
         <span class="post-meta">
                 <a href="http://meganehouser.github.io/author/meganehouser.html">Meganehouser</a>
-            | <time datetime="Mon 04 March 2019">Mon 04 March 2019</time>
+            | <time datetime="Sun 24 March 2019">Sun 24 March 2019</time>
         </span>
         <!-- TODO : Modified check -->
             <div class="post-cover cover" style="background-image: url('http://meganehouser.github.io//images/cover.jpg')">
@@ -140,92 +140,118 @@
         <article class="post">
         <div class="inner">
             <section class="post-content">
-                <p>Jupyter notebookをHaskellで動かそうと<a href="https://github.com/gibiansky/IHaskell">gibiansky/IHaskell: A Haskell kernel for IPython.</a>をREADMEを見ながらインストールしたが動作せず。動くようになったのでメモ。</p>
-<h1>環境</h1>
-<table>
-<thead>
-<tr>
-<th>項目</th>
-<th>値</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>OS</td>
-<td>macOS Mojave 10.14.3</td>
-</tr>
-<tr>
-<td>Stack</td>
-<td>1.9.3</td>
-</tr>
-<tr>
-<td>GHC</td>
-<td>8.6.3</td>
-</tr>
-</tbody>
-</table>
-<h1>手順</h1>
-<p>README通りに進める。</p>
-<h2>1. 依存するパッケージをインストール</h2>
-<div class="highlight"><pre><span></span>brew install zeromq libmagic cairo pkg-config pango
+                <p>最近触ってみてちょっと便利だったpipxについて紹介。</p>
+<h1>pipxとは</h1>
+<p>Pythonパッケージの実行バイナリを分離された仮想環境にインストールする便利ツールです。</p>
+<p><a href="https://github.com/pipxproject/pipx">pipxproject/pipx: Execute binaries from Python packages in isolated environments</a></p>
+<p>例えば以下のように使用します。</p>
+<div class="highlight"><pre><span></span>&gt;&gt; cowsay hello
+zsh: command not found: cowsay
+
+&gt;&gt; pipx install cowsay
+  installed package pysay 2.0.0, Python 3.7.2
+  These binaries are now globally available
+    - pysay
+    - pythink
+done! ✨ 🌟 ✨
+
+&gt;&gt; cowsay hello
+ _______
+&lt; hello &gt;
+ -------
+     \           ,-.-.
+      \         /     \
+       \       ( @ ,@  )._
+        \    ,/\...-..-&#39;  `\
+            /            )  \
+           (  o o   ,-.  )   )
+            \_____.&#39;  ,-&#39;    )
+             --/-- __/ )    /
+             ,^.--&#39;  ,/    /
+            &#39;  &#39;   ,/     (         $
+                  /     ,&#39;^\   __  /|
+                 |          `-&#39;  `´ /
+                  \    ,.    ,-~^^^´
+                   `--^  `--^
 </pre></div>
 
 
-<p>python3とHaskell-stackはインストール済みだったので外した。</p>
-<h2>2. gitリポジトリをクローン</h2>
-<div class="highlight"><pre><span></span>git clone https://github.com/gibiansky/IHaskell
-cd IHaskell
+<p>動きとしては\$HOME/.local/pipx/venv/配下にvenvで仮想環境を切ってpipでパッケージをインストールし、\$HOME/.local/bin/配下に実行ファイルのシムリンクを貼っています。
+(\$HOME/.local/bin/にPATHを通しておくことが必要)</p>
+<p>ipythonやhttpie, awscliなど使い勝手としてはglobalにインストールしたいけど、環境を汚したくない時に便利。</p>
+<h1>コマンド</h1>
+<h4>pipxの実行バイナリ配置ディレクトリをパスに追加</h4>
+<div class="highlight"><pre><span></span>pipx ensurepath
 </pre></div>
 
 
-<h2>3. 依存するPythonパッケージをインストール</h2>
-<div class="highlight"><pre><span></span>python3 -m venv .venv
-source .venv/bin/activate
-python -m pip install requirements.txt
+<p>使用中のシェルに応じて~/.bashrc, ~/.zshrc, ~/.config/fish/config.fish にPATH追加。</p>
+<h4>パッケージの実行バイナリをインストール</h4>
+<div class="highlight"><pre><span></span>pipx install PACAKGE
 </pre></div>
 
 
-<p>ipythonのインストールでエラーになる。必要なバージョンのprompt-toolkitが他のパッケージのせいで入れられないため。
-入れるパッケージのバージョンを調整する必要がある。</p>
-<h2>4. Haskellでビルド、ihaskellをインストール</h2>
-<div class="highlight"><pre><span></span>stack install --fast
-ihaskell install --stack
+<h4>一時的に仮想環境でパッケージの実行バイナリを実行</h4>
+<div class="highlight"><pre><span></span>pipx run PACKAGE [ARGS...]
 </pre></div>
 
 
-<p>$HOME/.local/bin/配下に実行ファイルがコピーされるので、パスを通しておく。</p>
-<h2>5. jupyter notebok起動</h2>
-<div class="highlight"><pre><span></span>stack exec jupyter -- notebook
+<p>git+urlでインストールする場合は以下の呼び出し方になります。</p>
+<div class="highlight"><pre><span></span>pipx install --spec git+URL BINARYNAME
+
+# 例
+pipx install --spec git+https://github.com/ambv/black black
 </pre></div>
 
 
-<p>Cellを実行しても戻り値が帰ってこない。
-ConsoleにWarningログが出ている。</p>
-<p><a href="https://stackoverflow.com/questions/54963043/jupyter-notebook-no-connection-to-server-because-websocket-connection-fails">python - Jupyter notebook: No connection to server because websocket connection fails - Stack Overflow</a></p>
-<p>最近リリースされたtornado 6.0がインストールされてしまっていて、非互換でこけているらしい。
-と、いうわけでtornadoは5系がインストールされる必要がある。</p>
-<h1>対処</h1>
-<p>Pythonでインストールするパッケージのバージョンを調整。なんとか動いた。</p>
-<p>動く状態のrequirements.txtは以下。これを3.でpip installする時に使えば良い。</p>
-<script src="https://gist.github.com/meganehouser/32d8a93e3d8b13cbceb6a6f2eb339f1d.js"></script>
+<h4>インストール済みパッケージのアップグレード</h4>
+<div class="highlight"><pre><span></span># パッケージ個別でアップグレード
+pipx upgrade PACKAGE
+# インストール済みパッケージを全てアップグレード
+pipx upgrade-all
+</pre></div>
+
+
+<h4>インストール済みパッケージの仮想環境に別のパッケージを追加でインストール</h4>
+<div class="highlight"><pre><span></span>pipx inject PACKAGE NEW_DEPENDENCIES
+</pre></div>
+
+
+<h4>インストール済みパッケージのアンインストール</h4>
+<div class="highlight"><pre><span></span># パッケージ個別でアンインストール
+pipx uninstall PACKAGE
+# インストール済みパッケージを全てアンインストール
+pipx uninstall-all
+</pre></div>
+
+
+<h4>インストール済みパッケージの再インストール</h4>
+<p>Python自体をアップグレードした場合などに、新しいPythonを使用して全てのパッケージをインストールし直すコマンド。</p>
+<div class="highlight"><pre><span></span>pipx reinstall-all PYTHON
+</pre></div>
+
+
+<h4>インストール済みパッケージのリスト表示</h4>
+<div class="highlight"><pre><span></span>pipx list
+</pre></div>
             </section>
 
             <section class="post-info">
                 <div class="post-share">
-                    <a class="twitter" href="https://twitter.com/share?text=MacでIHaskellを動かす&amp;url=http://meganehouser.github.io/2019-03-04_run_ihaskell.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <a class="twitter" href="https://twitter.com/share?text=Pythonの便利ツールpipx&amp;url=http://meganehouser.github.io/2019-03-24_pipx.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                     <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
                     </a>
-                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://meganehouser.github.io/2019-03-04_run_ihaskell.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://meganehouser.github.io/2019-03-24_pipx.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
                     <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
                     </a>
-                    <a class="googleplus" href="https://plus.google.com/share?url=http://meganehouser.github.io/2019-03-04_run_ihaskell.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <a class="googleplus" href="https://plus.google.com/share?url=http://meganehouser.github.io/2019-03-24_pipx.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
                     <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
                     </a>
                     <div class="clear"></div>
                 </div>
 
                 <aside class="post-tags">
-<a href="http://meganehouser.github.io/tag/haskell.html">Haskell</a>                </aside>
+<a href="http://meganehouser.github.io/tag/python.html">Python</a>                </aside>
 
                 <div class="clear"></div>
 
@@ -235,12 +261,12 @@ ConsoleにWarningログが出ている。</p>
                 <script type="text/javascript">
                     var disqus = 'meganehouser';
                     var disqus_shortname = 'meganehouser';
-                    var disqus_identifier = '/2019-03-04_run_ihaskell.html';
-                    var disqus_url = 'http://meganehouser.github.io/2019-03-04_run_ihaskell.html';
+                    var disqus_identifier = '/2019-03-24_pipx.html';
+                    var disqus_url = 'http://meganehouser.github.io/2019-03-24_pipx.html';
                 </script>
                 <noscript>Please enable JavaScript to view the comments.</noscript>
                 <section class="post-comments">
-                        <a id="show-disqus" class="post-comments-activate" data-disqus-identifier="/2019-03-04_run_ihaskell.html" >Show Comments</a>
+                        <a id="show-disqus" class="post-comments-activate" data-disqus-identifier="/2019-03-24_pipx.html" >Show Comments</a>
                     <div id="disqus_thread"></div>
                 </section>
 

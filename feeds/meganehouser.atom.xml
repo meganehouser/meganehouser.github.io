@@ -1,5 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>きんつば - meganehouser</title><link href="http://meganehouser.github.io/" rel="alternate"></link><link href="http://meganehouser.github.io/feeds/meganehouser.atom.xml" rel="self"></link><id>http://meganehouser.github.io/</id><updated>2019-03-07T00:00:00+09:00</updated><subtitle>Pythonとかやるソフトウェアエンジニア</subtitle><entry><title>Meguro.LYAFGG#1 開催しました</title><link href="http://meganehouser.github.io/2019-03-07_meguro_lyahfgg_01.html" rel="alternate"></link><published>2019-03-07T00:00:00+09:00</published><updated>2019-03-07T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2019-03-07:/2019-03-07_meguro_lyahfgg_01.html</id><summary type="html">&lt;p&gt;&lt;a href="https://twitter.com/nnm_tech?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"&gt;んむて(@nnm_tech)さん | Twitter&lt;/a&gt;とすごいH本の原書を読む会を開催しました！&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>きんつば - meganehouser</title><link href="http://meganehouser.github.io/" rel="alternate"></link><link href="http://meganehouser.github.io/feeds/meganehouser.atom.xml" rel="self"></link><id>http://meganehouser.github.io/</id><updated>2019-03-24T00:00:00+09:00</updated><subtitle>Pythonとかやるソフトウェアエンジニア</subtitle><entry><title>Pythonの便利ツールpipx</title><link href="http://meganehouser.github.io/2019-03-24_pipx.html" rel="alternate"></link><published>2019-03-24T00:00:00+09:00</published><updated>2019-03-24T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2019-03-24:/2019-03-24_pipx.html</id><summary type="html">&lt;p&gt;Pythonパッケージの実行バイナリを分離された仮想環境にインストールする便利ツールpipxについて。&lt;/p&gt;</summary><content type="html">&lt;p&gt;最近触ってみてちょっと便利だったpipxについて紹介。&lt;/p&gt;
+&lt;h1&gt;pipxとは&lt;/h1&gt;
+&lt;p&gt;Pythonパッケージの実行バイナリを分離された仮想環境にインストールする便利ツールです。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/pipxproject/pipx"&gt;pipxproject/pipx: Execute binaries from Python packages in isolated environments&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;例えば以下のように使用します。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&amp;gt;&amp;gt; cowsay hello
+zsh: command not found: cowsay
+
+&amp;gt;&amp;gt; pipx install cowsay
+  installed package pysay 2.0.0, Python 3.7.2
+  These binaries are now globally available
+    - pysay
+    - pythink
+done! ✨ 🌟 ✨
+
+&amp;gt;&amp;gt; cowsay hello
+ _______
+&amp;lt; hello &amp;gt;
+ -------
+     \           ,-.-.
+      \         /     \
+       \       ( @ ,@  )._
+        \    ,/\...-..-&amp;#39;  `\
+            /            )  \
+           (  o o   ,-.  )   )
+            \_____.&amp;#39;  ,-&amp;#39;    )
+             --/-- __/ )    /
+             ,^.--&amp;#39;  ,/    /
+            &amp;#39;  &amp;#39;   ,/     (         $
+                  /     ,&amp;#39;^\   __  /|
+                 |          `-&amp;#39;  `´ /
+                  \    ,.    ,-~^^^´
+                   `--^  `--^
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;動きとしては\$HOME/.local/pipx/venv/配下にvenvで仮想環境を切ってpipでパッケージをインストールし、\$HOME/.local/bin/配下に実行ファイルのシムリンクを貼っています。
+(\$HOME/.local/bin/にPATHを通しておくことが必要)&lt;/p&gt;
+&lt;p&gt;ipythonやhttpie, awscliなど使い勝手としてはglobalにインストールしたいけど、環境を汚したくない時に便利。&lt;/p&gt;
+&lt;h1&gt;コマンド&lt;/h1&gt;
+&lt;h4&gt;pipxの実行バイナリ配置ディレクトリをパスに追加&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;pipx ensurepath
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;使用中のシェルに応じて~/.bashrc, ~/.zshrc, ~/.config/fish/config.fish にPATH追加。&lt;/p&gt;
+&lt;h4&gt;パッケージの実行バイナリをインストール&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;pipx install PACAKGE
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h4&gt;一時的に仮想環境でパッケージの実行バイナリを実行&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;pipx run PACKAGE [ARGS...]
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;git+urlでインストールする場合は以下の呼び出し方になります。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;pipx install --spec git+URL BINARYNAME
+
+# 例
+pipx install --spec git+https://github.com/ambv/black black
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h4&gt;インストール済みパッケージのアップグレード&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# パッケージ個別でアップグレード
+pipx upgrade PACKAGE
+# インストール済みパッケージを全てアップグレード
+pipx upgrade-all
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h4&gt;インストール済みパッケージの仮想環境に別のパッケージを追加でインストール&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;pipx inject PACKAGE NEW_DEPENDENCIES
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h4&gt;インストール済みパッケージのアンインストール&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# パッケージ個別でアンインストール
+pipx uninstall PACKAGE
+# インストール済みパッケージを全てアンインストール
+pipx uninstall-all
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h4&gt;インストール済みパッケージの再インストール&lt;/h4&gt;
+&lt;p&gt;Python自体をアップグレードした場合などに、新しいPythonを使用して全てのパッケージをインストールし直すコマンド。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;pipx reinstall-all PYTHON
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h4&gt;インストール済みパッケージのリスト表示&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;pipx list
+&lt;/pre&gt;&lt;/div&gt;</content><category term="Python"></category></entry><entry><title>Meguro.LYAFGG#1 開催しました</title><link href="http://meganehouser.github.io/2019-03-07_meguro_lyahfgg_01.html" rel="alternate"></link><published>2019-03-07T00:00:00+09:00</published><updated>2019-03-07T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2019-03-07:/2019-03-07_meguro_lyahfgg_01.html</id><summary type="html">&lt;p&gt;&lt;a href="https://twitter.com/nnm_tech?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"&gt;んむて(@nnm_tech)さん | Twitter&lt;/a&gt;とすごいH本の原書を読む会を開催しました！&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://connpass.com/event/121177/"&gt;Meguro.LYAHFGG #1 - connpass&lt;/a&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;開催場所はラクスルさんの会議室をお借りしました。ありがとうございました。&lt;/li&gt;
@@ -17,7 +110,7 @@
 &lt;p&gt;&lt;strong&gt;第二回から参加したい方、輪読担当やりたい方大歓迎です&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;以下、第一回目のノートです。
 - @nnm_techさんが作成したまとめに、私が補足と実行結果を追加したものです。
-&lt;script src="https://gist.github.com/meganehouser/c1ccebfc1a5efeed51fee633f14f8327.js"&gt;&lt;/script&gt;&lt;/p&gt;</content><category term="Haskell"></category><category term="Meguro.LYAFGG"></category></entry><entry><title>MacでiHaskellを動かす</title><link href="http://meganehouser.github.io/2019-03-04_run_ihaskell.html" rel="alternate"></link><published>2019-03-04T00:00:00+09:00</published><updated>2019-03-04T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2019-03-04:/2019-03-04_run_ihaskell.html</id><summary type="html">&lt;p&gt;Jupyter notebookをHaskellで動かそうと&lt;a href="https://github.com/gibiansky/IHaskell"&gt;gibiansky/IHaskell: A Haskell kernel for IPython.&lt;/a&gt;をREADMEを見ながらインストールしたが動作せず。動くようになったのでメモ。&lt;/p&gt;
+&lt;script src="https://gist.github.com/meganehouser/c1ccebfc1a5efeed51fee633f14f8327.js"&gt;&lt;/script&gt;&lt;/p&gt;</content><category term="Haskell"></category><category term="Meguro.LYAFGG"></category></entry><entry><title>MacでIHaskellを動かす</title><link href="http://meganehouser.github.io/2019-03-04_run_ihaskell.html" rel="alternate"></link><published>2019-03-04T00:00:00+09:00</published><updated>2019-03-04T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2019-03-04:/2019-03-04_run_ihaskell.html</id><summary type="html">&lt;p&gt;Jupyter notebookをHaskellで動かそうと&lt;a href="https://github.com/gibiansky/IHaskell"&gt;gibiansky/IHaskell: A Haskell kernel for IPython.&lt;/a&gt;をREADMEを見ながらインストールしたが動作せず。動くようになったのでメモ。&lt;/p&gt;
 &lt;h1&gt;環境&lt;/h1&gt;
 &lt;table&gt;
 &lt;thead&gt;
