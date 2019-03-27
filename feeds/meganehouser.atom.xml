@@ -1,5 +1,292 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>きんつば - meganehouser</title><link href="http://meganehouser.github.io/" rel="alternate"></link><link href="http://meganehouser.github.io/feeds/meganehouser.atom.xml" rel="self"></link><id>http://meganehouser.github.io/</id><updated>2019-03-24T00:00:00+09:00</updated><subtitle>Pythonとかやるソフトウェアエンジニア</subtitle><entry><title>Pythonの便利ツールpipx</title><link href="http://meganehouser.github.io/2019-03-24_pipx.html" rel="alternate"></link><published>2019-03-24T00:00:00+09:00</published><updated>2019-03-24T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2019-03-24:/2019-03-24_pipx.html</id><summary type="html">&lt;p&gt;Pythonパッケージの実行バイナリを分離された仮想環境にインストールする便利ツールpipxについて。&lt;/p&gt;</summary><content type="html">&lt;p&gt;最近触ってみてちょっと便利だったpipxについて紹介。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>きんつば - meganehouser</title><link href="http://meganehouser.github.io/" rel="alternate"></link><link href="http://meganehouser.github.io/feeds/meganehouser.atom.xml" rel="self"></link><id>http://meganehouser.github.io/</id><updated>2019-03-27T00:00:00+09:00</updated><subtitle>Pythonとかやるソフトウェアエンジニア</subtitle><entry><title>F#についてLTしたよ</title><link href="http://meganehouser.github.io/2019-03-27_fsharp_lt.html" rel="alternate"></link><published>2019-03-27T00:00:00+09:00</published><updated>2019-03-27T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2019-03-27:/2019-03-27_fsharp_lt.html</id><summary type="html">&lt;p&gt;F#は楽しいけど日本では残念ながらあまり使われていないというLTをしました。&lt;/p&gt;</summary><content type="html">&lt;p&gt;3/1から入社した職場でF#愛でLTしてきたよ。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2&gt;marp: true&lt;/h2&gt;
+&lt;p&gt;&lt;!-- $theme: default --&gt;
+&lt;!-- _backgroundColor: #3399FF --&gt;
+&lt;!-- _color: white --&gt;&lt;/p&gt;
+&lt;h1&gt;&lt;!-- fit --&gt; この世界の片隅で使われている言語&lt;/h1&gt;
+&lt;hr&gt;
+&lt;!-- paginate: true --&gt;
+
+&lt;h1&gt;&lt;!-- fit --&gt; みなさん、F# というプログラミング言語をご存知でしょうか&lt;/h1&gt;
+&lt;hr&gt;
+&lt;h1&gt;お前誰よ&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;寺嶋 哲(Terajima Satoshi)&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://twitter.com/meganehouser"&gt;@meganehouser&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;3月1日からjoin&lt;/li&gt;
+&lt;li&gt;前職: Excelおじさん&lt;/li&gt;
+&lt;li&gt;よさこいとHouse踊れます&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="/images/kaeru.jpg" width="200px" height="200px"&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h1&gt;F#とは&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;マイクロソフトが開発した .NET Framework向けのプログラミング言語&lt;/li&gt;
+&lt;li&gt;OCamlベースの関数型+OOP言語&lt;/li&gt;
+&lt;li&gt;静的片付け+型推論&lt;/li&gt;
+&lt;li&gt;クロスプラットフォーム(Mac,Linux,Win,Android,iOS,JS/HTML5,GPU,FreeBSD)&lt;/li&gt;
+&lt;li&gt;オープンソース&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/fsharp/fsharp"&gt;fsharp/fsharp&lt;/a&gt; &lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h1&gt;F#の特徴的な機能&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;exe,dllにコンパイルまたはスクリプト実行できる&lt;/li&gt;
+&lt;li&gt;REPL標準装備&lt;/li&gt;
+&lt;li&gt;オフサイドルールを元にしたコンパクトな軽量構文&lt;/li&gt;
+&lt;li&gt;パイプライン演算子&lt;/li&gt;
+&lt;li&gt;判別共用体とパターンマッチ&lt;/li&gt;
+&lt;li&gt;コンピュテーション式&lt;/li&gt;
+&lt;li&gt;タイププロバイダ&lt;/li&gt;
+&lt;li&gt;測定単位&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h1&gt;オフサイドルールを元にしたコンパクトな軽量構文&lt;/h1&gt;
+&lt;h2&gt;例 C#の場合&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;using&lt;/span&gt; &lt;span class="nn"&gt;System&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="k"&gt;namespace&lt;/span&gt; &lt;span class="nn"&gt;HelloWorld&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Hello&lt;/span&gt; 
+    &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;string&lt;/span&gt; &lt;span class="nf"&gt;AddTitle&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;string&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="p"&gt;+&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;さん&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+
+        &lt;span class="k"&gt;static&lt;/span&gt; &lt;span class="k"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;Main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; 
+        &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="kt"&gt;var&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Console&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ReadLine&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+            &lt;span class="kt"&gt;var&lt;/span&gt; &lt;span class="n"&gt;nameWithTitle&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="n"&gt;AddTitle&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+            &lt;span class="n"&gt;Console&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;WriteLine&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Hello {NameWithTitle}!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;hr&gt;
+&lt;p&gt;F#の場合&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;open&lt;/span&gt; &lt;span class="nn"&gt;System&lt;/span&gt;
+
+&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="nv"&gt;addTitle&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;さん&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="nv"&gt;nameWithTitle&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nn"&gt;Console&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ReadLine&lt;/span&gt;&lt;span class="bp"&gt;()&lt;/span&gt; &lt;span class="o"&gt;|&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;addTitle&lt;/span&gt;
+&lt;span class="n"&gt;printf&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Hello, %s!&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;nameWithTitle&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;hr&gt;
+&lt;h1&gt;パイプライン演算子&lt;/h1&gt;
+&lt;p&gt;関数の戻り値を次の関数の引数として渡す機能
+- F＃から広まった機能
+- Elixir、ES2019は標準で入っている&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="nv"&gt;plus&lt;/span&gt; &lt;span class="n"&gt;n1&lt;/span&gt; &lt;span class="n"&gt;n2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;n1&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;n2&lt;/span&gt;
+
+&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="nv"&gt;multiply&lt;/span&gt; &lt;span class="n"&gt;n1&lt;/span&gt; &lt;span class="n"&gt;n2&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;n1&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;n2&lt;/span&gt;
+
+
+&lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="o"&gt;|&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;plus&lt;/span&gt; &lt;span class="mi"&gt;40&lt;/span&gt; &lt;span class="o"&gt;|&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;multiply&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="c1"&gt;// 100&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;hr&gt;
+&lt;h1&gt;パイプライン演算子 例2&lt;/h1&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;type&lt;/span&gt; &lt;span class="nc"&gt;Person&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="kt"&gt;string&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="n"&gt;age&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;int&lt;/span&gt;&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="nv"&gt;persons&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;
+    &lt;span class="o"&gt;{&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Bob&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="n"&gt;age&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;32&lt;/span&gt;&lt;span class="o"&gt;}&lt;/span&gt;
+    &lt;span class="o"&gt;{&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Alice&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="n"&gt;age&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;24&lt;/span&gt;&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;]&lt;/span&gt;
+
+&lt;span class="n"&gt;persons&lt;/span&gt;
+&lt;span class="o"&gt;|&amp;gt;&lt;/span&gt; &lt;span class="nn"&gt;List&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;filter&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;fun&lt;/span&gt; &lt;span class="n"&gt;p&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;age&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;30&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;|&amp;gt;&lt;/span&gt; &lt;span class="nn"&gt;List&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;filter&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;fun&lt;/span&gt; &lt;span class="n"&gt;p&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;StartsWith&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;B&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;))&lt;/span&gt;
+&lt;span class="o"&gt;|&amp;gt;&lt;/span&gt; &lt;span class="nn"&gt;List&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;map&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="k"&gt;fun&lt;/span&gt; &lt;span class="n"&gt;p&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="nn"&gt;String&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Format&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;{0},{1}歳&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;),&lt;/span&gt; &lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;age&lt;/span&gt;&lt;span class="o"&gt;))&lt;/span&gt;
+&lt;span class="o"&gt;|&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;fun&lt;/span&gt; &lt;span class="n"&gt;ps&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;printf&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;%s&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ps&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Head&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;hr&gt;
+&lt;h1&gt;コンピュテーション式&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;内部DSL。モナド用の構文として使われることも多い&lt;/li&gt;
+&lt;li&gt;式変形により言語の用意する構文の意味をカスタマイズ&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;open&lt;/span&gt; &lt;span class="nn"&gt;System&lt;/span&gt;
+&lt;span class="k"&gt;open&lt;/span&gt; &lt;span class="nn"&gt;System.Net&lt;/span&gt;
+
+&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="nv"&gt;fetchHtmlAsync&lt;/span&gt; &lt;span class="n"&gt;url&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 
+    &lt;span class="n"&gt;async&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="nv"&gt;uri&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Uri&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;use&lt;/span&gt; &lt;span class="n"&gt;webClient&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;WebClient&lt;/span&gt;&lt;span class="bp"&gt;()&lt;/span&gt;
+        &lt;span class="k"&gt;let!&lt;/span&gt; &lt;span class="nv"&gt;html&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;webClient&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;AsyncDownloadString&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;uri&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;html&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="nv"&gt;html&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;https://dotnetfoundation.org&amp;quot;&lt;/span&gt; 
+           &lt;span class="o"&gt;|&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;fetchHtmlAsync&lt;/span&gt; 
+           &lt;span class="o"&gt;|&amp;gt;&lt;/span&gt; &lt;span class="nn"&gt;Async&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;RunSynchronously&lt;/span&gt;
+&lt;span class="n"&gt;printfn&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;%s&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;html&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;コード出典 &lt;a href="https://docs.microsoft.com/ja-jp/dotnet/fsharp/tutorials/asynchronous-and-concurrent-programming/async"&gt;非同期プログラミング | Microsoft Docs&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h1&gt;タイププロバイダー&lt;/h1&gt;
+&lt;p&gt;任意のメタデータを与えると、コンパイラがコンパイル時に"型のないもの"に"型を与えて"提供してくれる機能&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;FSharp.Data&lt;/li&gt;
+&lt;li&gt;JSON、XML、CSV、HTMLドキュメント&lt;/li&gt;
+&lt;li&gt;SQLProvider&lt;/li&gt;
+&lt;li&gt;DBのテーブル・カラムへの型付&lt;/li&gt;
+&lt;li&gt;Azure のストレージ型プロバイダー&lt;/li&gt;
+&lt;li&gt;Azure Blob、テーブル、およびキュー等&lt;/li&gt;
+&lt;li&gt;FSharp.Data.GraphQL&lt;/li&gt;
+&lt;li&gt;GraphQLProviderURLで指定されたGraphQL serverに基づいて型&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href="https://docs.microsoft.com/ja-jp/dotnet/fsharp/tutorials/type-providers/"&gt;型プロバイダー | Microsoft Docs&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h1&gt;F#の好きな機能&lt;/h1&gt;
+&lt;h2&gt;判別共用体（直和型）とパターンマッチ&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;いわゆるリッチなEnum&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;改善前のコード&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;let doSomething (x:int) :int = 
+    // 何か失敗するかもしれない処理
+    n
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;hr&gt;
+&lt;h2&gt;判別共用体（直和型）とパターンマッチ&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;判別共用体を使って書き換えたコード&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;type&lt;/span&gt; &lt;span class="nc"&gt;Result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 
+    &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;Success&lt;/span&gt; &lt;span class="k"&gt;of&lt;/span&gt; &lt;span class="n"&gt;int&lt;/span&gt; 
+    &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;Failure&lt;/span&gt; &lt;span class="k"&gt;of&lt;/span&gt; &lt;span class="n"&gt;int&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="kt"&gt;string&lt;/span&gt;
+
+&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="nv"&gt;doSomething&lt;/span&gt;&lt;span class="k"&gt;&amp;#39;&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 
+    &lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="nv"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="c1"&gt;// 何iか失敗するかもしれない処理&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;9&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+        &lt;span class="n"&gt;Success&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;else&lt;/span&gt; 
+        &lt;span class="n"&gt;Failure&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;faild to do something&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+
+&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="nv"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;doSomething&amp;#39;&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; 
+
+&lt;span class="k"&gt;match&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="k"&gt;with&lt;/span&gt;
+&lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;Success&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;printfn&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;%d&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt;
+&lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;Failure&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;errCode&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;errMessage&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;printfn&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;[%d] %s&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;errCode&lt;/span&gt; &lt;span class="n"&gt;errMessage&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;hr&gt;
+&lt;h2&gt;判別共用体（直和型）とパターンマッチ&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;失敗した以降は関数を適用しない中値演算子を定義してみる&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="o"&gt;(|&amp;gt;&amp;gt;)&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;Result&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;int&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;Result&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 
+    &lt;span class="k"&gt;match&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="k"&gt;with&lt;/span&gt;
+    &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;Success&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;
+    &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;Failure&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt; &lt;span class="o"&gt;-&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;Failure&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;
+
+&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="nv"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="o"&gt;|&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;doSomething1&lt;/span&gt; &lt;span class="o"&gt;|&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;doSomething2&lt;/span&gt; &lt;span class="o"&gt;|&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;doSmething3&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;hr&gt;
+&lt;h1&gt;測定単位&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;数値型に単位をつけられる機能&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;[&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Measure&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;]&lt;/span&gt; &lt;span class="k"&gt;type&lt;/span&gt; &lt;span class="nc"&gt;km&lt;/span&gt;
+&lt;span class="o"&gt;[&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;Measure&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;]&lt;/span&gt; &lt;span class="k"&gt;type&lt;/span&gt; &lt;span class="nc"&gt;hours&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&amp;gt; 1&lt;span class="nt"&gt;&amp;lt;km&amp;gt;&lt;/span&gt; &lt;span class="nt"&gt;&amp;lt; 2&lt;/span&gt;&lt;span class="err"&gt;&amp;lt;km&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;;;
+val it : bool = true
+
+&amp;gt; 1&lt;span class="nt"&gt;&amp;lt;km&amp;gt;&lt;/span&gt; &lt;span class="nt"&gt;&amp;lt; 2&lt;/span&gt;&lt;span class="err"&gt;&amp;lt;hours&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;;;
+error
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="nv"&gt;speed&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;int&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;km&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;hours&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;km&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;hours&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;;;&lt;/span&gt;
+
+&lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="nv"&gt;doHoge&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;int&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;km&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;hours&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;)&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="c1"&gt;// do somehting&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;hr&gt;
+&lt;h1&gt;F#何に使ってたの&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;REPLで .NET Frameworkのクラスの挙動を確認&lt;/li&gt;
+&lt;li&gt;F#スクリプトで作成中のC#アプリケーションまたはライブラリをアドホックに呼び出す&lt;/li&gt;
+&lt;li&gt;F#スクリプトでテストデータの生成やログの集計とか&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;「F#、割とマジでWindowsでまともにストレスなく使える唯一のスクリプト言語なので。@igeta談」&lt;/strong&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h1&gt;海外でのF#コミュニティ&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;わりと活発&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://skillsmatter.com/conferences/10869-f-sharp-exchange-2019"&gt;F# eXchange 2019 | 4th - 5th Apr 2019 | London&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://sergeytihon.com/category/f-weekly/"&gt;F# Weekly – Sergey Tihon's Blog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href="https://sergeytihon.com/2018/10/22/f-advent-calendar-in-english-2018/"&gt;F# Advent Calendar in English 2018 – Sergey Tihon's Blog&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Kaggleのコアの解析アルゴリズムはF#で書かれていたらしい。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The F# code is consistently shorter, easier to read,
+easier to refactor and contains far fewer bugs. As our data analysis tools have developed … we’ve become more productive.
+    &lt;a href="https://fsharp.org/testimonials/#kaggle-1"&gt;Testimonials | The F# Software Foundation&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;日本でのF#コミュニティ&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;現在ではあまり活発な動きはない&lt;/li&gt;
+&lt;li&gt;2014年頃まではF# MVP受賞するような方が２〜３人いた&lt;/li&gt;
+&lt;li&gt;F#談話室 →　2017年以降開催なし&lt;/li&gt;
+&lt;li&gt;Advent Calendar →　2017年で終了&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://gitter.im/fsugjp/public"&gt;fsugjpのgitter&lt;/a&gt;が残っているのみ&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;!-- paginate: false--&gt;
+&lt;!-- _backgroundColor: #3399FF --&gt;
+&lt;!-- _color: white --&gt;&lt;/p&gt;
+&lt;h1&gt;&lt;!-- fit --&gt; この~~世界~~"日本"の片隅で使われている言語&lt;/h1&gt;
+&lt;hr&gt;
+&lt;!-- paginate: true--&gt;
+
+&lt;h1&gt;なぜ日本では片隅でしか使われていないの&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;日本では.NETはエンプラ系で使われることが多く、言語を変更するモチベーションがない&lt;/li&gt;
+&lt;li&gt;みんなC#で満足している&lt;/li&gt;
+&lt;li&gt;アンダース・ヘルスバーグがリードアーキテクトですし&lt;/li&gt;
+&lt;li&gt;C#がF#の便利な機能を取り込んでいっている&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Javaに対するベターJavaであるScala/Kotlin的な立場になれなかった&lt;/strong&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h1&gt;まとめ&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;言語が流行るかどうかはその国でのコンテクキストにも依存する&lt;/li&gt;
+&lt;li&gt;コミュニティが強い言語は強い&lt;ul&gt;
+&lt;li&gt;Pythonは日本でも海外でもみんなで盛り上げていく感じがあって素晴らしい&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;F#のことも記憶の片隅に残しておいてほしい&lt;/li&gt;
+&lt;/ul&gt;</content><category term="FSharp"></category><category term="LT"></category></entry><entry><title>Pythonの便利ツールpipx</title><link href="http://meganehouser.github.io/2019-03-24_pipx.html" rel="alternate"></link><published>2019-03-24T00:00:00+09:00</published><updated>2019-03-24T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2019-03-24:/2019-03-24_pipx.html</id><summary type="html">&lt;p&gt;Pythonパッケージの実行バイナリを分離された仮想環境にインストールする便利ツールpipxについて。&lt;/p&gt;</summary><content type="html">&lt;p&gt;最近触ってみてちょっと便利だったpipxについて紹介。&lt;/p&gt;
 &lt;h1&gt;pipxとは&lt;/h1&gt;
 &lt;p&gt;Pythonパッケージの実行バイナリを分離された仮想環境にインストールする便利ツールです。&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://github.com/pipxproject/pipx"&gt;pipxproject/pipx: Execute binaries from Python packages in isolated environments&lt;/a&gt;&lt;/p&gt;

@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
+  <title>F#についてLTしたよ</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+  <link href="http://meganehouser.github.io/" rel="canonical" />
+
+  <!-- Feed -->
+        <link href="http://meganehouser.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="きんつば Full Atom Feed" />
+
+  <link href="http://meganehouser.github.io/theme/css/style.css" type="text/css" rel="stylesheet" />
+
+  <!-- Code highlight color scheme -->
+      <link href="http://meganehouser.github.io/theme/css/code_blocks/github.css" rel="stylesheet">
+
+
+  <!-- Custom fonts -->
+  <link href='https://fonts.googleapis.com/css?family=Montserrat:400,300' rel='stylesheet' type='text/css' />
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css" />
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+
+  <link href="http://meganehouser.github.io/2019-03-27_fsharp_lt.html" rel="canonical" />
+
+    <meta name="description" content="F#は楽しいけど日本では残念ながらあまり使われていないというLTをしました。">
+
+    <meta name="author" content="meganehouser">
+
+    <meta name="tags" content="FSharp">
+    <meta name="tags" content="LT">
+
+
+
+
+<!-- Open Graph -->
+<meta property="og:site_name" content="きんつば"/>
+<meta property="og:title" content="F#についてLTしたよ"/>
+<meta property="og:description" content="F#は楽しいけど日本では残念ながらあまり使われていないというLTをしました。"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="http://meganehouser.github.io/2019-03-27_fsharp_lt.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2019-03-27 00:00:00+09:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="http://meganehouser.github.io/author/meganehouser.html">
+<meta property="article:section" content="programming"/>
+<meta property="article:tag" content="FSharp"/>
+<meta property="article:tag" content="LT"/>
+<meta property="og:image" content="http://meganehouser.github.io//images/cover.jpg">
+
+<!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@meganehouser">
+    <meta name="twitter:title" content="F#についてLTしたよ">
+    <meta name="twitter:url" content="http://meganehouser.github.io/2019-03-27_fsharp_lt.html">
+
+        <meta name="twitter:image:src" content="http://meganehouser.github.io//images/cover.jpg">
+
+      <meta name="twitter:description" content="F#は楽しいけど日本では残念ながらあまり使われていないというLTをしました。">
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "F#についてLTしたよ",
+  "headline": "F#についてLTしたよ",
+  "datePublished": "2019-03-27 00:00:00+09:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "meganehouser",
+    "url": "http://meganehouser.github.io/author/meganehouser.html"
+  },
+  "image": "http://meganehouser.github.io//images/cover.jpg",
+  "url": "http://meganehouser.github.io/2019-03-27_fsharp_lt.html",
+  "description": "F#は楽しいけど日本では残念ながらあまり使われていないというLTをしました。"
+}
+</script>
+</head>
+<!-- TODO : Body class -->
+<body class="home-template">
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+
+
+    </ul>
+  </div>
+</nav>
+    <!-- Progressbar -->
+    <div class="progress-container">
+        <span class="progress-bar"></span>
+    </div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header id="post-header" class="has-cover">
+      <div class="inner">
+        <nav id="navigation">
+            <span id="home-button" class="nav-button">
+                <a class="home-button" href="http://meganehouser.github.io/" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
+            </span>
+          <span id="menu-button" class="nav-button">
+            <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
+          </span>
+        </nav>
+        <h1 class="post-title">F#についてLTしたよ</h1>
+        <!-- TODO : Proper class for headline -->
+        <span class="post-meta">
+                <a href="http://meganehouser.github.io/author/meganehouser.html">Meganehouser</a>
+            | <time datetime="Wed 27 March 2019">Wed 27 March 2019</time>
+        </span>
+        <!-- TODO : Modified check -->
+            <div class="post-cover cover" style="background-image: url('http://meganehouser.github.io//images/cover.jpg')">
+      </div>
+    </header>
+
+  <section id="wrapper">
+    <a class="hidden-close"></a>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+        <div class="inner">
+            <section class="post-content">
+                <p>3/1から入社した職場でF#愛でLTしてきたよ。</p>
+<hr>
+<h2>marp: true</h2>
+<p><!-- $theme: default -->
+<!-- _backgroundColor: #3399FF -->
+<!-- _color: white --></p>
+<h1><!-- fit --> この世界の片隅で使われている言語</h1>
+<hr>
+<!-- paginate: true -->
+
+<h1><!-- fit --> みなさん、F# というプログラミング言語をご存知でしょうか</h1>
+<hr>
+<h1>お前誰よ</h1>
+<ul>
+<li>寺嶋 哲(Terajima Satoshi)</li>
+<li><a href="https://twitter.com/meganehouser">@meganehouser</a></li>
+<li>3月1日からjoin</li>
+<li>前職: Excelおじさん</li>
+<li>よさこいとHouse踊れます</li>
+</ul>
+<p><img src="/images/kaeru.jpg" width="200px" height="200px"></p>
+<hr>
+<h1>F#とは</h1>
+<ul>
+<li>マイクロソフトが開発した .NET Framework向けのプログラミング言語</li>
+<li>OCamlベースの関数型+OOP言語</li>
+<li>静的片付け+型推論</li>
+<li>クロスプラットフォーム(Mac,Linux,Win,Android,iOS,JS/HTML5,GPU,FreeBSD)</li>
+<li>オープンソース</li>
+<li><a href="https://github.com/fsharp/fsharp">fsharp/fsharp</a> </li>
+</ul>
+<hr>
+<h1>F#の特徴的な機能</h1>
+<ul>
+<li>exe,dllにコンパイルまたはスクリプト実行できる</li>
+<li>REPL標準装備</li>
+<li>オフサイドルールを元にしたコンパクトな軽量構文</li>
+<li>パイプライン演算子</li>
+<li>判別共用体とパターンマッチ</li>
+<li>コンピュテーション式</li>
+<li>タイププロバイダ</li>
+<li>測定単位</li>
+</ul>
+<hr>
+<h1>オフサイドルールを元にしたコンパクトな軽量構文</h1>
+<h2>例 C#の場合</h2>
+<div class="highlight"><pre><span></span><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">namespace</span> <span class="nn">HelloWorld</span>
+<span class="p">{</span>
+    <span class="k">class</span> <span class="nc">Hello</span> 
+    <span class="p">{</span>
+        <span class="k">static</span> <span class="kt">string</span> <span class="nf">AddTitle</span><span class="p">(</span><span class="kt">string</span> <span class="n">name</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="n">name</span> <span class="p">+</span> <span class="s">&quot;さん&quot;</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">()</span> 
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">name</span> <span class="p">=</span> <span class="n">Console</span><span class="p">.</span><span class="n">ReadLine</span><span class="p">();</span>
+            <span class="kt">var</span> <span class="n">nameWithTitle</span> <span class="p">=</span> <span class="n">AddTitle</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+            <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="err">$</span><span class="s">&quot;Hello {NameWithTitle}!&quot;</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<hr>
+<p>F#の場合</p>
+<div class="highlight"><pre><span></span><span class="k">open</span> <span class="nn">System</span>
+
+<span class="k">let</span> <span class="nv">addTitle</span> <span class="n">name</span> <span class="o">=</span> <span class="n">name</span> <span class="o">+</span> <span class="s">&quot;さん&quot;</span>
+
+<span class="k">let</span> <span class="nv">nameWithTitle</span> <span class="o">=</span> <span class="nn">Console</span><span class="p">.</span><span class="n">ReadLine</span><span class="bp">()</span> <span class="o">|&gt;</span> <span class="n">addTitle</span>
+<span class="n">printf</span> <span class="s">&quot;Hello, %s!&quot;</span> <span class="n">nameWithTitle</span>
+</pre></div>
+
+
+<hr>
+<h1>パイプライン演算子</h1>
+<p>関数の戻り値を次の関数の引数として渡す機能
+- F＃から広まった機能
+- Elixir、ES2019は標準で入っている</p>
+<div class="highlight"><pre><span></span><span class="k">let</span> <span class="nv">plus</span> <span class="n">n1</span> <span class="n">n2</span> <span class="o">=</span> <span class="n">n1</span> <span class="o">+</span> <span class="n">n2</span>
+
+<span class="k">let</span> <span class="nv">multiply</span> <span class="n">n1</span> <span class="n">n2</span> <span class="o">=</span> <span class="n">n1</span> <span class="o">*</span> <span class="n">n2</span>
+
+
+<span class="mi">10</span> <span class="o">|&gt;</span> <span class="n">plus</span> <span class="mi">40</span> <span class="o">|&gt;</span> <span class="n">multiply</span> <span class="mi">2</span> <span class="c1">// 100</span>
+</pre></div>
+
+
+<hr>
+<h1>パイプライン演算子 例2</h1>
+<div class="highlight"><pre><span></span><span class="k">type</span> <span class="nc">Person</span> <span class="o">=</span> <span class="o">{</span><span class="n">name</span><span class="o">:</span><span class="kt">string</span><span class="o">;</span> <span class="n">age</span><span class="o">:</span> <span class="n">int</span><span class="o">}</span>
+
+<span class="k">let</span> <span class="nv">persons</span> <span class="o">=</span> <span class="o">[</span>
+    <span class="o">{</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;Bob&quot;</span><span class="o">;</span> <span class="n">age</span><span class="o">=</span><span class="mi">32</span><span class="o">}</span>
+    <span class="o">{</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;Alice&quot;</span><span class="o">;</span> <span class="n">age</span><span class="o">=</span><span class="mi">24</span><span class="o">}</span>
+<span class="o">]</span>
+
+<span class="n">persons</span>
+<span class="o">|&gt;</span> <span class="nn">List</span><span class="p">.</span><span class="n">filter</span><span class="o">(</span><span class="k">fun</span> <span class="n">p</span> <span class="o">-&gt;</span> <span class="n">p</span><span class="o">.</span><span class="n">age</span> <span class="o">&gt;</span> <span class="mi">30</span><span class="o">)</span>
+<span class="o">|&gt;</span> <span class="nn">List</span><span class="p">.</span><span class="n">filter</span><span class="o">(</span><span class="k">fun</span> <span class="n">p</span> <span class="o">-&gt;</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">StartsWith</span><span class="o">(</span><span class="s">&quot;B&quot;</span><span class="o">))</span>
+<span class="o">|&gt;</span> <span class="nn">List</span><span class="p">.</span><span class="n">map</span><span class="o">(</span><span class="k">fun</span> <span class="n">p</span> <span class="o">-&gt;</span> <span class="nn">String</span><span class="p">.</span><span class="n">Format</span><span class="o">(</span><span class="s">&quot;{0},{1}歳&quot;</span><span class="o">,</span> <span class="o">(</span><span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="o">),</span> <span class="n">p</span><span class="o">.</span><span class="n">age</span><span class="o">))</span>
+<span class="o">|&gt;</span> <span class="k">fun</span> <span class="n">ps</span> <span class="o">-&gt;</span> <span class="n">printf</span> <span class="s">&quot;%s&quot;</span> <span class="o">(</span><span class="n">ps</span><span class="o">.</span><span class="n">Head</span><span class="o">)</span>
+</pre></div>
+
+
+<hr>
+<h1>コンピュテーション式</h1>
+<ul>
+<li>内部DSL。モナド用の構文として使われることも多い</li>
+<li>式変形により言語の用意する構文の意味をカスタマイズ</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="k">open</span> <span class="nn">System</span>
+<span class="k">open</span> <span class="nn">System.Net</span>
+
+<span class="k">let</span> <span class="nv">fetchHtmlAsync</span> <span class="n">url</span> <span class="o">=</span> 
+    <span class="n">async</span> <span class="o">{</span>
+        <span class="k">let</span> <span class="nv">uri</span> <span class="o">=</span> <span class="n">Uri</span><span class="o">(</span><span class="n">url</span><span class="o">)</span>
+        <span class="k">use</span> <span class="n">webClient</span> <span class="o">=</span> <span class="k">new</span> <span class="n">WebClient</span><span class="bp">()</span>
+        <span class="k">let!</span> <span class="nv">html</span> <span class="o">=</span> <span class="n">webClient</span><span class="o">.</span><span class="n">AsyncDownloadString</span><span class="o">(</span><span class="n">uri</span><span class="o">)</span>
+        <span class="k">return</span> <span class="n">html</span>
+    <span class="o">}</span>
+
+<span class="k">let</span> <span class="nv">html</span> <span class="o">=</span> <span class="s">&quot;https://dotnetfoundation.org&quot;</span> 
+           <span class="o">|&gt;</span> <span class="n">fetchHtmlAsync</span> 
+           <span class="o">|&gt;</span> <span class="nn">Async</span><span class="p">.</span><span class="n">RunSynchronously</span>
+<span class="n">printfn</span> <span class="s">&quot;%s&quot;</span> <span class="n">html</span>
+</pre></div>
+
+
+<p>コード出典 <a href="https://docs.microsoft.com/ja-jp/dotnet/fsharp/tutorials/asynchronous-and-concurrent-programming/async">非同期プログラミング | Microsoft Docs</a></p>
+<hr>
+<h1>タイププロバイダー</h1>
+<p>任意のメタデータを与えると、コンパイラがコンパイル時に"型のないもの"に"型を与えて"提供してくれる機能</p>
+<ul>
+<li>FSharp.Data</li>
+<li>JSON、XML、CSV、HTMLドキュメント</li>
+<li>SQLProvider</li>
+<li>DBのテーブル・カラムへの型付</li>
+<li>Azure のストレージ型プロバイダー</li>
+<li>Azure Blob、テーブル、およびキュー等</li>
+<li>FSharp.Data.GraphQL</li>
+<li>GraphQLProviderURLで指定されたGraphQL serverに基づいて型</li>
+</ul>
+<p><a href="https://docs.microsoft.com/ja-jp/dotnet/fsharp/tutorials/type-providers/">型プロバイダー | Microsoft Docs</a></p>
+<hr>
+<h1>F#の好きな機能</h1>
+<h2>判別共用体（直和型）とパターンマッチ</h2>
+<ul>
+<li>いわゆるリッチなEnum</li>
+</ul>
+<p>改善前のコード</p>
+<div class="highlight"><pre><span></span>let doSomething (x:int) :int = 
+    // 何か失敗するかもしれない処理
+    n
+</pre></div>
+
+
+<hr>
+<h2>判別共用体（直和型）とパターンマッチ</h2>
+<ul>
+<li>判別共用体を使って書き換えたコード</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="k">type</span> <span class="nc">Result</span> <span class="o">=</span> 
+    <span class="o">|</span> <span class="n">Success</span> <span class="k">of</span> <span class="n">int</span> 
+    <span class="o">|</span> <span class="n">Failure</span> <span class="k">of</span> <span class="n">int</span> <span class="o">*</span> <span class="kt">string</span>
+
+<span class="k">let</span> <span class="nv">doSomething</span><span class="k">&#39;</span> <span class="n">x</span> <span class="o">=</span> 
+    <span class="k">let</span> <span class="nv">result</span> <span class="o">=</span> <span class="c1">// 何iか失敗するかもしれない処理</span>
+    <span class="k">if</span> <span class="n">result</span> <span class="o">&gt;</span> <span class="mi">9</span> <span class="k">then</span>
+        <span class="n">Success</span><span class="o">(</span><span class="n">result</span><span class="o">)</span>
+    <span class="k">else</span> 
+        <span class="n">Failure</span><span class="o">(</span><span class="n">result</span><span class="o">,</span> <span class="s">&quot;faild to do something&quot;</span><span class="o">)</span>
+
+<span class="k">let</span> <span class="nv">result</span> <span class="o">=</span> <span class="n">doSomething&#39;</span> <span class="mi">1</span> 
+
+<span class="k">match</span> <span class="n">result</span> <span class="k">with</span>
+<span class="o">|</span> <span class="n">Success</span><span class="o">(</span><span class="n">n</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">printfn</span> <span class="s">&quot;%d&quot;</span> <span class="n">n</span>
+<span class="o">|</span> <span class="n">Failure</span><span class="o">(</span><span class="n">errCode</span><span class="o">,</span> <span class="n">errMessage</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">printfn</span> <span class="s">&quot;[%d] %s&quot;</span> <span class="n">errCode</span> <span class="n">errMessage</span>
+</pre></div>
+
+
+<hr>
+<h2>判別共用体（直和型）とパターンマッチ</h2>
+<ul>
+<li>失敗した以降は関数を適用しない中値演算子を定義してみる</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="k">let</span> <span class="o">(|&gt;&gt;)</span> <span class="o">(</span><span class="n">x</span><span class="o">:</span><span class="n">Result</span><span class="o">)</span> <span class="o">(</span><span class="n">f</span><span class="o">:</span><span class="n">int</span> <span class="o">-&gt;</span> <span class="n">Result</span><span class="o">)</span> <span class="o">=</span> 
+    <span class="k">match</span> <span class="n">x</span> <span class="k">with</span>
+    <span class="o">|</span> <span class="n">Success</span> <span class="n">data</span> <span class="o">-&gt;</span> <span class="n">f</span> <span class="n">data</span>
+    <span class="o">|</span> <span class="n">Failure</span> <span class="n">e</span> <span class="o">-&gt;</span> <span class="n">Failure</span> <span class="n">e</span>
+
+<span class="k">let</span> <span class="nv">result</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">|&gt;</span> <span class="n">doSomething1</span> <span class="o">|&gt;&gt;</span> <span class="n">doSomething2</span> <span class="o">|&gt;&gt;</span> <span class="n">doSmething3</span>
+</pre></div>
+
+
+<hr>
+<h1>測定単位</h1>
+<ul>
+<li>数値型に単位をつけられる機能</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="o">[&lt;</span><span class="n">Measure</span><span class="o">&gt;]</span> <span class="k">type</span> <span class="nc">km</span>
+<span class="o">[&lt;</span><span class="n">Measure</span><span class="o">&gt;]</span> <span class="k">type</span> <span class="nc">hours</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>&gt; 1<span class="nt">&lt;km&gt;</span> <span class="nt">&lt; 2</span><span class="err">&lt;km</span><span class="nt">&gt;</span>;;
+val it : bool = true
+
+&gt; 1<span class="nt">&lt;km&gt;</span> <span class="nt">&lt; 2</span><span class="err">&lt;hours</span><span class="nt">&gt;</span>;;
+error
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="k">let</span> <span class="nv">speed</span><span class="o">:</span> <span class="n">int</span><span class="o">&lt;</span><span class="n">km</span><span class="o">/</span><span class="n">hours</span><span class="o">&gt;</span> <span class="o">=</span> <span class="mi">100</span><span class="o">&lt;</span><span class="n">km</span><span class="o">&gt;</span> <span class="o">/</span> <span class="mi">1</span><span class="o">&lt;</span><span class="n">hours</span><span class="o">&gt;;;</span>
+
+<span class="k">let</span> <span class="nv">doHoge</span> <span class="o">(</span><span class="n">s</span><span class="o">:</span> <span class="n">int</span><span class="o">&lt;</span><span class="n">km</span><span class="o">/</span><span class="n">hours</span><span class="o">&gt;)</span> <span class="o">=</span> <span class="c1">// do somehting</span>
+</pre></div>
+
+
+<hr>
+<h1>F#何に使ってたの</h1>
+<ul>
+<li>REPLで .NET Frameworkのクラスの挙動を確認</li>
+<li>F#スクリプトで作成中のC#アプリケーションまたはライブラリをアドホックに呼び出す</li>
+<li>F#スクリプトでテストデータの生成やログの集計とか</li>
+</ul>
+<p><strong>「F#、割とマジでWindowsでまともにストレスなく使える唯一のスクリプト言語なので。@igeta談」</strong></p>
+<hr>
+<h1>海外でのF#コミュニティ</h1>
+<ul>
+<li>
+<p>わりと活発</p>
+<ul>
+<li><a href="https://skillsmatter.com/conferences/10869-f-sharp-exchange-2019">F# eXchange 2019 | 4th - 5th Apr 2019 | London</a></li>
+<li><a href="https://sergeytihon.com/category/f-weekly/">F# Weekly – Sergey Tihon's Blog</a></li>
+<li>
+<p><a href="https://sergeytihon.com/2018/10/22/f-advent-calendar-in-english-2018/">F# Advent Calendar in English 2018 – Sergey Tihon's Blog</a></p>
+</li>
+<li>
+<p>Kaggleのコアの解析アルゴリズムはF#で書かれていたらしい。</p>
+<blockquote>
+<p>The F# code is consistently shorter, easier to read,
+easier to refactor and contains far fewer bugs. As our data analysis tools have developed … we’ve become more productive.
+    <a href="https://fsharp.org/testimonials/#kaggle-1">Testimonials | The F# Software Foundation</a></p>
+</blockquote>
+<hr>
+</li>
+</ul>
+</li>
+</ul>
+<h1>日本でのF#コミュニティ</h1>
+<ul>
+<li>現在ではあまり活発な動きはない</li>
+<li>2014年頃まではF# MVP受賞するような方が２〜３人いた</li>
+<li>F#談話室 →　2017年以降開催なし</li>
+<li>Advent Calendar →　2017年で終了</li>
+<li><a href="https://gitter.im/fsugjp/public">fsugjpのgitter</a>が残っているのみ</li>
+</ul>
+<hr>
+<p><!-- paginate: false-->
+<!-- _backgroundColor: #3399FF -->
+<!-- _color: white --></p>
+<h1><!-- fit --> この~~世界~~"日本"の片隅で使われている言語</h1>
+<hr>
+<!-- paginate: true-->
+
+<h1>なぜ日本では片隅でしか使われていないの</h1>
+<ul>
+<li>日本では.NETはエンプラ系で使われることが多く、言語を変更するモチベーションがない</li>
+<li>みんなC#で満足している</li>
+<li>アンダース・ヘルスバーグがリードアーキテクトですし</li>
+<li>C#がF#の便利な機能を取り込んでいっている</li>
+</ul>
+<p><strong>Javaに対するベターJavaであるScala/Kotlin的な立場になれなかった</strong></p>
+<hr>
+<h1>まとめ</h1>
+<ul>
+<li>言語が流行るかどうかはその国でのコンテクキストにも依存する</li>
+<li>コミュニティが強い言語は強い<ul>
+<li>Pythonは日本でも海外でもみんなで盛り上げていく感じがあって素晴らしい</li>
+</ul>
+</li>
+<li>F#のことも記憶の片隅に残しておいてほしい</li>
+</ul>
+            </section>
+
+            <section class="post-info">
+                <div class="post-share">
+                    <a class="twitter" href="https://twitter.com/share?text=F#についてLTしたよ&amp;url=http://meganehouser.github.io/2019-03-27_fsharp_lt.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
+                    </a>
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://meganehouser.github.io/2019-03-27_fsharp_lt.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
+                    </a>
+                    <a class="googleplus" href="https://plus.google.com/share?url=http://meganehouser.github.io/2019-03-27_fsharp_lt.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
+                    </a>
+                    <div class="clear"></div>
+                </div>
+
+                <aside class="post-tags">
+<a href="http://meganehouser.github.io/tag/fsharp.html">FSharp</a><a href="http://meganehouser.github.io/tag/lt.html">LT</a>                </aside>
+
+                <div class="clear"></div>
+
+
+                </section>
+
+                <script type="text/javascript">
+                    var disqus = 'meganehouser';
+                    var disqus_shortname = 'meganehouser';
+                    var disqus_identifier = '/2019-03-27_fsharp_lt.html';
+                    var disqus_url = 'http://meganehouser.github.io/2019-03-27_fsharp_lt.html';
+                </script>
+                <noscript>Please enable JavaScript to view the comments.</noscript>
+                <section class="post-comments">
+                        <a id="show-disqus" class="post-comments-activate" data-disqus-identifier="/2019-03-27_fsharp_lt.html" >Show Comments</a>
+                    <div id="disqus_thread"></div>
+                </section>
+
+                <aside class="post-nav">
+                    <div class="clear"></div>
+                </aside>
+
+            </div>
+        </article>
+    </main>
+      <!-- TODO : Body class -->
+    <div id="body-class" style="display: none;" class=""></div>
+
+    <footer id="footer">
+      <div class="inner">
+        <section class="credits">
+
+
+          <span class="credits-theme">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow">Attila</a></span>
+          <span class="credits-software">Published with <a href="https://github.com/getpelican/pelican" rel="nofollow">Pelican</a></span>
+        </section>
+      </div>
+    </footer>
+  </section>
+
+  <script type="text/javascript" src="http://meganehouser.github.io/theme/js/script.js"></script>
+
+    <!-- Global Site Tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56794608-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-56794608-1', { 'anonymize_ip': true });
+    </script>
+<script type="text/javascript">
+    var disqus_shortname = 'meganehouser';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+</body>
+</html>
