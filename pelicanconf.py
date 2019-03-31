@@ -51,3 +51,15 @@ AUTHORS_SAVE_AS = 'authors.html'
 
 DISPLAY_CATEGORIES_ON_MENU = True
 DISPLAY_PAGES_ON_MENU = True
+
+AUTHORS_BIO = {
+  "meganehouser": {
+    "name": "meganehouser",
+    "image": "/images/kaeru.jpg",
+    "website": "http://meganehouser.github.io/",
+    "github": "meganehouser",
+    "twitter": "meganehouser",
+    "location": "Tokyo",
+    "bio": "Excelおじさんを卒業したPythonおじさん。ハウスとよさこい踊る。隠れF#er。すごいHaskell本読んでく。"
+  }
+}
