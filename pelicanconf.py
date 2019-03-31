@@ -27,7 +27,7 @@ TRANSLATION_FEED_ATOM = None
 LINKS = (('ぶりとだいこん', 'http://meganehouser.hatenablog.com/'),)
 
 # Social widget
-SOCIAL = (('twitter', 'http://twitter.com/meganehouser'),
+SOCIAL = (('twitter', 'https://twitter.com/meganehouser'),
           ('github', 'https://github.com/meganehouser'),)
 
 DEFAULT_PAGINATION = 10
@@ -43,3 +43,11 @@ YEAR_ARCHIVE_SAVE_AS = 'posts/{date:%Y}/index.html'
 MONTH_ARCHIVE_SAVE_AS = 'posts/{date:%Y}/{date:%b}/index.html'
 
 HEADER_COVER = '/images/cover.jpg'
+
+# Author
+AUTHOR_URL = 'author/{slug}'
+AUTHOR_SAVE_AS = 'author/{slug}/index.html'
+AUTHORS_SAVE_AS = 'authors.html'
+
+DISPLAY_CATEGORIES_ON_MENU = True
+DISPLAY_PAGES_ON_MENU = True
