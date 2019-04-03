@@ -63,3 +63,7 @@ AUTHORS_BIO = {
     "bio": "Excelおじさんを卒業したPythonおじさん。ハウスとよさこい踊る。隠れF#er。すごいHaskell本読んでく。"
   }
 }
+
+EXTRA_PATH_METADATA = {
+    'images/favicon.ico': {'path': 'favicon.ico'},
+}
