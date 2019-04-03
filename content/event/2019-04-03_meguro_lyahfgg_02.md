@@ -13,3 +13,10 @@ Tags: Haskell, Meguro.LYAFGG
 以下、第二回目のノートです。
 - @nnm_techさんが作成したまとめに、私が補足と実行結果を追加したものです。
 <script src="https://gist.github.com/meganehouser/5ed7b9c795f96d57b895c82b586997cd.js"></script>
+
+## 宣伝
+
+Meguro.LYAFGGでも宣伝させていただきましたが、弊社（SQUEEZE）の第0回Podcastが公開されました！
+
+<blockquote class="twitter-tweet" data-lang="ja"><p lang="ja" dir="ltr">.<a href="https://twitter.com/iktakahiro?ref_src=twsrc%5Etfw">@iktakahiro</a>と収録したSQUEEZE fm 第0回を公開 🎉 Pixel 3, Jupyter本, ブロリー, サッカー日本代表について話しました。 <br>録音トラブルで1時間飛んだり、収録から公開まで1ヶ月空いちゃってるけど、それは第0回のご愛嬌ということで。<a href="https://t.co/ewsuZDrmjy">https://t.co/ewsuZDrmjy</a></p>&mdash; masataka arai (@massa142) <a href="https://twitter.com/massa142/status/1112357658642677761?ref_src=twsrc%5Etfw">2019年3月31日</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
