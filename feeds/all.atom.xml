@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>きんつば</title><link href="http://meganehouser.github.io/" rel="alternate"></link><link href="http://meganehouser.github.io/feeds/all.atom.xml" rel="self"></link><id>http://meganehouser.github.io/</id><updated>2019-03-27T00:00:00+09:00</updated><subtitle>Pythonとかやるソフトウェアエンジニア</subtitle><entry><title>F#についてLTしたよ</title><link href="http://meganehouser.github.io/2019-03-27_fsharp_lt.html" rel="alternate"></link><published>2019-03-27T00:00:00+09:00</published><updated>2019-03-27T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2019-03-27:/2019-03-27_fsharp_lt.html</id><summary type="html">&lt;p&gt;F#は楽しいけど日本では残念ながらあまり使われていないというLTをしました。&lt;/p&gt;</summary><content type="html">&lt;p&gt;3/1から入社した職場でF#愛でLTしてきたよ。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>きんつば</title><link href="http://meganehouser.github.io/" rel="alternate"></link><link href="http://meganehouser.github.io/feeds/all.atom.xml" rel="self"></link><id>http://meganehouser.github.io/</id><updated>2019-04-03T00:00:00+09:00</updated><subtitle>Pythonとかやるソフトウェアエンジニア</subtitle><entry><title>Meguro.LYAFGG#2 開催しました</title><link href="http://meganehouser.github.io/2019-04-03_meguro_lyahfgg_02.html" rel="alternate"></link><published>2019-04-03T00:00:00+09:00</published><updated>2019-04-03T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2019-04-03:/2019-04-03_meguro_lyahfgg_02.html</id><summary type="html">&lt;p&gt;&lt;a href="https://twitter.com/nnm_tech"&gt;んむて(@nnm_tech)さん | Twitter&lt;/a&gt;と第二回すごいH本の原書を読む会を開催しました！&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://connpass.com/event/123933/"&gt;Meguro.LYAHFGG #2 - connpass&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;今回も開催場所はラクスルさんの会議室をお借りしました。ありがとうございました。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;第三回から参加したい方、輪読担当やりたい方大歓迎です&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;以下、第二回目のノートです。
+- @nnm_techさんが作成したまとめに、私が補足と実行結果を追加したものです。
+&lt;script src="https://gist.github.com/meganehouser/5ed7b9c795f96d57b895c82b586997cd.js"&gt;&lt;/script&gt;&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;a href="https://twitter.com/nnm_tech"&gt;んむて(@nnm_tech)さん | Twitter&lt;/a&gt;と第二回すごいH本の原書を読む会を開催しました！&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://connpass.com/event/123933/"&gt;Meguro.LYAHFGG #2 - connpass&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;今回も開催場所はラクスルさんの会議室をお借りしました。ありがとうございました。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;第三回から参加したい方、輪読担当やりたい方大歓迎です&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;以下、第二回目のノートです。
+- @nnm_techさんが作成したまとめに、私が補足と実行結果を追加したものです。
+&lt;script src="https://gist.github.com/meganehouser/5ed7b9c795f96d57b895c82b586997cd.js"&gt;&lt;/script&gt;&lt;/p&gt;</content><category term="Haskell"></category><category term="Meguro.LYAFGG"></category></entry><entry><title>F#についてLTしたよ</title><link href="http://meganehouser.github.io/2019-03-27_fsharp_lt.html" rel="alternate"></link><published>2019-03-27T00:00:00+09:00</published><updated>2019-03-27T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2019-03-27:/2019-03-27_fsharp_lt.html</id><summary type="html">&lt;p&gt;F#は楽しいけど日本では残念ながらあまり使われていないというLTをしました。&lt;/p&gt;</summary><content type="html">&lt;p&gt;3/1から入社した職場でF#愛でLTしてきたよ。&lt;/p&gt;
 &lt;hr&gt;
 &lt;h2&gt;&lt;!-- marp: true --&gt;&lt;/h2&gt;
 &lt;p&gt;&lt;!-- $theme: default --&gt;
