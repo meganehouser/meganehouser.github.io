@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
 
-  <title>Scheme in Rust</title>
+  <title>Meguro.LYAFGG#3 開催しました</title>
 
 
   <meta name="HandheldFriendly" content="True" />
@@ -41,48 +41,50 @@
   <![endif]-->
 
 
-  <link href="http://meganehouser.github.io/2015-01-10.html" rel="canonical" />
+  <link href="http://meganehouser.github.io/2019-05-19_meguro_lyahfgg_03.html" rel="canonical" />
 
-    <meta name="description" content="RustでSchemeをちょっとだけ実装してみた。">
+    <meta name="description" content="2019/05/16に、んむてさんと第三回すごいH本の原書を読む会を開催しました！">
 
     <meta name="author" content="meganehouser">
 
-    <meta name="tags" content="rust">
+    <meta name="tags" content="Haskell">
+    <meta name="tags" content="Meguro.LYAFGG">
 
 
 
 
 <!-- Open Graph -->
 <meta property="og:site_name" content="きんつば"/>
-<meta property="og:title" content="Scheme in Rust"/>
-<meta property="og:description" content="RustでSchemeをちょっとだけ実装してみた。"/>
+<meta property="og:title" content="Meguro.LYAFGG#3 開催しました"/>
+<meta property="og:description" content="2019/05/16に、んむてさんと第三回すごいH本の原書を読む会を開催しました！"/>
 <meta property="og:locale" content="en_US"/>
-<meta property="og:url" content="http://meganehouser.github.io/2015-01-10.html"/>
+<meta property="og:url" content="http://meganehouser.github.io/2019-05-19_meguro_lyahfgg_03.html"/>
 <meta property="og:type" content="article"/>
-<meta property="article:published_time" content="2015-01-10 00:00:00+09:00"/>
+<meta property="article:published_time" content="2019-05-19 00:00:00+09:00"/>
 <meta property="article:modified_time" content=""/>
 <meta property="article:author" content="http://meganehouser.github.io/author/meganehouser">
-<meta property="article:section" content="programming"/>
-<meta property="article:tag" content="rust"/>
+<meta property="article:section" content="event"/>
+<meta property="article:tag" content="Haskell"/>
+<meta property="article:tag" content="Meguro.LYAFGG"/>
 <meta property="og:image" content="http://meganehouser.github.io//images/cover.jpg">
 
 <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@meganehouser">
-    <meta name="twitter:title" content="Scheme in Rust">
-    <meta name="twitter:url" content="http://meganehouser.github.io/2015-01-10.html">
+    <meta name="twitter:title" content="Meguro.LYAFGG#3 開催しました">
+    <meta name="twitter:url" content="http://meganehouser.github.io/2019-05-19_meguro_lyahfgg_03.html">
 
         <meta name="twitter:image:src" content="http://meganehouser.github.io//images/cover.jpg">
 
-      <meta name="twitter:description" content="RustでSchemeをちょっとだけ実装してみた。">
+      <meta name="twitter:description" content="2019/05/16に、んむてさんと第三回すごいH本の原書を読む会を開催しました！">
 
 <script type="application/ld+json">
 {
   "@context": "http://schema.org",
   "@type": "Article",
-  "name": "Scheme in Rust",
-  "headline": "Scheme in Rust",
-  "datePublished": "2015-01-10 00:00:00+09:00",
+  "name": "Meguro.LYAFGG#3 開催しました",
+  "headline": "Meguro.LYAFGG#3 開催しました",
+  "datePublished": "2019-05-19 00:00:00+09:00",
   "dateModified": "",
   "author": {
     "@type": "Person",
@@ -90,8 +92,8 @@
     "url": "http://meganehouser.github.io/author/meganehouser"
   },
   "image": "http://meganehouser.github.io//images/cover.jpg",
-  "url": "http://meganehouser.github.io/2015-01-10.html",
-  "description": "RustでSchemeをちょっとだけ実装してみた。"
+  "url": "http://meganehouser.github.io/2019-05-19_meguro_lyahfgg_03.html",
+  "description": "2019/05/16に、んむてさんと第三回すごいH本の原書を読む会を開催しました！"
 }
 </script>
 </head>
@@ -126,11 +128,11 @@
             <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
           </span>
         </nav>
-        <h1 class="post-title">Scheme in Rust</h1>
+        <h1 class="post-title">Meguro.LYAFGG#3 開催しました</h1>
         <!-- TODO : Proper class for headline -->
         <span class="post-meta">
                 <a href="http://meganehouser.github.io/author/meganehouser">meganehouser</a>
-            | <time datetime="Sat 10 January 2015">Sat 10 January 2015</time>
+            | <time datetime="Sun 19 May 2019">Sun 19 May 2019</time>
         </span>
         <!-- TODO : Modified check -->
             <div class="post-cover cover" style="background-image: url('http://meganehouser.github.io//images/cover.jpg')">
@@ -145,32 +147,59 @@
         <article class="post">
         <div class="inner">
             <section class="post-content">
-                <p>Rust 1.0 alpha がリリースされたのでRustを書いてみた。</p>
-<p><a href="http://blogs.msdn.com/b/ashleyf/archive/2010/09/24/fscheme-0-0-0.aspx">FScheme - Scheme in F# - Code Monkey Have Fun - Site Home - MSDN Blogs</a></p>
-<p>このサイトを参考にSchemeをさわりだけ実装。 減算・乗算・if式が実行可能。</p>
-<p>今までGCある言語しか使ってこなかった身としては結構つらいところある。 
-C/C++の素養があればもっとスムーズに始められと思われる。</p>
-<p>enumにclosure入れるのとかやっとの事で理解できた。</p>
-<p>次はRust製のゲームエンジン<a href="http://www.piston.rs/">piston</a>触ってみたい。</p>
-<script src="https://gist.github.com/meganehouser/e8eee004304fbda7d4a8.js"></script>
+                <p><a href="https://twitter.com/nnm_tech">んむて(@nnm_tech)さん | Twitter</a>と第三回すごいH本の原書を読む会を開催しました！</p>
+<p><a href="https://megurolyahfgg.connpass.com/event/127906/">Meguro.LYAHFGG #3 - connpass</a></p>
+<ul>
+<li>今回も開催場所はラクスルさんの会議室をお借りしました。ありがとうございました。</li>
+</ul>
+<p><strong>第四回から参加したい方、輪読担当やりたい方大歓迎です</strong></p>
+<h2>実施内容</h2>
+<h3>読んだ内容</h3>
+<p>以下、第三回目のノートです。
+- 2章Tuplesから3章Types and Typeclassesの前半まで進めました。
+<script src="https://gist.github.com/meganehouser/5ed7b9c795f96d57b895c82b586997cd.js"></script></p>
+<p>Haskell以外で出た話題を以下に書き留めます。</p>
+<p>（みんなでLYAHFGGをネタにいろんな言語についてわいわいする会になってきて楽しい）</p>
+<ul>
+<li>Jupyter notebookの後継、Jupyter-labが便利<ul>
+<li><a href="http://kzkohashi.hatenablog.com/entry/2018/07/27/073124">Jupyter Notebookの後継？Jupyter Labをつかってみた - いっきのblog</a></li>
+</ul>
+</li>
+<li>Javaはメソッド名の解決の際にジェネリックの型引数が消去された形で解決される。<ul>
+<li><a href="https://nagise.hatenablog.jp/entry/20160520/1463744926">贖罪のイレイジャ - プログラマーの脳みそ</a></li>
+</ul>
+</li>
+<li>C++や.NETにも2個の値のtupleのような入れ物が存在する<ul>
+<li><a href="https://cpprefjp.github.io/reference/utility/pair.html">pair - cpprefjp C++日本語リファレンス</a></li>
+<li><a href="https://docs.microsoft.com/ja-jp/dotnet/api/system.collections.generic.keyvaluepair-2?view=netframework-4.8">KeyValuePair<TKey,TValue> Struct (System.Collections.Generic) | Microsoft Docs</a></li>
+<li>Dictionaryのキーと値のセットを列挙する際などに使用される</li>
+</ul>
+</li>
+</ul>
+<h3>LT</h3>
+<p>今回から、最後の１５分程度でLTをやってみる時間を設けてみました。</p>
+<p>今回は、んむてさんがRuby2.7で入る予定のパターンマッチについて、以下のRubyKaigiの資料を使って説明してくれました。</p>
+<ul>
+<li><a href="https://www.notion.so/Ruby2-7-Pattern-Match-f5743893c1f040beb8f1a790b4973bce7">Ruby2.7で導入されるPattern Match</a></li>
+</ul>
             </section>
 
             <section class="post-info">
                 <div class="post-share">
-                    <a class="twitter" href="https://twitter.com/share?text=Scheme in Rust&amp;url=http://meganehouser.github.io/2015-01-10.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <a class="twitter" href="https://twitter.com/share?text=Meguro.LYAFGG#3 開催しました&amp;url=http://meganehouser.github.io/2019-05-19_meguro_lyahfgg_03.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                     <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
                     </a>
-                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://meganehouser.github.io/2015-01-10.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://meganehouser.github.io/2019-05-19_meguro_lyahfgg_03.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
                     <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
                     </a>
-                    <a class="googleplus" href="https://plus.google.com/share?url=http://meganehouser.github.io/2015-01-10.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <a class="googleplus" href="https://plus.google.com/share?url=http://meganehouser.github.io/2019-05-19_meguro_lyahfgg_03.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
                     <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
                     </a>
                     <div class="clear"></div>
                 </div>
 
                 <aside class="post-tags">
-<a href="http://meganehouser.github.io/tag/rust.html">rust</a>                </aside>
+<a href="http://meganehouser.github.io/tag/haskell.html">Haskell</a><a href="http://meganehouser.github.io/tag/megurolyafgg.html">Meguro.LYAFGG</a>                </aside>
 
                 <div class="clear"></div>
 
@@ -197,12 +226,12 @@ C/C++の素養があればもっとスムーズに始められと思われる。
                 <script type="text/javascript">
                     var disqus = 'meganehouser';
                     var disqus_shortname = 'meganehouser';
-                    var disqus_identifier = '/2015-01-10.html';
-                    var disqus_url = 'http://meganehouser.github.io/2015-01-10.html';
+                    var disqus_identifier = '/2019-05-19_meguro_lyahfgg_03.html';
+                    var disqus_url = 'http://meganehouser.github.io/2019-05-19_meguro_lyahfgg_03.html';
                 </script>
                 <noscript>Please enable JavaScript to view the comments.</noscript>
                 <section class="post-comments">
-                        <a id="show-disqus" class="post-comments-activate" data-disqus-identifier="/2015-01-10.html" >Show Comments</a>
+                        <a id="show-disqus" class="post-comments-activate" data-disqus-identifier="/2019-05-19_meguro_lyahfgg_03.html" >Show Comments</a>
                     <div id="disqus_thread"></div>
                 </section>
 

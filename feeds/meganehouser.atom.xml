@@ -1,5 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>きんつば - meganehouser</title><link href="http://meganehouser.github.io/" rel="alternate"></link><link href="http://meganehouser.github.io/feeds/meganehouser.atom.xml" rel="self"></link><id>http://meganehouser.github.io/</id><updated>2019-04-25T00:00:00+09:00</updated><subtitle>Pythonとかやるソフトウェアエンジニア</subtitle><entry><title>Github活動を出力するツールfurikrs作った</title><link href="http://meganehouser.github.io/2019-04-25_furikrs.html" rel="alternate"></link><published>2019-04-25T00:00:00+09:00</published><updated>2019-04-25T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2019-04-25:/2019-04-25_furikrs.html</id><summary type="html">&lt;p&gt;pepabo/furik, laugh_k/footprintを参考にGithubの活動をMarkdown出力するツールをRustで作ってみた。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;a href="https://github.com/pepabo/furik"&gt;pepabo/furik&lt;/a&gt;、&lt;a href="https://github.com/laughk/footprint"&gt;laghk/footprint&lt;/a&gt;を参考にGihubuの活動をMarkdown出力するツールをRustで作ってみた。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>きんつば - meganehouser</title><link href="http://meganehouser.github.io/" rel="alternate"></link><link href="http://meganehouser.github.io/feeds/meganehouser.atom.xml" rel="self"></link><id>http://meganehouser.github.io/</id><updated>2019-05-19T00:00:00+09:00</updated><subtitle>Pythonとかやるソフトウェアエンジニア</subtitle><entry><title>Meguro.LYAFGG#3 開催しました</title><link href="http://meganehouser.github.io/2019-05-19_meguro_lyahfgg_03.html" rel="alternate"></link><published>2019-05-19T00:00:00+09:00</published><updated>2019-05-19T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2019-05-19:/2019-05-19_meguro_lyahfgg_03.html</id><summary type="html">&lt;p&gt;2019/05/16に、んむてさんと第三回すごいH本の原書を読む会を開催しました！&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;a href="https://twitter.com/nnm_tech"&gt;んむて(@nnm_tech)さん | Twitter&lt;/a&gt;と第三回すごいH本の原書を読む会を開催しました！&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://megurolyahfgg.connpass.com/event/127906/"&gt;Meguro.LYAHFGG #3 - connpass&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;今回も開催場所はラクスルさんの会議室をお借りしました。ありがとうございました。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;第四回から参加したい方、輪読担当やりたい方大歓迎です&lt;/strong&gt;&lt;/p&gt;
+&lt;h2&gt;実施内容&lt;/h2&gt;
+&lt;h3&gt;読んだ内容&lt;/h3&gt;
+&lt;p&gt;以下、第三回目のノートです。
+- 2章Tuplesから3章Types and Typeclassesの前半まで進めました。
+&lt;script src="https://gist.github.com/meganehouser/5ed7b9c795f96d57b895c82b586997cd.js"&gt;&lt;/script&gt;&lt;/p&gt;
+&lt;p&gt;Haskell以外で出た話題を以下に書き留めます。&lt;/p&gt;
+&lt;p&gt;（みんなでLYAHFGGをネタにいろんな言語についてわいわいする会になってきて楽しい）&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Jupyter notebookの後継、Jupyter-labが便利&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://kzkohashi.hatenablog.com/entry/2018/07/27/073124"&gt;Jupyter Notebookの後継？Jupyter Labをつかってみた - いっきのblog&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Javaはメソッド名の解決の際にジェネリックの型引数が消去された形で解決される。&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://nagise.hatenablog.jp/entry/20160520/1463744926"&gt;贖罪のイレイジャ - プログラマーの脳みそ&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;C++や.NETにも2個の値のtupleのような入れ物が存在する&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://cpprefjp.github.io/reference/utility/pair.html"&gt;pair - cpprefjp C++日本語リファレンス&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://docs.microsoft.com/ja-jp/dotnet/api/system.collections.generic.keyvaluepair-2?view=netframework-4.8"&gt;KeyValuePair&lt;TKey,TValue&gt; Struct (System.Collections.Generic) | Microsoft Docs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Dictionaryのキーと値のセットを列挙する際などに使用される&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;LT&lt;/h3&gt;
+&lt;p&gt;今回から、最後の１５分程度でLTをやってみる時間を設けてみました。&lt;/p&gt;
+&lt;p&gt;今回は、んむてさんがRuby2.7で入る予定のパターンマッチについて、以下のRubyKaigiの資料を使って説明してくれました。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.notion.so/Ruby2-7-Pattern-Match-f5743893c1f040beb8f1a790b4973bce7"&gt;Ruby2.7で導入されるPattern Match&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><category term="Haskell"></category><category term="Meguro.LYAFGG"></category></entry><entry><title>Github活動を出力するツールfurikrs作った</title><link href="http://meganehouser.github.io/2019-04-25_furikrs.html" rel="alternate"></link><published>2019-04-25T00:00:00+09:00</published><updated>2019-04-25T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2019-04-25:/2019-04-25_furikrs.html</id><summary type="html">&lt;p&gt;pepabo/furik, laugh_k/footprintを参考にGithubの活動をMarkdown出力するツールをRustで作ってみた。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;a href="https://github.com/pepabo/furik"&gt;pepabo/furik&lt;/a&gt;、&lt;a href="https://github.com/laughk/footprint"&gt;laghk/footprint&lt;/a&gt;を参考にGihubuの活動をMarkdown出力するツールをRustで作ってみた。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://github.com/meganehouser/furikrs"&gt;meganehouser/furikrs&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
