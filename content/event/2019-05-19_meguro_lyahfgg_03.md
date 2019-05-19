@@ -14,7 +14,7 @@ Summary: 2019/05/16に、んむてさんと第三回すごいH本の原書を読
 ### 読んだ内容
 以下、第三回目のノートです。
 - 2章Tuplesから3章Types and Typeclassesの前半まで進めました。
-<script src="https://gist.github.com/meganehouser/5ed7b9c795f96d57b895c82b586997cd.js"></script>
+<script src="https://gist.github.com/meganehouser/e841a277e195c5ee40f6fd08bda24e86.js"></script>
 
 Haskell以外で出た話題を以下に書き留めます。
 
