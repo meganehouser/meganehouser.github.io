@@ -35,6 +35,8 @@ DEFAULT_PAGINATION = 10
 # Uncomment following line if you want document-relative URLs when developing
 RELATIVE_URLS = True
 
+STATIC_PATHS = ['assets', 'images']
+
 THEME = './theme/attila'
 
 SLUGIFY_SOURCE = 'basename'
@@ -55,7 +57,7 @@ DISPLAY_PAGES_ON_MENU = True
 AUTHORS_BIO = {
   "meganehouser": {
     "name": "meganehouser",
-    "image": "/images/kaeru.jpg",
+    "image": "images/kaeru.jpg",
     "website": "http://meganehouser.github.io/",
     "github": "meganehouser",
     "twitter": "meganehouser",
@@ -67,3 +69,5 @@ AUTHORS_BIO = {
 EXTRA_PATH_METADATA = {
     'images/favicon.ico': {'path': 'favicon.ico'},
 }
+
+CSS_OVERRIDE = ['assets/css/myblog.css']
