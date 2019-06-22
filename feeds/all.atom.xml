@@ -1,5 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>きんつば</title><link href="http://meganehouser.github.io/" rel="alternate"></link><link href="http://meganehouser.github.io/feeds/all.atom.xml" rel="self"></link><id>http://meganehouser.github.io/</id><updated>2019-05-19T00:00:00+09:00</updated><subtitle>Pythonとかやるソフトウェアエンジニア</subtitle><entry><title>Meguro.LYAFGG#3 開催しました</title><link href="http://meganehouser.github.io/2019-05-19_meguro_lyahfgg_03.html" rel="alternate"></link><published>2019-05-19T00:00:00+09:00</published><updated>2019-05-19T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2019-05-19:/2019-05-19_meguro_lyahfgg_03.html</id><summary type="html">&lt;p&gt;2019/05/16に、んむてさんと第三回すごいH本の原書を読む会を開催しました！&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;a href="https://twitter.com/nnm_tech"&gt;んむて(@nnm_tech)さん | Twitter&lt;/a&gt;と第三回すごいH本の原書を読む会を開催しました！&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>きんつば</title><link href="http://meganehouser.github.io/" rel="alternate"></link><link href="http://meganehouser.github.io/feeds/all.atom.xml" rel="self"></link><id>http://meganehouser.github.io/</id><updated>2019-06-22T00:00:00+09:00</updated><subtitle>Pythonとかやるソフトウェアエンジニア</subtitle><entry><title>Meguro.LYAFGG#4 開催しました</title><link href="http://meganehouser.github.io/2019-06-22_meguro_lyahfgg_04.html" rel="alternate"></link><published>2019-06-22T00:00:00+09:00</published><updated>2019-06-22T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2019-06-22:/2019-06-22_meguro_lyahfgg_04.html</id><summary type="html">&lt;p&gt;2019/06/20に、んむてさんと第四回すごいH本の原書を読む会を開催しました！&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;a href="https://twitter.com/nnm_tech"&gt;んむて(@nnm_tech)さん | Twitter&lt;/a&gt;と第四回すごいH本の原書を読む会を開催しました！&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://megurolyahfgg.connpass.com/event/133793/"&gt;Meguro.LYAHFGG #4 - connpass&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;今回も開催場所はラクスルさんの会議室をお借りしました。ありがとうございました。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;第五回から参加したい方、輪読担当やりたい方大歓迎です&lt;/strong&gt;&lt;/p&gt;
+&lt;h2&gt;実施内容&lt;/h2&gt;
+&lt;h3&gt;読んだ内容&lt;/h3&gt;
+&lt;p&gt;以下、第三回目のノートです。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;3章Types and TypeclassesのType variablesから3章の最後までやりました。
+&lt;script src="https://gist.github.com/meganehouser/decbc69c10d3a368495061393f0fb8cf.js"&gt;&lt;/script&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Haskell以外で出た話題を以下に書き留めます。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;他の言語では==, +, -, *, /などの演算子はどのように実現しているか。&lt;/li&gt;
+&lt;li&gt;Python, C#,C++などのオブジェクト指向言語ではメソッドの糖衣構文として実現されている&lt;/li&gt;
+&lt;li&gt;そのため、それらの演算子をオーバーロードすると演算子の挙動を変更できる&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;LT&lt;/h3&gt;
+&lt;p&gt;今回は私が、今世間を騒がせているパイプライン演算子について説明しました。
+以下、資料&lt;/p&gt;
+&lt;h4&gt;F#のパイプライン演算子&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;    &lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="nv"&gt;add&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;           &lt;span class="c1"&gt;// add : x:int -&amp;gt; y: int -&amp;gt; int&lt;/span&gt;
+    &lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="nv"&gt;mul&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;           &lt;span class="c1"&gt;// mul : x:int -&amp;gt; y: int -&amp;gt; int&lt;/span&gt;
+    &lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="nv"&gt;display&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;printfn&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;number is %d&amp;quot;&lt;/span&gt; &lt;span class="c1"&gt;// display : int -&amp;gt; unit&lt;/span&gt;
+
+    &lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;mul&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;add&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="o"&gt;))&lt;/span&gt;
+
+    &lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="o"&gt;|&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt; &lt;span class="o"&gt;|&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;mul&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="o"&gt;|&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;display&lt;/span&gt;
+
+    &lt;span class="k"&gt;let&lt;/span&gt; &lt;span class="o"&gt;(|&amp;gt;)&lt;/span&gt; &lt;span class="n"&gt;arg&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="n"&gt;arg&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;F#では中置演算子が定義可能、カリー化が標準組み込みされているのでパイプライン演算子が、標準の言語仕様内で実装可能&lt;/li&gt;
+&lt;li&gt;Elixirは中置演算子が定義不可、カリー化もされないので、マクロによるAST変換により実現&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;Rubyのパイプライン演算子&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;    &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;A&lt;/span&gt;
+      &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;initialize&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+          &lt;span class="vi"&gt;@n&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt;
+      &lt;span class="k"&gt;end&lt;/span&gt; 
+
+      &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="vi"&gt;@n&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="vi"&gt;@n&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt;
+        &lt;span class="nb"&gt;self&lt;/span&gt;
+      &lt;span class="k"&gt;end&lt;/span&gt;
+
+        &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;mul&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+          &lt;span class="vi"&gt;@n&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="vi"&gt;@n&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt;
+        &lt;span class="nb"&gt;self&lt;/span&gt;
+      &lt;span class="k"&gt;end&lt;/span&gt;
+
+      &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;display&lt;/span&gt;
+        &lt;span class="nb"&gt;puts&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;number is &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="vi"&gt;@n&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;to_s&lt;/span&gt;
+      &lt;span class="k"&gt;end&lt;/span&gt;
+    &lt;span class="k"&gt;end&lt;/span&gt;
+
+    &lt;span class="n"&gt;A&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;mul&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+    &lt;span class="n"&gt;A&lt;/span&gt; &lt;span class="o"&gt;|&amp;gt;&lt;/span&gt; &lt;span class="kp"&gt;new&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="o"&gt;|&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt; &lt;span class="o"&gt;|&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;mul&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="o"&gt;|&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;display&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;Rubyのパイプライン演算子はF#ともElixirとも異なる&lt;/li&gt;
+&lt;li&gt;単にメソッドチェーンがパイプライン演算子で書き換えられるだけなので有効なユースケースがあるか&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;Haskellでのパイプライン演算子&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;    &lt;span class="n"&gt;add&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;
+    &lt;span class="n"&gt;mul&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;
+    &lt;span class="n"&gt;display&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;putStrLn&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;number is &amp;quot;&lt;/span&gt; &lt;span class="o"&gt;++&lt;/span&gt; &lt;span class="n"&gt;show&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="n"&gt;display&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;mul&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;add&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+    &lt;span class="n"&gt;display&lt;/span&gt; &lt;span class="o"&gt;$&lt;/span&gt; &lt;span class="n"&gt;mul&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="o"&gt;$&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt; &lt;span class="o"&gt;$&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;  &lt;span class="c1"&gt;-- ($) :: (a -&amp;gt; b) -&amp;gt; a -&amp;gt; b&lt;/span&gt;
+
+    &lt;span class="kr"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;Data.Function&lt;/span&gt;
+    &lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;mul&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt; &lt;span class="n"&gt;display&lt;/span&gt; &lt;span class="c1"&gt;-- (&amp;amp;) :: a -&amp;gt; (a -&amp;gt; b) -&amp;gt; b&lt;/span&gt;
+
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;|&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;arg&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="ow"&gt;=&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="n"&gt;arg&lt;/span&gt;
+    &lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="o"&gt;|&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt; &lt;span class="o"&gt;|&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;mul&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="o"&gt;|&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;display&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h4&gt;元ネタ&lt;/h4&gt;
+&lt;p&gt;&lt;a href="https://mametter.hatenablog.com/entry/2019/06/15/192311"&gt;パイプライン演算子の歴史 - まめめも&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://qiita.com/cedretaber/items/6a3831367439f64756ab"&gt;第一引数版パイプライン演算子 - Qiita&lt;/a&gt;&lt;/p&gt;
+&lt;h3&gt;LTで参加者から出てきた話題&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;ECMAScriptにもパイプライン演算子のプロポーザルが上がっている&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/tc39/proposal-pipeline-operator"&gt;tc39/proposal-pipeline-operator: A proposal for adding the simple-but-useful pipeline operator to JavaScript.&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;現在Stage1&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/tc39/proposals/blob/master/stage-1-proposals.md"&gt;proposals/stage-1-proposals.md at master · tc39/proposals&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;JavaScriptで関数型っぽく書く&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://medium.com/javascript-scene/composing-software-an-introduction-27b72500d6ea"&gt;Composing Software: An Introduction – JavaScript Scene – Medium&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;C++のパイプライン演算子ではなくパイプラインの話&lt;ul&gt;
+&lt;li&gt;http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1261r0.pdf&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Rubyでコンビネータ&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://qiita.com/irohiroki/items/b4a3653b3ddf2e357a9d"&gt;yield_selfを使ったリファクタリング - Qiita&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</content><category term="Haskell"></category><category term="Meguro.LYAFGG"></category></entry><entry><title>Meguro.LYAFGG#3 開催しました</title><link href="http://meganehouser.github.io/2019-05-19_meguro_lyahfgg_03.html" rel="alternate"></link><published>2019-05-19T00:00:00+09:00</published><updated>2019-05-19T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2019-05-19:/2019-05-19_meguro_lyahfgg_03.html</id><summary type="html">&lt;p&gt;2019/05/16に、んむてさんと第三回すごいH本の原書を読む会を開催しました！&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;a href="https://twitter.com/nnm_tech"&gt;んむて(@nnm_tech)さん | Twitter&lt;/a&gt;と第三回すごいH本の原書を読む会を開催しました！&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://megurolyahfgg.connpass.com/event/127906/"&gt;Meguro.LYAHFGG #3 - connpass&lt;/a&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;今回も開催場所はラクスルさんの会議室をお借りしました。ありがとうございました。&lt;/li&gt;
