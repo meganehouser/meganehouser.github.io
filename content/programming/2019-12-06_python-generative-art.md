@@ -49,7 +49,7 @@ Processingは電子アートとビジュアルデザインのための統合開�
 これはPython Modeが裏側でJythonを使っているためです。最近はJythonはあまり活発に開発されていません……。
 
 でもProcessingで簡単なプログラムを書くのには特に困ることはありません（たぶん）。
-とにかくここでは一旦気にせずProcessingとPthon Mode for Processingをインストールしてみましょう。
+とにかくここでは一旦気にせずProcessingとPython Mode for Processingをインストールしてみましょう。
 
 #### 1. Processingのインストール
 
