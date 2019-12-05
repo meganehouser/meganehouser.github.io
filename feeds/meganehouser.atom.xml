@@ -1,5 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>きんつば - meganehouser</title><link href="https://meganehouser.github.io/" rel="alternate"></link><link href="https://meganehouser.github.io/feeds/meganehouser.atom.xml" rel="self"></link><id>https://meganehouser.github.io/</id><updated>2019-06-22T00:00:00+09:00</updated><subtitle>Pythonとかやるソフトウェアエンジニア</subtitle><entry><title>Meguro.LYAFGG#4 開催しました</title><link href="https://meganehouser.github.io/2019-06-22_meguro_lyahfgg_04.html" rel="alternate"></link><published>2019-06-22T00:00:00+09:00</published><updated>2019-06-22T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2019-06-22:/2019-06-22_meguro_lyahfgg_04.html</id><summary type="html">&lt;p&gt;2019/06/20に、んむてさんと第四回すごいH本の原書を読む会を開催しました！&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;a href="https://twitter.com/nnm_tech"&gt;んむて(@nnm_tech)さん | Twitter&lt;/a&gt;と第四回すごいH本の原書を読む会を開催しました！&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>きんつば - meganehouser</title><link href="https://meganehouser.github.io/" rel="alternate"></link><link href="https://meganehouser.github.io/feeds/meganehouser.atom.xml" rel="self"></link><id>https://meganehouser.github.io/</id><updated>2019-12-06T00:00:00+09:00</updated><subtitle>Pythonとかやるソフトウェアエンジニア</subtitle><entry><title>PythonでGenerative Art入門</title><link href="https://meganehouser.github.io/2019-12-06_python-generative-art.html" rel="alternate"></link><published>2019-12-06T00:00:00+09:00</published><updated>2019-12-06T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2019-12-06:/2019-12-06_python-generative-art.html</id><summary type="html">&lt;p&gt;Pyladies Japan Advent Calender 2019の記事です。PythonでGererative Artに入門してみましょう。&lt;/p&gt;</summary><content type="html">&lt;p&gt;この記事は&lt;a href="https://adventar.org/calendars/4730"&gt;Pyladies Japan Advent Calendar 2019&lt;/a&gt;の6日目の記事です。&lt;/p&gt;
+&lt;p&gt;同僚のPyladiesスタッフに「なんでもいいから記事書いて」と言われたので気軽に書いてみます！
+私自身は男性なのでPyladiesに参加したことはありませんが、色々な分野のテーマで開催されていて、楽しそうで羨ましく感じています。&lt;/p&gt;
+&lt;p&gt;今回は、Pythonを使ってGererative Artに入門する方法について紹介します！&lt;/p&gt;
+&lt;h3&gt;目次&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="#whoareyou"&gt;お前誰よ&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#intro"&gt;Generative Artとは&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#install"&gt;Python Mode for Processing導入方法&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#snowflake"&gt;雪の結晶を描いてみよう&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#conclusion"&gt;まとめ&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id='whoareyou'&gt;お前誰よ&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;@meganehouser&lt;/li&gt;
+&lt;li&gt;男性です&lt;/li&gt;
+&lt;li&gt;職種: Software Developer&lt;/li&gt;
+&lt;li&gt;お仕事: Python/Django/Django REST Framework/Angular/TypeScript&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://megurolyahfgg.connpass.com/"&gt;Meguro.LYAHFGG - connpass&lt;/a&gt;主催&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;プライベートでは最近はRustを書いたりしています。&lt;/p&gt;
+&lt;h2 id='intro'&gt;Generative Artとは&lt;/h2&gt;
+
+&lt;p&gt;「ジェネラティブ・アートとは、コンピュータを使い、創造のプロセスの一部に意図的に偶然性を取り入れたプログラムで作られたアートのことである。」 (&lt;a href="https://lab.sugimototatsuo.com/2018/09/why-love-generative-art/"&gt;ジェネラティブ・アートを愛する理由 - lab.sugimototatsuo.com&lt;/a&gt;)&lt;/p&gt;
+&lt;p&gt;どんなものかピンと来ない場合はGoogle画像検索で作品をみてみましょう。感じがつかめると思います。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.google.com/search?q=generative+art&amp;amp;tbm=isch"&gt;generative art - Google 検索&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id='install'&gt;Python Mode for Processing 導入方法&lt;/h2&gt;
+
+&lt;p&gt;この記事ではProcessingのPython Modeで作品を作ってみます。
+Processingは電子アートとビジュアルデザインのための統合開発環境です。
+簡単にいえば、プログラミングでお絵かきができるソフトウェアと考えてください。
+デフォルトではJavaを単純化した言語を使用しますが、プラグインをインストールすることによってPython2.7でProcessingを使用できるようになります。&lt;/p&gt;
+&lt;p&gt;ん、Python2系はもうすぐお亡くなりになるはずでは。&lt;/p&gt;
+&lt;p&gt;これはPython Modeが裏側でJythonを使っているためです。最近はJythonはあまり活発に開発されていません……。&lt;/p&gt;
+&lt;p&gt;でもProcessingで簡単なプログラムを書くのには特に困ることはありません（たぶん）。
+とにかくここでは一旦気にせずProcessingとPthon Mode for Processingをインストールしてみましょう。&lt;/p&gt;
+&lt;h4&gt;1. Processingのインストール&lt;/h4&gt;
+&lt;p&gt;以下のページからインストーラをダウンロードしてインストール。
+(Windows/Linux/Mac OSXに対応しています。)&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://processing.org/download/"&gt;https://processing.org/download/&lt;/a&gt;&lt;/p&gt;
+&lt;h4&gt;2. Python Mode for Processingのインストール&lt;/h4&gt;
+&lt;p&gt;Processingを起動して、画面右上のメニュー「モードの追加」をクリック。
+&lt;img alt="Add Mode" src="../images/20191206processing01.png"&gt;&lt;/p&gt;
+&lt;p&gt;「Python Mode for Processing 3」を選択してinstallボタンをクリック。
+&lt;img alt="Install Mode" src="../images/20191206processing02.png"&gt;&lt;/p&gt;
+&lt;h4&gt;3. 実行&lt;/h4&gt;
+&lt;p&gt;モードを「Python」に変更、エディタ部にプログラムを書いて実行すると、実行結果が別ウインドウで表示されます。&lt;/p&gt;
+&lt;h2 id='snowflake'&gt;雪の結晶を描いてみよう&lt;/h2&gt;
+
+&lt;p&gt;クリスマスっぽいので雪の結晶を描いてみます。&lt;/p&gt;
+&lt;p&gt;わからない命令があれば&lt;a href="https://py.processing.org/reference/"&gt;Processing.py Reference&lt;/a&gt;を参照してください。&lt;/p&gt;
+&lt;h4&gt;1. 軸を6本描いてみる&lt;/h4&gt;
+&lt;p&gt;以下をProcessingのエディタ部に入力して実行してみてください。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;setup&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt; &lt;span class="c1"&gt;# 起動時に一度だけ実行される関数&lt;/span&gt;
+    &lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;500&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;500&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;# 結果表示するウインドウのサイズを設定&lt;/span&gt;
+    &lt;span class="n"&gt;background&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;30&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;30&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;255&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;# 背景色を設定&lt;/span&gt;
+    &lt;span class="n"&gt;strokeCap&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ROUND&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;# ラインの先端の形状を設定&lt;/span&gt;
+    &lt;span class="n"&gt;strokeWeight&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;# ラインの太さを設定&lt;/span&gt;
+    &lt;span class="n"&gt;stroke&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;255&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;255&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;255&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;180&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;# 描画色を設定(R,G,B,Alpha)&lt;/span&gt;
+    &lt;span class="n"&gt;center&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;width&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;height&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="c1"&gt;# widthとheightは実行時のウインドウサイズを保持&lt;/span&gt;
+    &lt;span class="n"&gt;translate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;center&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;center&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt; &lt;span class="c1"&gt;# 座標の移動(画面の中央をx=0, y=0になるように変形)&lt;/span&gt;
+
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;_&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="n"&gt;line&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;# 線を引く&lt;/span&gt;
+        &lt;span class="n"&gt;rotate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;PI&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;# 座標の回転&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;6本の軸が表示されました。
+&lt;img alt="snowfalke 01" src="../images/20191206snowflake01.png"&gt;&lt;/p&gt;
+&lt;p&gt;ポイントは&lt;code&gt;translate&lt;/code&gt;と&lt;code&gt;rotate&lt;/code&gt;です。&lt;code&gt;translate&lt;/code&gt;で原点を画面中央に移動し、&lt;code&gt;rotate&lt;/code&gt;で30°ずつ座標を回転させ、&lt;code&gt;line&lt;/code&gt;を呼び出すことで、放射状に線を引いています。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;rotate&lt;/code&gt;はラジアンを引数に取るため一周は&lt;code&gt;2 * PI&lt;/code&gt;となり、30°は&lt;code&gt;PI / 3&lt;/code&gt;になります。&lt;/p&gt;
+&lt;h4&gt;2. 軸から枝を生やしてみる&lt;/h4&gt;
+&lt;p&gt;6本の軸から枝を生やしてみましょう。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;draw_branch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;branch_len&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;direction&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;pushMatrix&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;  &lt;span class="c1"&gt;# 座標の状態の保存&lt;/span&gt;
+    &lt;span class="n"&gt;rotate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;direction&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;PI&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;line&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;branch_len&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; 
+    &lt;span class="n"&gt;popMatrix&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;  &lt;span class="c1"&gt;# 座標系の状態のリストア&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;setup&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;500&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;500&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;background&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;30&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;30&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;255&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;strokeCap&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ROUND&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;strokeWeight&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;stroke&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;255&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;255&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;255&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;180&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;center&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;width&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;height&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;
+    &lt;span class="n"&gt;translate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;center&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;center&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;_&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="n"&gt;line&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+        &lt;span class="n"&gt;pushMatrix&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;  &lt;span class="c1"&gt;# 座標の状態の保存&lt;/span&gt;
+        &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;branch_len&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;40&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;80&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;20&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt;
+            &lt;span class="n"&gt;translate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;60&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="n"&gt;draw_branch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;branch_len&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="n"&gt;draw_branch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;branch_len&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;popMatrix&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;  &lt;span class="c1"&gt;# 座標の状態のリストア&lt;/span&gt;
+        &lt;span class="n"&gt;rotate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;PI&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;img alt="snowflake 02" src="../images/20191206snowflake02.png"&gt;&lt;/p&gt;
+&lt;p&gt;ポイントは&lt;code&gt;pushMatrix&lt;/code&gt;と&lt;code&gt;popMatrix&lt;/code&gt;です。&lt;code&gt;pushMatrix&lt;/code&gt;は座標の状態をマトリックススタックにプッシュし、&lt;code&gt;popMatrix&lt;/code&gt;は座標の状態をマトリックススタックからポップして復元します。&lt;/p&gt;
+&lt;p&gt;簡単に言うと、&lt;code&gt;popMatrix&lt;/code&gt;を呼び出すと、&lt;code&gt;translate&lt;/code&gt;や&lt;code&gt;rotate&lt;/code&gt;で変形した座標系を&lt;code&gt;pushMatrix&lt;/code&gt;した状態まで戻すことができます。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;draw_branch&lt;/code&gt;関数では座標を60°(または-60°)回転させて枝を書き、座標系を復元して復帰しています。&lt;/p&gt;
+&lt;h3&gt;3. 偶然性&lt;/h3&gt;
+&lt;p&gt;Generative Artとは意図的に偶然性を取り入れた作品なのでした。&lt;/p&gt;
+&lt;p&gt;私たちの雪の結晶は今のところ偶然性がありません。取り入れましょう。&lt;/p&gt;
+&lt;p&gt;偶然性（ランダム）を取り入れた完成形のソースが以下です。
+&lt;script src="https://gist.github.com/meganehouser/fbc7a7ba42b91fe1416cbb82a46fd36c.js"&gt;&lt;/script&gt;&lt;/p&gt;
+&lt;p&gt;軸から枝を生やす位置と、枝の長さをランダムにしました。
+実行するたびに微妙に異なった形の雪の結晶が表示されるはずです。
+&lt;img alt="snowflake" src="../images/20191206snowflake.png"&gt;&lt;/p&gt;
+&lt;p&gt;何度か実行させてみると、枝の角度を変えてみたり、枝が重ならないように制限をかけるなど、改良をしてみたくなるかもしれません。
+そうして修正を加えたら、もうあなたはGenerative Artの入門の次の一歩を踏み出しています。&lt;/p&gt;
+&lt;h2 id='conclusion'&gt;まとめ&lt;/h2&gt;
+
+&lt;p&gt;ProcessingとPython Mode for Processingを使って、簡単にGenerative Artに入門することができました。&lt;/p&gt;
+&lt;p&gt;この記事では言及していませんが、Processingでは図形をアニメーションすることも簡単にできます。&lt;/p&gt;
+&lt;p&gt;例えば、以下のように。
+&lt;img alt="stars" src="../images/20191206stars.gif"&gt;&lt;/p&gt;
+&lt;p&gt;AI系のWebサイトの背景とかで見かけたりするパターンです。
+みていると複雑なパターンを描いていて飽きませんが、仕組みは単純です。&lt;/p&gt;
+&lt;p&gt;円周上を動く点をランダムに配置し、点と点が近くなったら線を引いています。
+コードは以下の通り。
+&lt;script src="https://gist.github.com/meganehouser/7b0dd1a42aae32830d6bd47544d37086.js"&gt;&lt;/script&gt;&lt;/p&gt;
+&lt;p&gt;Processingではアイディアをすぐ形にしてみることができます。
+ぜひ、あなただけの作品を作ってみてください。&lt;/p&gt;
+&lt;p&gt;Generative Artに興味を持たれた方は以下の書籍も当たってみてください。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.amazon.co.jp/dp/4861009634/"&gt;[普及版]ジェネラティブ・アート―Processingによる実践ガイド | マット・ピアソン, Matt Pearson, 久保田 晃弘, 沖 啓介 |本 | 通販 | Amazon&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><category term="python"></category><category term="generative art"></category></entry><entry><title>Meguro.LYAFGG#4 開催しました</title><link href="https://meganehouser.github.io/2019-06-22_meguro_lyahfgg_04.html" rel="alternate"></link><published>2019-06-22T00:00:00+09:00</published><updated>2019-06-22T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2019-06-22:/2019-06-22_meguro_lyahfgg_04.html</id><summary type="html">&lt;p&gt;2019/06/20に、んむてさんと第四回すごいH本の原書を読む会を開催しました！&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;a href="https://twitter.com/nnm_tech"&gt;んむて(@nnm_tech)さん | Twitter&lt;/a&gt;と第四回すごいH本の原書を読む会を開催しました！&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://megurolyahfgg.connpass.com/event/133793/"&gt;Meguro.LYAHFGG #4 - connpass&lt;/a&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;今回も開催場所はラクスルさんの会議室をお借りしました。ありがとうございました。&lt;/li&gt;
