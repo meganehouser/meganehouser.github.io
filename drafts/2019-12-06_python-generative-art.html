@@ -41,7 +41,7 @@
   <![endif]-->
 
 
-  <link href="https://meganehouser.github.io/drafts/2019-12-08_python-generative-art.html" rel="canonical" />
+  <link href="https://meganehouser.github.io/drafts/2019-12-06_python-generative-art.html" rel="canonical" />
 
     <meta name="description" content="Pyladies Japan Advent Calender 2019の記事です。PythonでGererative Artに入門してみましょう。">
 
@@ -58,9 +58,9 @@
 <meta property="og:title" content="PythonでGenerative Art入門"/>
 <meta property="og:description" content="Pyladies Japan Advent Calender 2019の記事です。PythonでGererative Artに入門してみましょう。"/>
 <meta property="og:locale" content="en_US"/>
-<meta property="og:url" content="https://meganehouser.github.io/drafts/2019-12-08_python-generative-art.html"/>
+<meta property="og:url" content="https://meganehouser.github.io/drafts/2019-12-06_python-generative-art.html"/>
 <meta property="og:type" content="article"/>
-<meta property="article:published_time" content="2019-12-08 00:00:00+09:00"/>
+<meta property="article:published_time" content="2019-12-06 00:00:00+09:00"/>
 <meta property="article:modified_time" content=""/>
 <meta property="article:author" content="https://meganehouser.github.io/author/meganehouser">
 <meta property="article:section" content="programming"/>
@@ -72,7 +72,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@meganehouser">
     <meta name="twitter:title" content="PythonでGenerative Art入門">
-    <meta name="twitter:url" content="https://meganehouser.github.io/drafts/2019-12-08_python-generative-art.html">
+    <meta name="twitter:url" content="https://meganehouser.github.io/drafts/2019-12-06_python-generative-art.html">
 
         <meta name="twitter:image:src" content="https://meganehouser.github.io//images/cover.jpg">
 
@@ -84,7 +84,7 @@
   "@type": "Article",
   "name": "PythonでGenerative Art入門",
   "headline": "PythonでGenerative Art入門",
-  "datePublished": "2019-12-08 00:00:00+09:00",
+  "datePublished": "2019-12-06 00:00:00+09:00",
   "dateModified": "",
   "author": {
     "@type": "Person",
@@ -92,7 +92,7 @@
     "url": "https://meganehouser.github.io/author/meganehouser"
   },
   "image": "https://meganehouser.github.io//images/cover.jpg",
-  "url": "https://meganehouser.github.io/drafts/2019-12-08_python-generative-art.html",
+  "url": "https://meganehouser.github.io/drafts/2019-12-06_python-generative-art.html",
   "description": "Pyladies Japan Advent Calender 2019の記事です。PythonでGererative Artに入門してみましょう。"
 }
 </script>
@@ -132,7 +132,7 @@
         <!-- TODO : Proper class for headline -->
         <span class="post-meta">
                 <a href="https://meganehouser.github.io/author/meganehouser">meganehouser</a>
-            | <time datetime="Sun 08 December 2019">Sun 08 December 2019</time>
+            | <time datetime="Fri 06 December 2019">Fri 06 December 2019</time>
         </span>
         <!-- TODO : Modified check -->
             <div class="post-cover cover" style="background-image: url('https://meganehouser.github.io//images/cover.jpg')">
@@ -147,7 +147,7 @@
         <article class="post">
         <div class="inner">
             <section class="post-content">
-                <p>この記事は<a href="https://adventar.org/calendars/4730">Pyladies Japan Advent Calendar 2019</a>の8日目の記事です。</p>
+                <p>この記事は<a href="https://adventar.org/calendars/4730">Pyladies Japan Advent Calendar 2019</a>の6日目の記事です。</p>
 <p>同僚のPyladiesスタッフに「なんでもいいから記事書いて」と言われたので気軽に書いてみます！
 私自身は男性なのでPyladiesに参加したことはありませんが、色々な分野のテーマで開催されていて、楽しそうで羨ましく感じています。</p>
 <p>今回は、Pythonを使ってGererative Artに入門する方法について紹介します！</p>
@@ -192,9 +192,9 @@ Processingは電子アートとビジュアルデザインのための統合開�
 <p><a href="https://processing.org/download/">https://processing.org/download/</a></p>
 <h4>2. Python Mode for Processingのインストール</h4>
 <p>Processingを起動して、画面右上のメニュー「モードの追加」をクリック。
-<img alt="Add Mode" src="../images/20191208processing01.png"></p>
+<img alt="Add Mode" src="../images/20191206processing01.png"></p>
 <p>「Python Mode for Processing 3」を選択してinstallボタンをクリック。
-<img alt="Install Mode" src="../images/20191208processing02.png"></p>
+<img alt="Install Mode" src="../images/20191206processing02.png"></p>
 <h4>3. 実行</h4>
 <p>モードを「Python」に変更、エディタ部にプログラムを書いて実行すると、実行結果が別ウインドウで表示されます。</p>
 <h2 id='snowflake'>雪の結晶を描いてみよう</h2>
@@ -219,7 +219,7 @@ Processingは電子アートとビジュアルデザインのための統合開�
 
 
 <p>6本の軸が表示されました。
-<img alt="snowfalke 01" src="../images/20191208snowflake01.png"></p>
+<img alt="snowfalke 01" src="../images/20191206snowflake01.png"></p>
 <p>ポイントは<code>translate</code>と<code>rotate</code>です。<code>translate</code>で原点を画面中央に移動し、<code>rotate</code>で30°ずつ座標を回転させ、<code>line</code>を呼び出すことで、放射状に線を引いています。</p>
 <p><code>rotate</code>はラジアンを引数に取るため一周は<code>2 * PI</code>となり、30°は<code>PI / 3</code>になります。</p>
 <h4>2. 軸から枝を生やしてみる</h4>
@@ -252,7 +252,7 @@ Processingは電子アートとビジュアルデザインのための統合開�
 </pre></div>
 
 
-<p><img alt="snowflake 02" src="../images/20191208snowflake02.png"></p>
+<p><img alt="snowflake 02" src="../images/20191206snowflake02.png"></p>
 <p>ポイントは<code>pushMatrix</code>と<code>popMatrix</code>です。<code>pushMatrix</code>は座標の状態をマトリックススタックにプッシュし、<code>popMatrix</code>は座標の状態をマトリックススタックからポップして復元します。</p>
 <p>簡単に言うと、<code>popMatrix</code>を呼び出すと、<code>translate</code>や<code>rotate</code>で変形した座標系を<code>pushMatrix</code>した状態まで戻すことができます。</p>
 <p><code>draw_branch</code>関数では座標を60°(または-60°)回転させて枝を書き、座標系を復元して復帰しています。</p>
@@ -261,8 +261,9 @@ Processingは電子アートとビジュアルデザインのための統合開�
 <p>私たちの雪の結晶は今のところ偶然性がありません。取り入れましょう。</p>
 <p>偶然性（ランダム）を取り入れた完成形のソースが以下です。
 <script src="https://gist.github.com/meganehouser/fbc7a7ba42b91fe1416cbb82a46fd36c.js"></script></p>
-<p>実行するたびに微妙に異なった形の雪の結晶が表示されるはずです。
-<img alt="snowflake" src="../images/20191208snowflake.png"></p>
+<p>軸から枝を生やす位置と、枝の長さをランダムにしました。
+実行するたびに微妙に異なった形の雪の結晶が表示されるはずです。
+<img alt="snowflake" src="../images/20191206snowflake.png"></p>
 <p>何度か実行させてみると、枝の角度を変えてみたり、枝が重ならないように制限をかけるなど、改良をしてみたくなるかもしれません。
 そうして修正を加えたら、もうあなたはGenerative Artの入門の次の一歩を踏み出しています。</p>
 <h2 id='conclusion'>まとめ</h2>
@@ -270,7 +271,7 @@ Processingは電子アートとビジュアルデザインのための統合開�
 <p>ProcessingとPython Mode for Processingを使って、簡単にGenerative Artに入門することができました。</p>
 <p>この記事では言及していませんが、Processingでは図形をアニメーションすることも簡単にできます。</p>
 <p>例えば、以下のように。
-<img alt="stars" src="../images/20191208stars.gif"></p>
+<img alt="stars" src="../images/20191206stars.gif"></p>
 <p>AI系のWebサイトの背景とかで見かけたりするパターンです。
 みていると複雑なパターンを描いていて飽きませんが、仕組みは単純です。</p>
 <p>円周上を動く点をランダムに配置し、点と点が近くなったら線を引いています。
@@ -286,13 +287,13 @@ Processingは電子アートとビジュアルデザインのための統合開�
 
             <section class="post-info">
                 <div class="post-share">
-                    <a class="twitter" href="https://twitter.com/share?text=PythonでGenerative Art入門&amp;url=https://meganehouser.github.io/drafts/2019-12-08_python-generative-art.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <a class="twitter" href="https://twitter.com/share?text=PythonでGenerative Art入門&amp;url=https://meganehouser.github.io/drafts/2019-12-06_python-generative-art.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                     <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
                     </a>
-                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://meganehouser.github.io/drafts/2019-12-08_python-generative-art.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://meganehouser.github.io/drafts/2019-12-06_python-generative-art.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
                     <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
                     </a>
-                    <a class="googleplus" href="https://plus.google.com/share?url=https://meganehouser.github.io/drafts/2019-12-08_python-generative-art.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <a class="googleplus" href="https://plus.google.com/share?url=https://meganehouser.github.io/drafts/2019-12-06_python-generative-art.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
                     <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
                     </a>
                     <div class="clear"></div>
