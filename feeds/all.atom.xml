@@ -37,7 +37,7 @@ Processingは電子アートとビジュアルデザインのための統合開�
 &lt;p&gt;ん、Python2系はもうすぐお亡くなりになるはずでは。&lt;/p&gt;
 &lt;p&gt;これはPython Modeが裏側でJythonを使っているためです。最近はJythonはあまり活発に開発されていません……。&lt;/p&gt;
 &lt;p&gt;でもProcessingで簡単なプログラムを書くのには特に困ることはありません（たぶん）。
-とにかくここでは一旦気にせずProcessingとPthon Mode for Processingをインストールしてみましょう。&lt;/p&gt;
+とにかくここでは一旦気にせずProcessingとPython Mode for Processingをインストールしてみましょう。&lt;/p&gt;
 &lt;h4&gt;1. Processingのインストール&lt;/h4&gt;
 &lt;p&gt;以下のページからインストーラをダウンロードしてインストール。
 (Windows/Linux/Mac OSXに対応しています。)&lt;/p&gt;
