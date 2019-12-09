@@ -1,5 +1,5 @@
 Title: PythonでGenerative Art入門
-Tags: python, generative art
+Tags: python, generative art, advent calendar
 Summary: Pyladies Japan Advent Calender 2019の記事です。PythonでGererative Artに入門してみましょう。
 
 この記事は[Pyladies Japan Advent Calendar 2019](https://adventar.org/calendars/4730)の6日目の記事です。
