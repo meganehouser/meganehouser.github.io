@@ -14,20 +14,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="referrer" content="origin" />
   <meta name="generator" content="Pelican" />
-  <link href="https://meganehouser.github.io/" rel="canonical" />
+  <link href="./" rel="canonical" />
 
   <!-- Feed -->
-        <link href="https://meganehouser.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="きんつば Full Atom Feed" />
 
-  <link href="https://meganehouser.github.io/theme/css/style.css" type="text/css" rel="stylesheet" />
+  <link href="./theme/css/style.css" type="text/css" rel="stylesheet" />
 
   <!-- Code highlight color scheme -->
-      <link href="https://meganehouser.github.io/theme/css/code_blocks/github.css" rel="stylesheet">
+      <link href="./theme/css/code_blocks/github.css" rel="stylesheet">
 
     <!-- CSS specified by the user -->
 
 
-    <link href="https://meganehouser.github.io/assets/css/myblog.css" type="text/css" rel="stylesheet" />
+    <link href="./assets/css/myblog.css" type="text/css" rel="stylesheet" />
 
   <!-- Custom fonts -->
   <link href='https://fonts.googleapis.com/css?family=Montserrat:400,300' rel='stylesheet' type='text/css' />
@@ -41,7 +40,7 @@
   <![endif]-->
 
 
-  <link href="https://meganehouser.github.io/drafts/2019-12-11_rust-terminal-crates.html" rel="canonical" />
+  <link href="./2019-12-11_rust-terminal-crates.html" rel="canonical" />
 
     <meta name="description" content="Rustその2 Advent Calendar 2019の記事です。">
 
@@ -58,23 +57,23 @@
 <meta property="og:title" content="Rustのターミナル操作crateいろいろ"/>
 <meta property="og:description" content="Rustその2 Advent Calendar 2019の記事です。"/>
 <meta property="og:locale" content="en_US"/>
-<meta property="og:url" content="https://meganehouser.github.io/drafts/2019-12-11_rust-terminal-crates.html"/>
+<meta property="og:url" content="./2019-12-11_rust-terminal-crates.html"/>
 <meta property="og:type" content="article"/>
 <meta property="article:published_time" content="2019-12-11 00:00:00+09:00"/>
 <meta property="article:modified_time" content=""/>
-<meta property="article:author" content="https://meganehouser.github.io/author/meganehouser">
+<meta property="article:author" content="./author/meganehouser">
 <meta property="article:section" content="programming"/>
 <meta property="article:tag" content="rust"/>
 <meta property="article:tag" content="advent calendar"/>
-<meta property="og:image" content="https://meganehouser.github.io//images/cover.jpg">
+<meta property="og:image" content=".//images/cover.jpg">
 
 <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@meganehouser">
     <meta name="twitter:title" content="Rustのターミナル操作crateいろいろ">
-    <meta name="twitter:url" content="https://meganehouser.github.io/drafts/2019-12-11_rust-terminal-crates.html">
+    <meta name="twitter:url" content="./2019-12-11_rust-terminal-crates.html">
 
-        <meta name="twitter:image:src" content="https://meganehouser.github.io//images/cover.jpg">
+        <meta name="twitter:image:src" content=".//images/cover.jpg">
 
       <meta name="twitter:description" content="Rustその2 Advent Calendar 2019の記事です。">
 
@@ -89,10 +88,10 @@
   "author": {
     "@type": "Person",
     "name": "meganehouser",
-    "url": "https://meganehouser.github.io/author/meganehouser"
+    "url": "./author/meganehouser"
   },
-  "image": "https://meganehouser.github.io//images/cover.jpg",
-  "url": "https://meganehouser.github.io/drafts/2019-12-11_rust-terminal-crates.html",
+  "image": ".//images/cover.jpg",
+  "url": "./2019-12-11_rust-terminal-crates.html",
   "description": "Rustその2 Advent Calendar 2019の記事です。"
 }
 </script>
@@ -106,7 +105,7 @@
     <p class="nav-label">Menu</p>
     <ul>
 
-              <li role="presentation"><a href="https://meganehouser.github.io/pages/about.html">About Me</a></li>
+              <li role="presentation"><a href="./pages/about.html">About Me</a></li>
 
     </ul>
   </div>
@@ -122,7 +121,7 @@
       <div class="inner">
         <nav id="navigation">
             <span id="home-button" class="nav-button">
-                <a class="home-button" href="https://meganehouser.github.io/" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
+                <a class="home-button" href="./" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
             </span>
           <span id="menu-button" class="nav-button">
             <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
@@ -131,11 +130,11 @@
         <h1 class="post-title">Rustのターミナル操作crateいろいろ</h1>
         <!-- TODO : Proper class for headline -->
         <span class="post-meta">
-                <a href="https://meganehouser.github.io/author/meganehouser">meganehouser</a>
+                <a href="./author/meganehouser">meganehouser</a>
             | <time datetime="Wed 11 December 2019">Wed 11 December 2019</time>
         </span>
         <!-- TODO : Modified check -->
-            <div class="post-cover cover" style="background-image: url('https://meganehouser.github.io//images/cover.jpg')">
+            <div class="post-cover cover" style="background-image: url('.//images/cover.jpg')">
       </div>
     </header>
 
@@ -170,9 +169,9 @@
 <p>そこで他のターミナル操作系のcrateで書き直すことにしたのですが、結構いろんなcrateがあってよくわからなかったので調べてみました。</p>
 <p>各情報とサンプルプログラムを掲載しています。サンプルプログラムはHello Worldだけだと簡単すぎるので、<code>m</code>キーをクリックしたら画面中央に"Merry Christmas"と表示するものです。</p>
 <p>Star数やLatest versionは2019/12/10での状態です。</p>
-<h2 id="nucurses-rs">ncurses-rs</h2>
+<h2 id="ncurses-rs">ncurses-rs</h2>
 
-<p>割と前からあるncursesの薄いラッパーです。
+<p>割と昔からあるncursesの薄いラッパーです。
 ドキュメントは書かれていませんが、ncursesの方で検索すると使い方がいくらでも出てくるので困ることはありません。</p>
 <table>
 <thead>
@@ -237,10 +236,10 @@
 </pre></div>
 
 
-<p>C言語のライブラリの薄いラッパーのため、構造体+メソッドでの抽象化などは行われておらず、フラットに命令を読んでいく形式になります。</p>
+<p>C言語のライブラリの薄いラッパーのため、構造体+メソッドでの抽象化などは行われておらず、フラットに命令を呼んでいく形式になります。</p>
 <h2 id="pancurses">pancurses</h2>
 
-<p>pancursesはLinuxとWindows両方をサポートしつつ、cursesをより使いやすくかつ移植性を保つために十分にcursesに近いインターフェースを提供することを目的としたcrateです。</p>
+<p>pancursesはLinuxとWindows両方をサポートしつつ、cursesをより使いやすく、かつ移植性を保つために十分にcursesに近いインターフェースを提供することを目的としたcrateです。</p>
 <p>Linuxではncurses-rs、Windowsではpdcurses-sysに依存しています。</p>
 <table>
 <thead>
@@ -338,7 +337,7 @@
 </tr>
 </tbody>
 </table>
-<p>Rustboxは<a href="https://github.com/nsf/termbox">termobox</a>のRust実装です。READMEでは現在はCライブラリのラッパーだが、将来的にはRustのみの実装に置き換える計画があるとうたわれているます。</p>
+<p>Rustboxは<a href="https://github.com/nsf/termbox">termobox</a>のRust実装です。READMEでは、現在はCライブラリのラッパーで将来的にRustのみの実装に置き換える計画だと書かれています。</p>
 <p>しかし、2018年5月以降、新しいリリースはされていないようです。</p>
 <div class="highlight"><pre><span></span><span class="k">use</span><span class="w"> </span><span class="n">rustbox</span>::<span class="o">*</span><span class="p">;</span><span class="w"></span>
 
@@ -376,7 +375,7 @@
 <h2 id="crossterm">crossterm</h2>
 
 <p>crosstermはWindows, UNIX両方をサポートするクロスプラットフォームなターミナル操作ライブラリです。</p>
-<p>READMEでは、1.0リリースの準備として最新バージョンで非常に急速なインターフェースを変更していることが記載されており、この後のリリース0.14でも破壊的な変更が予定されているようです(<a href="https://github.com/crossterm-rs/crossterm/wiki/Upgrade-from-0.13-to-0.14">0.13から0.14へのアップグレード</a>)</p>
+<p>READMEでは、1.0リリースの準備として最新バージョンでインターフェースを大きく変更していることが記載されており、この後のリリース0.14でも破壊的な変更が予定されているようです(<a href="https://github.com/crossterm-rs/crossterm/wiki/Upgrade-from-0.13-to-0.14">0.13から0.14へのアップグレード</a>)</p>
 <table>
 <thead>
 <tr>
@@ -480,7 +479,7 @@
 <h2 id="termion">termion</h2>
 
 <p>termionはピュアRust, 他の低レベルハンドリング用のライブラリに依存しない、ターミナル操作crateです。</p>
-<p>UNIXライクなOSをRustで開発しているRedoxのプロジェクト配下でメンテされています。</p>
+<p>Rust製のUNIXライクなOSであるRedoxのプロジェクト配下でメンテされています。</p>
 <table>
 <thead>
 <tr>
@@ -793,20 +792,20 @@
 
             <section class="post-info">
                 <div class="post-share">
-                    <a class="twitter" href="https://twitter.com/share?text=Rustのターミナル操作crateいろいろ&amp;url=https://meganehouser.github.io/drafts/2019-12-11_rust-terminal-crates.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <a class="twitter" href="https://twitter.com/share?text=Rustのターミナル操作crateいろいろ&amp;url=./2019-12-11_rust-terminal-crates.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                     <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
                     </a>
-                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://meganehouser.github.io/drafts/2019-12-11_rust-terminal-crates.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=./2019-12-11_rust-terminal-crates.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
                     <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
                     </a>
-                    <a class="googleplus" href="https://plus.google.com/share?url=https://meganehouser.github.io/drafts/2019-12-11_rust-terminal-crates.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <a class="googleplus" href="https://plus.google.com/share?url=./2019-12-11_rust-terminal-crates.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
                     <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
                     </a>
                     <div class="clear"></div>
                 </div>
 
                 <aside class="post-tags">
-<a href="https://meganehouser.github.io/tag/rust.html">rust</a><a href="https://meganehouser.github.io/tag/advent-calendar.html">advent calendar</a>                </aside>
+<a href="./tag/rust.html">rust</a><a href="./tag/advent-calendar.html">advent calendar</a>                </aside>
 
                 <div class="clear"></div>
 
@@ -814,10 +813,10 @@
 
 
                         <figure class="post-author-avatar">
-                            <img src="https://meganehouser.github.io/images/kaeru.jpg" alt="meganehouser" />
+                            <img src="./images/kaeru.jpg" alt="meganehouser" />
                         </figure>
                     <div class="post-author-bio">
-                        <h4 class="post-author-name"><a href="https://meganehouser.github.io/author/meganehouser">meganehouser</a></h4>
+                        <h4 class="post-author-name"><a href="./author/meganehouser">meganehouser</a></h4>
                             <p class="post-author-about">Excelおじさんを卒業したPythonおじさん。ハウスとよさこい踊る。隠れF#er。すごいHaskell本読んでく。</p>
                             <span class="post-author-location"><i class="ic ic-location"></i> Tokyo</span>
                             <span class="post-author-website"><a href="http://meganehouser.github.io/"><i class="ic ic-link"></i> Website</a></span>
@@ -853,24 +852,7 @@
     </footer>
   </section>
 
-  <script type="text/javascript" src="https://meganehouser.github.io/theme/js/script.js"></script>
+  <script type="text/javascript" src="./theme/js/script.js"></script>
 
-    <!-- Global Site Tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56794608-1"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'UA-56794608-1', { 'anonymize_ip': true });
-    </script>
-<script type="text/javascript">
-    var disqus_shortname = 'meganehouser';
-    (function () {
-        var s = document.createElement('script'); s.async = true;
-        s.type = 'text/javascript';
-        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-    }());
-</script>
 </body>
 </html>
