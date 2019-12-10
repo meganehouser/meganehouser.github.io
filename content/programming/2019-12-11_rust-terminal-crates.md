@@ -34,7 +34,7 @@ Summary: Rustその2 Advent Calendar 2019の記事です。
 
 Star数やLatest versionは2019/12/10での状態です。
 
-<h2 id="nucurses-rs">ncurses-rs</h2>
+<h2 id="ncurses-rs">ncurses-rs</h2>
 割と昔からあるncursesの薄いラッパーです。
 ドキュメントは書かれていませんが、ncursesの方で検索すると使い方がいくらでも出てくるので困ることはありません。
 
