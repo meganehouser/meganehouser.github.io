@@ -33,6 +33,8 @@ Status: draft
 
 各情報とサンプルプログラムを掲載しています。サンプルプログラムはHello Worldだけだと簡単すぎるので、`m`キーをクリックしたら画面中央に"Merry Christmas"と表示するものです。
 
+Star数やLatest versionは2019/12/10での状態です。
+
 <h2 id="nucurses-rs">ncurses-rs</h2>
 割と前からあるncursesの薄いラッパーです。
 ドキュメントは書かれていませんが、ncursesの方で検索すると使い方がいくらでも出てくるので困ることはありません。
@@ -90,8 +92,8 @@ Linuxではncurses-rs、Windowsではpdcurses-sysに依存しています。
 | key | value |
 | -- | -- |
 | repository |[ihalila/pancurses](https://github.com/ihalila/pancurses) |
-| Star | 203 |
-| crates.io | [https://crates.io/crates/pancurses]([https://crates.io/crates/pancurses) |
+| Star | 204 |
+| crates.io | [https://crates.io/crates/pancurses](https://crates.io/crates/pancurses) |
 | Latest version | 0.16.1(Dec 26, 2018) |
 | docs.rs | [pancurses - Rust](https://docs.rs/pancurses/0.16.1/pancurses/) |
 
@@ -181,11 +183,15 @@ ncurses-rsやpancursesよりもシンプルで使い勝手がよいインター�
 
 <h2 id="crossterm">crossterm</h2>
 
+crosstermはWindows, UNIX両方をサポートするクロスプラットフォームなターミナル操作ライブラリです。
+
+READMEでは、1.0リリースの準備として最新バージョンで非常に急速なインターフェースを変更していることが記載されており、この後のリリース0.14でも破壊的な変更が予定されているようです([0.13から0.14へのアップグレード](https://github.com/crossterm-rs/crossterm/wiki/Upgrade-from-0.13-to-0.14))
+
 | key | value |
 | -- | -- |
 | repository | [crossterm-rs/crossterm](https://github.com/crossterm-rs/crossterm) |
-| Star | 474 |
-| crates.io | [https://crates.io/crates/termbox](https://crates.io/crates/termbox) |
+| Star | 475 |
+| crates.io | [https://crates.io/crates/crossterm](https://crates.io/crates/crossterm) |
 | Latest version | 0.13.3(Nov 8, 2019) |
 | docs.rs | [crossterm - Rust](https://docs.rs/crossterm/0.13.3/crossterm/) |
 
@@ -250,9 +256,21 @@ fn main() {
 }
 ```
 
+ターミナル操作コマンドを並べて`execute!`で一度に実行するコマンドAPIが特徴的です。
+ドキュメントにはコマンドAPIには以下のメリットがあると記載されています。
+
+- よりよい性能
+- フラッシュするタイミングを完全に制御可能
+- ANSIエスケープコマンドが実行される場所を完全に制御可能
+- より簡単で優れたAPI
+
+また、上記サンプルコードでは`SyncReader`を使用していますが、非同期版の`AsyncReader`が用意されていることも特徴です。
 
 <h2 id="termion">termion</h2>
 
+termionはピュアRust, 他の低レベルハンドリング用のライブラリに依存しない、ターミナル操作crateです。
+
+UNIXライクなOSをRustで開発しているRedoxのプロジェクト配下でメンテされています。
 
 
 | key | value |
@@ -304,9 +322,20 @@ fn main() {
 }
 ```
 
+crosstermのように複数のコマンドを一度に実行する形式ですが、標準出力に制御コードを書き込むというのがよりむき出しとなった見た目です。
+
 
 <h2 id="cursive">cursive</h2>
+
+今まで紹介したcrateが単純なターミナル操作に特化したcrateであったのに対して、ここから紹介するcursiveとtui-rsはよりリッチなTUIを実現するcrateです。
+
+どちらもWidgetを組み合わせて複雑な画面のアプリケーションを作り込んでいくことができます。
+
+cursiveとtui-rsのどちらを使えばいいかは以下のドキュメントがあります。
+
 [Cursive vs tui‐rs · gyscos/cursive Wiki](https://github.com/gyscos/cursive/wiki/Cursive-vs-tui%E2%80%90rs)
+
+cursiveはncurses-rs, pancurses, termion, crossterm, BearLibTerminal.rsからbackendを選択することができます。
 
 | key | value |
 | -- | -- |
@@ -381,8 +410,16 @@ fn main() {
 } 
 ```
 
+組み込みのWidgetやサードパーティのWidgetで対応できない場合は、独自のWidgetを定義します。
+
+上記サンプルコードでは、インラインで独自の挙動を設定できる組み込みWidgetのCanvasを使用しています。
+
 
 <h2 id="tui-rs">tui-rs</h2>
+
+tui-rsは少し前に話題になった[spotify-rs](https://github.com/Rigellute/spotify-tui)でも使用されているcrateです。
+
+tui-rsはtermion, rustbox, crossterm, pancursesからbackendを選択することができます。
 
 | key | value |
 | -- | -- |
@@ -392,7 +429,6 @@ fn main() {
 | Latest version | 0.7.0 (Nov 29, 2019) |
 | docs.rs | [tui 0.7.0 - Docs.rs](https://docs.rs/crate/tui/0.7.0) |
 
-[Rigellute/spotify-tui: Spotify for the terminal written in Rust 🚀](https://github.com/Rigellute/spotify-tui)
 
 ```rust
 use std::io;
@@ -488,5 +524,10 @@ fn main() {
 }
 ```
 
+tui-rsは入力はハンドルしないため、termionなどのbackendの仕組みをそのまま使用します。
+
+
 <h2 id="conclusion">まとめ</h2>
+
+長いものに巻かれろということでStar数の多いtermionで実装し直したところ、CPU使用率は8%まで下がりました！
 
