@@ -1,7 +1,6 @@
 Title: Rustのターミナル操作crateいろいろ
 Tags: rust, advent calendar
 Summary: Rustその2 Advent Calendar 2019の記事です。
-Status: draft
 
 この記事は[Rustその2 Advent Calendar 2019](https://qiita.com/advent-calendar/2019/rust2)の11日目の記事です。
 
@@ -36,7 +35,7 @@ Status: draft
 Star数やLatest versionは2019/12/10での状態です。
 
 <h2 id="nucurses-rs">ncurses-rs</h2>
-割と前からあるncursesの薄いラッパーです。
+割と昔からあるncursesの薄いラッパーです。
 ドキュメントは書かれていませんが、ncursesの方で検索すると使い方がいくらでも出てくるので困ることはありません。
 
 | key | value |
@@ -80,12 +79,12 @@ fn main() {
 }
 ```
 
-C言語のライブラリの薄いラッパーのため、構造体+メソッドでの抽象化などは行われておらず、フラットに命令を読んでいく形式になります。
+C言語のライブラリの薄いラッパーのため、構造体+メソッドでの抽象化などは行われておらず、フラットに命令を呼んでいく形式になります。
 
 
 
 <h2 id="pancurses">pancurses</h2>
-pancursesはLinuxとWindows両方をサポートしつつ、cursesをより使いやすくかつ移植性を保つために十分にcursesに近いインターフェースを提供することを目的としたcrateです。
+pancursesはLinuxとWindows両方をサポートしつつ、cursesをより使いやすく、かつ移植性を保つために十分にcursesに近いインターフェースを提供することを目的としたcrateです。
 
 Linuxではncurses-rs、Windowsではpdcurses-sysに依存しています。
 
@@ -142,7 +141,7 @@ initscrがwindow返して、その後はwindowのメソッドを呼ぶように�
 | Latest version | 0.11.0 Mar 31, 2018 |
 | docs.rs | [rustbox - Rust](https://docs.rs/rustbox/0.11.0/rustbox/) |
 
-Rustboxは[termobox](https://github.com/nsf/termbox)のRust実装です。READMEでは現在はCライブラリのラッパーだが、将来的にはRustのみの実装に置き換える計画があるとうたわれているます。
+Rustboxは[termobox](https://github.com/nsf/termbox)のRust実装です。READMEでは、現在はCライブラリのラッパーで将来的にRustのみの実装に置き換える計画だと書かれています。
 
 しかし、2018年5月以降、新しいリリースはされていないようです。
 
@@ -185,7 +184,7 @@ ncurses-rsやpancursesよりもシンプルで使い勝手がよいインター�
 
 crosstermはWindows, UNIX両方をサポートするクロスプラットフォームなターミナル操作ライブラリです。
 
-READMEでは、1.0リリースの準備として最新バージョンで非常に急速なインターフェースを変更していることが記載されており、この後のリリース0.14でも破壊的な変更が予定されているようです([0.13から0.14へのアップグレード](https://github.com/crossterm-rs/crossterm/wiki/Upgrade-from-0.13-to-0.14))
+READMEでは、1.0リリースの準備として最新バージョンでインターフェースを大きく変更していることが記載されており、この後のリリース0.14でも破壊的な変更が予定されているようです([0.13から0.14へのアップグレード](https://github.com/crossterm-rs/crossterm/wiki/Upgrade-from-0.13-to-0.14))
 
 | key | value |
 | -- | -- |
@@ -270,7 +269,7 @@ fn main() {
 
 termionはピュアRust, 他の低レベルハンドリング用のライブラリに依存しない、ターミナル操作crateです。
 
-UNIXライクなOSをRustで開発しているRedoxのプロジェクト配下でメンテされています。
+Rust製のUNIXライクなOSであるRedoxのプロジェクト配下でメンテされています。
 
 
 | key | value |
