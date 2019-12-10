@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
+  <title>Rustのターミナル操作crateいろいろ</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+  <link href="https://meganehouser.github.io/" rel="canonical" />
+
+  <!-- Feed -->
+        <link href="https://meganehouser.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="きんつば Full Atom Feed" />
+
+  <link href="https://meganehouser.github.io/theme/css/style.css" type="text/css" rel="stylesheet" />
+
+  <!-- Code highlight color scheme -->
+      <link href="https://meganehouser.github.io/theme/css/code_blocks/github.css" rel="stylesheet">
+
+    <!-- CSS specified by the user -->
+
+
+    <link href="https://meganehouser.github.io/assets/css/myblog.css" type="text/css" rel="stylesheet" />
+
+  <!-- Custom fonts -->
+  <link href='https://fonts.googleapis.com/css?family=Montserrat:400,300' rel='stylesheet' type='text/css' />
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css" />
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+
+  <link href="https://meganehouser.github.io/drafts/2019-12-11_rust-terminal-crates.html" rel="canonical" />
+
+    <meta name="description" content="Rustその2 Advent Calendar 2019の記事です。">
+
+    <meta name="author" content="meganehouser">
+
+    <meta name="tags" content="rust">
+    <meta name="tags" content="advent calendar">
+
+
+
+
+<!-- Open Graph -->
+<meta property="og:site_name" content="きんつば"/>
+<meta property="og:title" content="Rustのターミナル操作crateいろいろ"/>
+<meta property="og:description" content="Rustその2 Advent Calendar 2019の記事です。"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="https://meganehouser.github.io/drafts/2019-12-11_rust-terminal-crates.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2019-12-11 00:00:00+09:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="https://meganehouser.github.io/author/meganehouser">
+<meta property="article:section" content="programming"/>
+<meta property="article:tag" content="rust"/>
+<meta property="article:tag" content="advent calendar"/>
+<meta property="og:image" content="https://meganehouser.github.io//images/cover.jpg">
+
+<!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@meganehouser">
+    <meta name="twitter:title" content="Rustのターミナル操作crateいろいろ">
+    <meta name="twitter:url" content="https://meganehouser.github.io/drafts/2019-12-11_rust-terminal-crates.html">
+
+        <meta name="twitter:image:src" content="https://meganehouser.github.io//images/cover.jpg">
+
+      <meta name="twitter:description" content="Rustその2 Advent Calendar 2019の記事です。">
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "Rustのターミナル操作crateいろいろ",
+  "headline": "Rustのターミナル操作crateいろいろ",
+  "datePublished": "2019-12-11 00:00:00+09:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "meganehouser",
+    "url": "https://meganehouser.github.io/author/meganehouser"
+  },
+  "image": "https://meganehouser.github.io//images/cover.jpg",
+  "url": "https://meganehouser.github.io/drafts/2019-12-11_rust-terminal-crates.html",
+  "description": "Rustその2 Advent Calendar 2019の記事です。"
+}
+</script>
+</head>
+<!-- TODO : Body class -->
+<body class="home-template">
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+
+              <li role="presentation"><a href="https://meganehouser.github.io/pages/about.html">About Me</a></li>
+
+    </ul>
+  </div>
+</nav>
+    <!-- Progressbar -->
+    <div class="progress-container">
+        <span class="progress-bar"></span>
+    </div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header id="post-header" class="has-cover">
+      <div class="inner">
+        <nav id="navigation">
+            <span id="home-button" class="nav-button">
+                <a class="home-button" href="https://meganehouser.github.io/" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
+            </span>
+          <span id="menu-button" class="nav-button">
+            <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
+          </span>
+        </nav>
+        <h1 class="post-title">Rustのターミナル操作crateいろいろ</h1>
+        <!-- TODO : Proper class for headline -->
+        <span class="post-meta">
+                <a href="https://meganehouser.github.io/author/meganehouser">meganehouser</a>
+            | <time datetime="Wed 11 December 2019">Wed 11 December 2019</time>
+        </span>
+        <!-- TODO : Modified check -->
+            <div class="post-cover cover" style="background-image: url('https://meganehouser.github.io//images/cover.jpg')">
+      </div>
+    </header>
+
+  <section id="wrapper">
+    <a class="hidden-close"></a>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+        <div class="inner">
+            <section class="post-content">
+                <p>この記事は<a href="https://qiita.com/advent-calendar/2019/rust2">Rustその2 Advent Calendar 2019</a>の11日目の記事です。</p>
+<p>いろいろなターミナル操作系のcrateがあるので試してみました、という記事です。</p>
+<h3>目次</h3>
+<ul>
+<li><a href="#preface">はじめに</a></li>
+<li><a href="#ncurses-rs">nucurses-rs</a></li>
+<li><a href="#pancurses">pancurses</a></li>
+<li><a href="#rustbox">rustbox</a></li>
+<li><a href="#crossterm">crossterm</a></li>
+<li><a href="#termion">termion</a></li>
+<li><a href="#cursive">cursive</a></li>
+<li><a href="#tui-rs">tui-rs</a></li>
+<li><a href="#conclusion">まとめ</a></li>
+</ul>
+<h2 id="preface">はじめに</h2>
+
+<p>映画「マトリックス」に影響を受けまくった世代なので<a href="https://github.com/abishekvashok/cmatrix">cmatrix</a>、<a href="https://github.com/will8211/unimatrix">unimatrix</a>みたいなターミナルで緑色の文字が振ってくるコマンドをRustで移植しました。</p>
+<p>作ったコマンド「<a href="https://github.com/meganehouser/rustmatrix">rustmatrix</a>」の画面
+<img alt="rustmatrix" src="https://user-images.githubusercontent.com/1280199/67680821-6d5f0100-f9cf-11e9-8989-d88684ff1dfc.png"></p>
+<p>ターミナルを操作するcrateは当初cursiveを使っていたのですが、CPU使用率が40%を超えてしまいました。cursiveは毎フレームで描画を行なってアニメーションする用途には向いていないようです。</p>
+<p>そこで他のターミナル操作系のcrateで書き直すことにしたのですが、結構いろんなcrateがあってよくわからなかったので調べてみました。</p>
+<p>各情報とサンプルプログラムを掲載しています。サンプルプログラムはHello Worldだけだと簡単すぎるので、<code>m</code>キーをクリックしたら画面中央に"Merry Christmas"と表示するものです。</p>
+<p>Star数やLatest versionは2019/12/10での状態です。</p>
+<h2 id="nucurses-rs">ncurses-rs</h2>
+
+<p>割と前からあるncursesの薄いラッパーです。
+ドキュメントは書かれていませんが、ncursesの方で検索すると使い方がいくらでも出てくるので困ることはありません。</p>
+<table>
+<thead>
+<tr>
+<th>key</th>
+<th>value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>repository</td>
+<td><a href="https://github.com/jeaye/ncurses-rs">jeaye/ncurses-rs</a> </td>
+</tr>
+<tr>
+<td>Star</td>
+<td>473</td>
+</tr>
+<tr>
+<td>crates.io</td>
+<td><a href="https://crates.io/crates/ncurses">https://crates.io/crates/ncurses</a></td>
+</tr>
+<tr>
+<td>Latest version</td>
+<td>5.99.0 (Feb 25, 2019)</td>
+</tr>
+<tr>
+<td>docs.rs</td>
+<td><a href="https://docs.rs/ncurses/5.99.0/ncurses/">ncurses - Rust</a></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><span class="k">use</span><span class="w"> </span><span class="n">ncurses</span>::<span class="o">*</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">const</span><span class="w"> </span><span class="n">MESSAGE</span>: <span class="kp">&amp;</span><span class="kt">str</span> <span class="o">=</span><span class="w"> </span><span class="s">&quot;Merry Christmas !!&quot;</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">window</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">initscr</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">start_color</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">use_default_colors</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">init_pair</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">COLOR_BLUE</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">addstr</span><span class="p">(</span><span class="s">&quot;Hello world !!&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">refresh</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">keypad</span><span class="p">(</span><span class="n">window</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">noecho</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">curs_set</span><span class="p">(</span><span class="n">CURSOR_VISIBILITY</span>::<span class="n">CURSOR_INVISIBLE</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">loop</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">match</span><span class="w"> </span><span class="n">getch</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">             </span><span class="mi">109</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="kd">let</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getmaxy</span><span class="p">(</span><span class="n">window</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+<span class="w">                </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getmaxx</span><span class="p">(</span><span class="n">window</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="n">MESSAGE</span><span class="p">.</span><span class="n">len</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="kt">i32</span><span class="p">;</span><span class="w"></span>
+<span class="w">                </span><span class="n">clear</span><span class="p">();</span><span class="w"></span>
+<span class="w">                </span><span class="n">color_set</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">                </span><span class="n">mvaddstr</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">MESSAGE</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">            </span><span class="n">KEY_DC</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="k">break</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="n">_</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">(),</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">endwin</span><span class="p">();</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+
+
+<p>C言語のライブラリの薄いラッパーのため、構造体+メソッドでの抽象化などは行われておらず、フラットに命令を読んでいく形式になります。</p>
+<h2 id="pancurses">pancurses</h2>
+
+<p>pancursesはLinuxとWindows両方をサポートしつつ、cursesをより使いやすくかつ移植性を保つために十分にcursesに近いインターフェースを提供することを目的としたcrateです。</p>
+<p>Linuxではncurses-rs、Windowsではpdcurses-sysに依存しています。</p>
+<table>
+<thead>
+<tr>
+<th>key</th>
+<th>value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>repository</td>
+<td><a href="https://github.com/ihalila/pancurses">ihalila/pancurses</a></td>
+</tr>
+<tr>
+<td>Star</td>
+<td>204</td>
+</tr>
+<tr>
+<td>crates.io</td>
+<td><a href="https://crates.io/crates/pancurses">https://crates.io/crates/pancurses</a></td>
+</tr>
+<tr>
+<td>Latest version</td>
+<td>0.16.1(Dec 26, 2018)</td>
+</tr>
+<tr>
+<td>docs.rs</td>
+<td><a href="https://docs.rs/pancurses/0.16.1/pancurses/">pancurses - Rust</a></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><span class="k">use</span><span class="w"> </span><span class="n">pancurses</span>::<span class="o">*</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">const</span><span class="w"> </span><span class="n">MESSAGE</span>: <span class="kp">&amp;</span><span class="kt">str</span> <span class="o">=</span><span class="w"> </span><span class="s">&quot;Merry Christmas !!&quot;</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">window</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">initscr</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">start_color</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">use_default_colors</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">init_pair</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">COLOR_BLUE</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">window</span><span class="p">.</span><span class="n">printw</span><span class="p">(</span><span class="s">&quot;Hello world !!&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">window</span><span class="p">.</span><span class="n">refresh</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">window</span><span class="p">.</span><span class="n">keypad</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">noecho</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">curs_set</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">loop</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">match</span><span class="w"> </span><span class="n">window</span><span class="p">.</span><span class="n">getch</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nb">Some</span><span class="p">(</span><span class="n">Input</span>::<span class="n">Character</span><span class="p">(</span><span class="sc">&#39;m&#39;</span><span class="p">))</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="kd">let</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">window</span><span class="p">.</span><span class="n">get_max_y</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+<span class="w">                </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">window</span><span class="p">.</span><span class="n">get_max_x</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="n">MESSAGE</span><span class="p">.</span><span class="n">len</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="kt">i32</span><span class="p">;</span><span class="w"></span>
+<span class="w">                </span><span class="n">window</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span><span class="w"></span>
+<span class="w">                </span><span class="n">window</span><span class="p">.</span><span class="n">color_set</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">                </span><span class="n">window</span><span class="p">.</span><span class="n">mvaddstr</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">MESSAGE</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">            </span><span class="nb">Some</span><span class="p">(</span><span class="n">Input</span>::<span class="n">KeyDC</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="k">break</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="n">_</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">(),</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">endwin</span><span class="p">();</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+
+
+<p>initscrがwindow返して、その後はwindowのメソッドを呼ぶようになっており、生のncursesよりも使いやすく抽象化されていることがわかります。</p>
+<h2 id="rustbox">rustbox</h2>
+
+<table>
+<thead>
+<tr>
+<th>key</th>
+<th>value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>repository</td>
+<td><a href="https://github.com/gchp/rustbox">gchp/rustbox</a></td>
+</tr>
+<tr>
+<td>Star</td>
+<td>391</td>
+</tr>
+<tr>
+<td>crates.io</td>
+<td><a href="https://crates.io/crates/rustbox">https://crates.io/crates/rustbox</a></td>
+</tr>
+<tr>
+<td>Latest version</td>
+<td>0.11.0 Mar 31, 2018</td>
+</tr>
+<tr>
+<td>docs.rs</td>
+<td><a href="https://docs.rs/rustbox/0.11.0/rustbox/">rustbox - Rust</a></td>
+</tr>
+</tbody>
+</table>
+<p>Rustboxは<a href="https://github.com/nsf/termbox">termobox</a>のRust実装です。READMEでは現在はCライブラリのラッパーだが、将来的にはRustのみの実装に置き換える計画があるとうたわれているます。</p>
+<p>しかし、2018年5月以降、新しいリリースはされていないようです。</p>
+<div class="highlight"><pre><span></span><span class="k">use</span><span class="w"> </span><span class="n">rustbox</span>::<span class="o">*</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">const</span><span class="w"> </span><span class="n">MESSAGE</span>: <span class="kp">&amp;</span><span class="kt">str</span> <span class="o">=</span><span class="w"> </span><span class="s">&quot;Merry Christmas !!&quot;</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">rustbox</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RustBox</span>::<span class="n">init</span><span class="p">(</span><span class="nb">Default</span>::<span class="n">default</span><span class="p">()).</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">rustbox</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">rustbox</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">rustbox</span>::<span class="n">RB_NORMAL</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span>::<span class="n">White</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span>::<span class="nb">Default</span><span class="p">,</span><span class="w">  </span><span class="s">&quot;Hello world !!&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">rustbox</span><span class="p">.</span><span class="n">present</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">loop</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">match</span><span class="w"> </span><span class="n">rustbox</span><span class="p">.</span><span class="n">poll_event</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nb">Ok</span><span class="p">(</span><span class="n">rustbox</span>::<span class="n">Event</span>::<span class="n">KeyEvent</span><span class="p">(</span><span class="n">key</span><span class="p">))</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="k">match</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                    </span><span class="n">Key</span>::<span class="n">Char</span><span class="p">(</span><span class="sc">&#39;m&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                        </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rustbox</span><span class="p">.</span><span class="n">width</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="n">MESSAGE</span><span class="p">.</span><span class="n">len</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
+<span class="w">                        </span><span class="kd">let</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rustbox</span><span class="p">.</span><span class="n">height</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+<span class="w">                        </span><span class="n">rustbox</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span><span class="w"></span>
+<span class="w">                        </span><span class="n">rustbox</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">rustbox</span>::<span class="n">RB_BOLD</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span>::<span class="n">Blue</span><span class="p">,</span><span class="w"> </span><span class="n">Color</span>::<span class="nb">Default</span><span class="p">,</span><span class="w"> </span><span class="n">MESSAGE</span><span class="p">);</span><span class="w"></span>
+<span class="w">                        </span><span class="n">rustbox</span><span class="p">.</span><span class="n">present</span><span class="p">();</span><span class="w"></span>
+<span class="w">                    </span><span class="p">},</span><span class="w"></span>
+<span class="w">                    </span><span class="n">Key</span>::<span class="n">Ctrl</span><span class="p">(</span><span class="sc">&#39;c&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="k">break</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="n">_</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{},</span><span class="w"></span>
+<span class="w">                </span><span class="p">}</span><span class="w"></span>
+<span class="w">            </span><span class="p">},</span><span class="w"></span>
+<span class="w">            </span><span class="n">_</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{},</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+
+
+<p>ncurses-rsやpancursesよりもシンプルで使い勝手がよいインターフェースとなっています。</p>
+<h2 id="crossterm">crossterm</h2>
+
+<p>crosstermはWindows, UNIX両方をサポートするクロスプラットフォームなターミナル操作ライブラリです。</p>
+<p>READMEでは、1.0リリースの準備として最新バージョンで非常に急速なインターフェースを変更していることが記載されており、この後のリリース0.14でも破壊的な変更が予定されているようです(<a href="https://github.com/crossterm-rs/crossterm/wiki/Upgrade-from-0.13-to-0.14">0.13から0.14へのアップグレード</a>)</p>
+<table>
+<thead>
+<tr>
+<th>key</th>
+<th>value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>repository</td>
+<td><a href="https://github.com/crossterm-rs/crossterm">crossterm-rs/crossterm</a></td>
+</tr>
+<tr>
+<td>Star</td>
+<td>475</td>
+</tr>
+<tr>
+<td>crates.io</td>
+<td><a href="https://crates.io/crates/crossterm">https://crates.io/crates/crossterm</a></td>
+</tr>
+<tr>
+<td>Latest version</td>
+<td>0.13.3(Nov 8, 2019)</td>
+</tr>
+<tr>
+<td>docs.rs</td>
+<td><a href="https://docs.rs/crossterm/0.13.3/crossterm/">crossterm - Rust</a></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><span class="k">use</span><span class="w"> </span><span class="n">crossterm</span>::<span class="o">*</span><span class="p">;</span><span class="w"></span>
+<span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">io</span>::<span class="p">{</span><span class="n">stdout</span><span class="p">,</span><span class="w"> </span><span class="n">Write</span><span class="p">};</span><span class="w"></span>
+<span class="k">use</span><span class="w"> </span><span class="n">crossterm</span>::<span class="n">screen</span>::<span class="n">RawScreen</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">const</span><span class="w"> </span><span class="n">MESSAGE</span>: <span class="kp">&amp;</span><span class="kt">str</span> <span class="o">=</span><span class="w"> </span><span class="s">&quot;Merry Christmas !!&quot;</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">_screen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RawScreen</span>::<span class="n">into_raw_mode</span><span class="p">().</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">input</span>::<span class="n">input</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">sync_stdin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">input</span><span class="p">.</span><span class="n">read_sync</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">execute</span><span class="o">!</span><span class="p">(</span><span class="w"></span>
+<span class="w">        </span><span class="n">stdout</span><span class="p">(),</span><span class="w"></span>
+<span class="w">        </span><span class="n">cursor</span>::<span class="n">Hide</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="n">terminal</span>::<span class="n">Clear</span><span class="p">(</span><span class="n">terminal</span>::<span class="n">ClearType</span>::<span class="n">All</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">execute</span><span class="o">!</span><span class="p">(</span><span class="w"></span>
+<span class="w">        </span><span class="n">stdout</span><span class="p">(),</span><span class="w"></span>
+<span class="w">        </span><span class="n">style</span>::<span class="n">SetForegroundColor</span><span class="p">(</span><span class="n">style</span>::<span class="n">Color</span>::<span class="n">White</span><span class="p">),</span><span class="w"></span>
+<span class="w">        </span><span class="n">cursor</span>::<span class="n">MoveTo</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">),</span><span class="w"></span>
+<span class="w">        </span><span class="n">Output</span><span class="p">(</span><span class="s">&quot;Hello world !!&quot;</span><span class="p">),</span><span class="w"></span>
+<span class="w">        </span><span class="n">style</span>::<span class="n">ResetColor</span><span class="w"></span>
+<span class="w">    </span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="p">(</span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="n">height</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">terminal</span>::<span class="n">size</span><span class="p">().</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">width</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="n">MESSAGE</span><span class="p">.</span><span class="n">len</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="kt">u16</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">height</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">loop</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">event</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sync_stdin</span><span class="p">.</span><span class="n">next</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="k">match</span><span class="w"> </span><span class="n">event</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nb">Some</span><span class="p">(</span><span class="n">input</span>::<span class="n">InputEvent</span>::<span class="n">Keyboard</span><span class="p">(</span><span class="n">k</span><span class="p">))</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="k">match</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                    </span><span class="n">input</span>::<span class="n">KeyEvent</span>::<span class="n">Char</span><span class="p">(</span><span class="sc">&#39;m&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                        </span><span class="kd">let</span><span class="w"> </span><span class="n">styled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">style</span>::<span class="n">style</span><span class="p">(</span><span class="s">&quot;Merry Christmas !!&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="w">                            </span><span class="p">.</span><span class="n">with</span><span class="p">(</span><span class="n">style</span>::<span class="n">Color</span>::<span class="n">Blue</span><span class="p">)</span><span class="w"></span>
+<span class="w">                            </span><span class="p">.</span><span class="n">attribute</span><span class="p">(</span><span class="n">style</span>::<span class="n">Attribute</span>::<span class="n">Bold</span><span class="p">);</span><span class="w"></span>
+<span class="w">                        </span><span class="n">execute</span><span class="o">!</span><span class="p">(</span><span class="w"></span>
+<span class="w">                                </span><span class="n">stdout</span><span class="p">(),</span><span class="w"></span>
+<span class="w">                                </span><span class="n">terminal</span>::<span class="n">Clear</span><span class="p">(</span><span class="n">terminal</span>::<span class="n">ClearType</span>::<span class="n">All</span><span class="p">),</span><span class="w"></span>
+<span class="w">                                </span><span class="n">cursor</span>::<span class="n">MoveTo</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">),</span><span class="w"></span>
+<span class="w">                                </span><span class="n">style</span>::<span class="n">PrintStyledContent</span><span class="p">(</span><span class="n">styled</span><span class="p">)</span><span class="w"></span>
+<span class="w">                            </span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
+<span class="w">                    </span><span class="p">},</span><span class="w"></span>
+<span class="w">                    </span><span class="n">input</span>::<span class="n">KeyEvent</span>::<span class="n">Ctrl</span><span class="p">(</span><span class="sc">&#39;c&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="k">break</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="n">_</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{},</span><span class="w"></span>
+<span class="w">                </span><span class="p">}</span><span class="w"></span>
+<span class="w">            </span><span class="p">},</span><span class="w"></span>
+<span class="w">            </span><span class="n">_</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{},</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">execute</span><span class="o">!</span><span class="p">(</span><span class="w"></span>
+<span class="w">        </span><span class="n">stdout</span><span class="p">(),</span><span class="w"></span>
+<span class="w">        </span><span class="n">cursor</span>::<span class="n">Show</span><span class="w"></span>
+<span class="w">    </span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+
+
+<p>ターミナル操作コマンドを並べて<code>execute!</code>で一度に実行するコマンドAPIが特徴的です。
+ドキュメントにはコマンドAPIには以下のメリットがあると記載されています。</p>
+<ul>
+<li>よりよい性能</li>
+<li>フラッシュするタイミングを完全に制御可能</li>
+<li>ANSIエスケープコマンドが実行される場所を完全に制御可能</li>
+<li>より簡単で優れたAPI</li>
+</ul>
+<p>また、上記サンプルコードでは<code>SyncReader</code>を使用していますが、非同期版の<code>AsyncReader</code>が用意されていることも特徴です。</p>
+<h2 id="termion">termion</h2>
+
+<p>termionはピュアRust, 他の低レベルハンドリング用のライブラリに依存しない、ターミナル操作crateです。</p>
+<p>UNIXライクなOSをRustで開発しているRedoxのプロジェクト配下でメンテされています。</p>
+<table>
+<thead>
+<tr>
+<th>key</th>
+<th>value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>repository</td>
+<td><a href="https://github.com/redox-os/termion">redox-os/termion</a></td>
+</tr>
+<tr>
+<td>Star</td>
+<td>1.1k</td>
+</tr>
+<tr>
+<td>crates.io</td>
+<td><a href="https://crates.io/crates/termion">https://crates.io/crates/termion</a></td>
+</tr>
+<tr>
+<td>Latest version</td>
+<td>1.5.4(Nov 30, 2019)</td>
+</tr>
+<tr>
+<td>docs.rs</td>
+<td><a href="https://docs.rs/termion/1.5.4/termion/">termion - Rust</a></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><span class="k">use</span><span class="w"> </span><span class="n">termion</span>::<span class="o">*</span><span class="p">;</span><span class="w"></span>
+<span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">io</span>::<span class="p">{</span><span class="n">Write</span><span class="p">,</span><span class="w"> </span><span class="n">stdout</span><span class="p">,</span><span class="w"> </span><span class="n">stdin</span><span class="p">};</span><span class="w"></span>
+<span class="k">use</span><span class="w"> </span><span class="n">termion</span>::<span class="n">input</span>::<span class="n">TermRead</span><span class="p">;</span><span class="w"></span>
+<span class="k">use</span><span class="w"> </span><span class="n">termion</span>::<span class="n">raw</span>::<span class="n">IntoRawMode</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">const</span><span class="w"> </span><span class="n">MESSAGE</span>: <span class="kp">&amp;</span><span class="kt">str</span> <span class="o">=</span><span class="w"> </span><span class="s">&quot;Merry Christmas !!&quot;</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">stdin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stdin</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">stdout</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stdout</span><span class="p">().</span><span class="n">into_raw_mode</span><span class="p">().</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">write</span><span class="o">!</span><span class="p">(</span><span class="n">stdout</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;{}{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">clear</span>::<span class="n">All</span><span class="p">,</span><span class="w"> </span><span class="n">cursor</span>::<span class="n">Hide</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">write</span><span class="o">!</span><span class="p">(</span><span class="n">stdout</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;{}Hello world !!&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">cursor</span>::<span class="n">Goto</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)).</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">stdout</span><span class="p">.</span><span class="n">flush</span><span class="p">().</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">stdin</span><span class="p">.</span><span class="n">keys</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">match</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nb">Ok</span><span class="p">(</span><span class="n">event</span>::<span class="n">Key</span>::<span class="n">Char</span><span class="p">(</span><span class="sc">&#39;m&#39;</span><span class="p">))</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="kd">let</span><span class="w"> </span><span class="nb">Ok</span><span class="p">((</span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="n">height</span><span class="p">))</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">terminal_size</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                    </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">width</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="n">MESSAGE</span><span class="p">.</span><span class="n">len</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="kt">u16</span><span class="p">;</span><span class="w"></span>
+<span class="w">                    </span><span class="kd">let</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">height</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+<span class="w">                    </span><span class="n">write</span><span class="o">!</span><span class="p">(</span><span class="n">stdout</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;{}{}{}{}{}{}&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                           </span><span class="n">clear</span>::<span class="n">All</span><span class="p">,</span><span class="w"></span>
+<span class="w">                           </span><span class="n">cursor</span>::<span class="n">Goto</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">),</span><span class="w"></span>
+<span class="w">                           </span><span class="n">color</span>::<span class="n">Fg</span><span class="p">(</span><span class="n">color</span>::<span class="n">Blue</span><span class="p">),</span><span class="w"></span>
+<span class="w">                           </span><span class="n">style</span>::<span class="n">Bold</span><span class="p">,</span><span class="w"></span>
+<span class="w">                           </span><span class="n">MESSAGE</span><span class="p">,</span><span class="w"></span>
+<span class="w">                           </span><span class="n">style</span>::<span class="n">Reset</span><span class="p">,</span><span class="w"></span>
+<span class="w">                    </span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
+<span class="w">                    </span><span class="n">stdout</span><span class="p">.</span><span class="n">flush</span><span class="p">().</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
+<span class="w">                </span><span class="p">}</span><span class="w"></span>
+<span class="w">            </span><span class="p">},</span><span class="w"></span>
+<span class="w">            </span><span class="nb">Ok</span><span class="p">(</span><span class="n">event</span>::<span class="n">Key</span>::<span class="n">Ctrl</span><span class="p">(</span><span class="sc">&#39;c&#39;</span><span class="p">))</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="k">break</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="n">_</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{},</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">write</span><span class="o">!</span><span class="p">(</span><span class="n">stdout</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">termion</span>::<span class="n">cursor</span>::<span class="n">Show</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+
+
+<p>crosstermのように複数のコマンドを一度に実行する形式ですが、標準出力に制御コードを書き込むというのがよりむき出しとなった見た目です。</p>
+<h2 id="cursive">cursive</h2>
+
+<p>今まで紹介したcrateが単純なターミナル操作に特化したcrateであったのに対して、ここから紹介するcursiveとtui-rsはよりリッチなTUIを実現するcrateです。</p>
+<p>どちらもWidgetを組み合わせて複雑な画面のアプリケーションを作り込んでいくことができます。</p>
+<p>cursiveとtui-rsのどちらを使えばいいかは以下のドキュメントがあります。</p>
+<p><a href="https://github.com/gyscos/cursive/wiki/Cursive-vs-tui%E2%80%90rs">Cursive vs tui‐rs · gyscos/cursive Wiki</a></p>
+<p>cursiveはncurses-rs, pancurses, termion, crossterm, BearLibTerminal.rsからbackendを選択することができます。</p>
+<table>
+<thead>
+<tr>
+<th>key</th>
+<th>value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>repository</td>
+<td><a href="https://github.com/gyscos/Cursive">gyscos/cursive</a></td>
+</tr>
+<tr>
+<td>Star</td>
+<td>1.4k</td>
+</tr>
+<tr>
+<td>crates.io</td>
+<td><a href="https://crates.io/crates/cursive">https://crates.io/crates/cursive</a></td>
+</tr>
+<tr>
+<td>Latest version</td>
+<td>0.13.0 (Aug 17, 2019)</td>
+</tr>
+<tr>
+<td>docs.rs</td>
+<td><a href="https://docs.rs/cursive/0.13.0/cursive/">cursive - Rust</a></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><span class="k">use</span><span class="w"> </span><span class="n">cursive</span>::<span class="o">*</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">const</span><span class="w"> </span><span class="n">MESSAGE</span>: <span class="kp">&amp;</span><span class="kt">str</span> <span class="o">=</span><span class="w"> </span><span class="s">&quot;Merry Christmas !!&quot;</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">enum</span> <span class="nc">State</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">HelloWorld</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">MerryChristmas</span><span class="p">,</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">struct</span> <span class="nc">StateContainer</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">state</span>: <span class="nc">State</span><span class="p">,</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">impl</span><span class="w"> </span><span class="n">StateContainer</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">new</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="nc">StateContainer</span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">StateContainer</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">state</span>: <span class="nc">State</span>::<span class="n">HelloWorld</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">siv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Cursive</span>::<span class="n">default</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">theme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">theme</span>::<span class="n">Theme</span>::<span class="n">default</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">theme</span><span class="w"></span>
+<span class="w">        </span><span class="p">.</span><span class="n">palette</span><span class="w"></span>
+<span class="w">        </span><span class="p">.</span><span class="n">set_color</span><span class="p">(</span><span class="s">&quot;view&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">theme</span>::<span class="n">Color</span>::<span class="n">TerminalDefault</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">theme</span><span class="w"></span>
+<span class="w">        </span><span class="p">.</span><span class="n">palette</span><span class="w"></span>
+<span class="w">        </span><span class="p">.</span><span class="n">set_color</span><span class="p">(</span><span class="s">&quot;foreground&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">theme</span>::<span class="n">Color</span>::<span class="n">from_256colors</span><span class="p">(</span><span class="mi">15</span><span class="p">));</span><span class="w"></span>
+<span class="w">    </span><span class="n">theme</span><span class="w"></span>
+<span class="w">        </span><span class="p">.</span><span class="n">palette</span><span class="w"></span>
+<span class="w">        </span><span class="p">.</span><span class="n">set_color</span><span class="p">(</span><span class="s">&quot;background&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">theme</span>::<span class="n">Color</span>::<span class="n">TerminalDefault</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">siv</span><span class="p">.</span><span class="n">set_theme</span><span class="p">(</span><span class="n">theme</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">StateContainer</span>::<span class="n">new</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">canvas</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">views</span>::<span class="n">Canvas</span>::<span class="n">new</span><span class="p">(</span><span class="n">state</span><span class="p">);</span><span class="w"></span>
+<span class="w">   </span><span class="n">canvas</span><span class="p">.</span><span class="n">set_required_size</span><span class="p">(</span><span class="o">|</span><span class="n">_</span><span class="p">,</span><span class="w"> </span><span class="n">constraint</span><span class="o">|</span><span class="w"> </span><span class="p">{</span><span class="n">constraint</span><span class="p">});</span><span class="w"></span>
+<span class="w">    </span><span class="n">canvas</span><span class="p">.</span><span class="n">set_on_event</span><span class="p">(</span><span class="o">|</span><span class="n">state</span><span class="p">,</span><span class="w"> </span><span class="n">event</span><span class="o">|</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">event</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">event</span>::<span class="n">Event</span>::<span class="n">Char</span><span class="p">(</span><span class="sc">&#39;m&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">state</span><span class="p">.</span><span class="n">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">State</span>::<span class="n">MerryChristmas</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="n">event</span>::<span class="n">EventResult</span>::<span class="n">Ignored</span><span class="w"></span>
+<span class="w">    </span><span class="p">});</span><span class="w"></span>
+<span class="w">    </span><span class="n">canvas</span><span class="p">.</span><span class="n">set_draw</span><span class="p">(</span><span class="o">|</span><span class="n">state</span><span class="p">,</span><span class="w"> </span><span class="n">printer</span><span class="o">|</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">match</span><span class="w"> </span><span class="n">state</span><span class="p">.</span><span class="n">state</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">State</span>::<span class="n">HelloWorld</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="n">printer</span><span class="p">.</span><span class="n">print</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;Hello world !!&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">            </span><span class="n">State</span>::<span class="n">MerryChristmas</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">printer</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="n">MESSAGE</span><span class="p">.</span><span class="n">len</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
+<span class="w">                </span><span class="kd">let</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">printer</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+<span class="w">                </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">style</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">theme</span>::<span class="n">Style</span>::<span class="n">default</span><span class="p">();</span><span class="w"></span>
+<span class="w">                </span><span class="n">style</span><span class="p">.</span><span class="n">effects</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">theme</span>::<span class="n">Effect</span>::<span class="n">Bold</span><span class="p">);</span><span class="w"></span>
+<span class="w">                </span><span class="n">style</span><span class="p">.</span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="n">theme</span>::<span class="n">ColorStyle</span>::<span class="n">from</span><span class="p">(</span><span class="n">theme</span>::<span class="n">Color</span>::<span class="n">from_256colors</span><span class="p">(</span><span class="mi">12</span><span class="p">)));</span><span class="w"></span>
+<span class="w">                </span><span class="n">printer</span><span class="p">.</span><span class="n">with_style</span><span class="p">(</span><span class="n">style</span><span class="p">,</span><span class="w"> </span><span class="o">|</span><span class="n">p</span><span class="o">|</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                    </span><span class="n">p</span><span class="p">.</span><span class="n">print</span><span class="p">((</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">),</span><span class="w"> </span><span class="n">MESSAGE</span><span class="p">);</span><span class="w"></span>
+<span class="w">                </span><span class="p">});</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">        </span><span class="p">};</span><span class="w"></span>
+<span class="w">    </span><span class="p">});</span><span class="w"></span>
+<span class="w">    </span><span class="n">siv</span><span class="p">.</span><span class="n">add_fullscreen_layer</span><span class="p">(</span><span class="n">canvas</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">siv</span><span class="p">.</span><span class="n">run</span><span class="p">();</span><span class="w"></span>
+<span class="p">}</span><span class="w"> </span>
+</pre></div>
+
+
+<p>組み込みのWidgetやサードパーティのWidgetで対応できない場合は、独自のWidgetを定義します。</p>
+<p>上記サンプルコードでは、インラインで独自の挙動を設定できる組み込みWidgetのCanvasを使用しています。</p>
+<h2 id="tui-rs">tui-rs</h2>
+
+<p>tui-rsは少し前に話題になった<a href="https://github.com/Rigellute/spotify-tui">spotify-rs</a>でも使用されているcrateです。</p>
+<p>tui-rsはtermion, rustbox, crossterm, pancursesからbackendを選択することができます。</p>
+<table>
+<thead>
+<tr>
+<th>key</th>
+<th>value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>repository</td>
+<td><a href="https://github.com/fdehau/tui-rs">fdehau/tui-rs</a></td>
+</tr>
+<tr>
+<td>Star</td>
+<td>2.1k</td>
+</tr>
+<tr>
+<td>crates.io</td>
+<td><a href="https://crates.io/crates/tui">https://crates.io/crates/tui</a></td>
+</tr>
+<tr>
+<td>Latest version</td>
+<td>0.7.0 (Nov 29, 2019)</td>
+</tr>
+<tr>
+<td>docs.rs</td>
+<td><a href="https://docs.rs/crate/tui/0.7.0">tui 0.7.0 - Docs.rs</a></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">io</span><span class="p">;</span><span class="w"></span>
+<span class="k">use</span><span class="w"> </span><span class="n">termion</span><span class="p">;</span><span class="w"></span>
+<span class="k">use</span><span class="w"> </span><span class="n">termion</span>::<span class="n">input</span>::<span class="n">TermRead</span><span class="p">;</span><span class="w"></span>
+<span class="k">use</span><span class="w"> </span><span class="n">termion</span>::<span class="n">raw</span>::<span class="n">IntoRawMode</span><span class="p">;</span><span class="w"></span>
+<span class="k">use</span><span class="w"> </span><span class="n">tui</span>::<span class="n">widgets</span>::<span class="n">Widget</span><span class="p">;</span><span class="w"></span>
+<span class="k">use</span><span class="w"> </span><span class="n">tui</span>::<span class="o">*</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">const</span><span class="w"> </span><span class="n">MESSAGE</span>: <span class="kp">&amp;</span><span class="kt">str</span> <span class="o">=</span><span class="w"> </span><span class="s">&quot;Merry Christmas !!&quot;</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">struct</span> <span class="nc">Label</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">x</span>: <span class="kt">u16</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">y</span>: <span class="kt">u16</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">text</span>: <span class="kp">&amp;</span><span class="na">&#39;a</span><span class="w"> </span><span class="kt">str</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">style</span>: <span class="nc">style</span>::<span class="n">Style</span><span class="p">,</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">impl</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="o">&gt;</span><span class="w"> </span><span class="nb">Default</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Label</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">default</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="nc">Label</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">Label</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">x</span>: <span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="n">y</span>: <span class="mi">0</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="n">text</span>: <span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="n">style</span>: <span class="nc">style</span>::<span class="n">Style</span>::<span class="n">default</span><span class="p">(),</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">impl</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Label</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">text</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">text</span>: <span class="kp">&amp;</span><span class="na">&#39;a</span><span class="w"> </span><span class="kt">str</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="n">Label</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="bp">self</span><span class="p">.</span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">text</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="bp">self</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">position</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">x</span>: <span class="kt">u16</span><span class="p">,</span><span class="w"> </span><span class="n">y</span>: <span class="kt">u16</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="n">Label</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="bp">self</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="bp">self</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="bp">self</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">style</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">style</span>: <span class="nc">style</span>::<span class="n">Style</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="n">Label</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="bp">self</span><span class="p">.</span><span class="n">style</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">style</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="bp">self</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">impl</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Widget</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Label</span><span class="o">&lt;</span><span class="na">&#39;a</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">draw</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">area</span>: <span class="nc">layout</span>::<span class="n">Rect</span><span class="p">,</span><span class="w"> </span><span class="n">buf</span>: <span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="n">buffer</span>::<span class="n">Buffer</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">buf</span><span class="p">.</span><span class="n">set_string</span><span class="p">(</span><span class="w"></span>
+<span class="w">            </span><span class="n">area</span><span class="p">.</span><span class="n">left</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">x</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="n">area</span><span class="p">.</span><span class="n">top</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="bp">self</span><span class="p">.</span><span class="n">y</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="bp">self</span><span class="p">.</span><span class="n">text</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="bp">self</span><span class="p">.</span><span class="n">style</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">stdout</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">io</span>::<span class="n">stdout</span><span class="p">().</span><span class="n">into_raw_mode</span><span class="p">().</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">stdout</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">termion</span>::<span class="n">screen</span>::<span class="n">AlternateScreen</span>::<span class="n">from</span><span class="p">(</span><span class="n">stdout</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">backend</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">backend</span>::<span class="n">TermionBackend</span>::<span class="n">new</span><span class="p">(</span><span class="n">stdout</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">terminal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Terminal</span>::<span class="n">new</span><span class="p">(</span><span class="n">backend</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">terminal</span><span class="p">.</span><span class="n">hide_cursor</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">terminal</span><span class="w"></span>
+<span class="w">        </span><span class="p">.</span><span class="n">draw</span><span class="p">(</span><span class="o">|</span><span class="k">mut</span><span class="w"> </span><span class="n">f</span><span class="o">|</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="kd">let</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">f</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"></span>
+<span class="w">            </span><span class="n">Label</span>::<span class="n">default</span><span class="p">().</span><span class="n">text</span><span class="p">(</span><span class="s">&quot;Hello World !!&quot;</span><span class="p">).</span><span class="n">render</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">);</span><span class="w"></span>
+<span class="w">        </span><span class="p">})</span><span class="w"></span>
+<span class="w">        </span><span class="p">.</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">stdin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">io</span>::<span class="n">stdin</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">stdin</span><span class="p">.</span><span class="n">keys</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">match</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nb">Ok</span><span class="p">(</span><span class="n">termion</span>::<span class="n">event</span>::<span class="n">Key</span>::<span class="n">Char</span><span class="p">(</span><span class="sc">&#39;m&#39;</span><span class="p">))</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                </span><span class="n">terminal</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span><span class="w"></span>
+<span class="w">                </span><span class="n">terminal</span><span class="w"></span>
+<span class="w">                    </span><span class="p">.</span><span class="n">draw</span><span class="p">(</span><span class="o">|</span><span class="k">mut</span><span class="w"> </span><span class="n">f</span><span class="o">|</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">                        </span><span class="kd">let</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">f</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"></span>
+<span class="w">                        </span><span class="kd">let</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">size</span><span class="p">.</span><span class="n">width</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="n">MESSAGE</span><span class="p">.</span><span class="n">len</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="kt">u16</span><span class="p">;</span><span class="w"></span>
+<span class="w">                        </span><span class="kd">let</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">size</span><span class="p">.</span><span class="n">height</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"></span>
+<span class="w">                        </span><span class="kd">let</span><span class="w"> </span><span class="n">style</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">style</span>::<span class="n">Style</span>::<span class="n">default</span><span class="p">().</span><span class="n">fg</span><span class="p">(</span><span class="n">style</span>::<span class="n">Color</span>::<span class="n">Blue</span><span class="p">);</span><span class="w"></span>
+<span class="w">                        </span><span class="n">Label</span>::<span class="n">default</span><span class="p">()</span><span class="w"></span>
+<span class="w">                            </span><span class="p">.</span><span class="n">text</span><span class="p">(</span><span class="n">MESSAGE</span><span class="p">)</span><span class="w"></span>
+<span class="w">                            </span><span class="p">.</span><span class="n">position</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"></span>
+<span class="w">                            </span><span class="p">.</span><span class="n">style</span><span class="p">(</span><span class="n">style</span><span class="p">)</span><span class="w"></span>
+<span class="w">                            </span><span class="p">.</span><span class="n">render</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">f</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">);</span><span class="w"></span>
+<span class="w">                    </span><span class="p">})</span><span class="w"></span>
+<span class="w">                    </span><span class="p">.</span><span class="n">unwrap</span><span class="p">();</span><span class="w"></span>
+<span class="w">            </span><span class="p">}</span><span class="w"></span>
+<span class="w">            </span><span class="nb">Ok</span><span class="p">(</span><span class="n">termion</span>::<span class="n">event</span>::<span class="n">Key</span>::<span class="n">Ctrl</span><span class="p">(</span><span class="sc">&#39;c&#39;</span><span class="p">))</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="k">break</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="n">_</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{}</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+
+
+<p>tui-rsは入力はハンドルしないため、termionなどのbackendの仕組みをそのまま使用します。</p>
+<h2 id="conclusion">まとめ</h2>
+
+<p>長いものに巻かれろということでStar数の多いtermionで実装し直したところ、CPU使用率は8%まで下がりました！</p>
+            </section>
+
+            <section class="post-info">
+                <div class="post-share">
+                    <a class="twitter" href="https://twitter.com/share?text=Rustのターミナル操作crateいろいろ&amp;url=https://meganehouser.github.io/drafts/2019-12-11_rust-terminal-crates.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
+                    </a>
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://meganehouser.github.io/drafts/2019-12-11_rust-terminal-crates.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
+                    </a>
+                    <a class="googleplus" href="https://plus.google.com/share?url=https://meganehouser.github.io/drafts/2019-12-11_rust-terminal-crates.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
+                    </a>
+                    <div class="clear"></div>
+                </div>
+
+                <aside class="post-tags">
+<a href="https://meganehouser.github.io/tag/rust.html">rust</a><a href="https://meganehouser.github.io/tag/advent-calendar.html">advent calendar</a>                </aside>
+
+                <div class="clear"></div>
+
+                <aside class="post-author">
+
+
+                        <figure class="post-author-avatar">
+                            <img src="https://meganehouser.github.io/images/kaeru.jpg" alt="meganehouser" />
+                        </figure>
+                    <div class="post-author-bio">
+                        <h4 class="post-author-name"><a href="https://meganehouser.github.io/author/meganehouser">meganehouser</a></h4>
+                            <p class="post-author-about">Excelおじさんを卒業したPythonおじさん。ハウスとよさこい踊る。隠れF#er。すごいHaskell本読んでく。</p>
+                            <span class="post-author-location"><i class="ic ic-location"></i> Tokyo</span>
+                            <span class="post-author-website"><a href="http://meganehouser.github.io/"><i class="ic ic-link"></i> Website</a></span>
+                        <!-- Social linkes in alphabet order. -->
+                            <span class="post-author-github"><a target="_blank" href="https://github.com/meganehouser"><i class="ic ic-link"></i> GitHub</a></span>
+                            <span class="post-author-twitter"><a target="_blank" href="https://twitter.com/meganehouser"><i class="ic ic-twitter"></i> Twitter</a></span>
+                    </div>
+                    <div class="clear"></div>
+                </aside>
+
+                </section>
+
+
+                <aside class="post-nav">
+                    <div class="clear"></div>
+                </aside>
+
+            </div>
+        </article>
+    </main>
+      <!-- TODO : Body class -->
+    <div id="body-class" style="display: none;" class=""></div>
+
+    <footer id="footer">
+      <div class="inner">
+        <section class="credits">
+
+
+          <span class="credits-theme">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow">Attila</a></span>
+          <span class="credits-software">Published with <a href="https://github.com/getpelican/pelican" rel="nofollow">Pelican</a></span>
+        </section>
+      </div>
+    </footer>
+  </section>
+
+  <script type="text/javascript" src="https://meganehouser.github.io/theme/js/script.js"></script>
+
+    <!-- Global Site Tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56794608-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-56794608-1', { 'anonymize_ip': true });
+    </script>
+<script type="text/javascript">
+    var disqus_shortname = 'meganehouser';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+</body>
+</html>
