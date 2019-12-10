@@ -22,7 +22,7 @@
 &lt;p&gt;そこで他のターミナル操作系のcrateで書き直すことにしたのですが、結構いろんなcrateがあってよくわからなかったので調べてみました。&lt;/p&gt;
 &lt;p&gt;各情報とサンプルプログラムを掲載しています。サンプルプログラムはHello Worldだけだと簡単すぎるので、&lt;code&gt;m&lt;/code&gt;キーをクリックしたら画面中央に"Merry Christmas"と表示するものです。&lt;/p&gt;
 &lt;p&gt;Star数やLatest versionは2019/12/10での状態です。&lt;/p&gt;
-&lt;h2 id="nucurses-rs"&gt;ncurses-rs&lt;/h2&gt;
+&lt;h2 id="ncurses-rs"&gt;ncurses-rs&lt;/h2&gt;
 
 &lt;p&gt;割と昔からあるncursesの薄いラッパーです。
 ドキュメントは書かれていませんが、ncursesの方で検索すると使い方がいくらでも出てくるので困ることはありません。&lt;/p&gt;
