@@ -1,5 +1,646 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>きんつば - meganehouser</title><link href="https://meganehouser.github.io/" rel="alternate"></link><link href="https://meganehouser.github.io/feeds/meganehouser.atom.xml" rel="self"></link><id>https://meganehouser.github.io/</id><updated>2019-12-06T00:00:00+09:00</updated><subtitle>Pythonとかやるソフトウェアエンジニア</subtitle><entry><title>PythonでGenerative Art入門</title><link href="https://meganehouser.github.io/2019-12-06_python-generative-art.html" rel="alternate"></link><published>2019-12-06T00:00:00+09:00</published><updated>2019-12-06T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2019-12-06:/2019-12-06_python-generative-art.html</id><summary type="html">&lt;p&gt;Pyladies Japan Advent Calender 2019の記事です。PythonでGererative Artに入門してみましょう。&lt;/p&gt;</summary><content type="html">&lt;p&gt;この記事は&lt;a href="https://adventar.org/calendars/4730"&gt;Pyladies Japan Advent Calendar 2019&lt;/a&gt;の6日目の記事です。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>きんつば - meganehouser</title><link href="http://meganehouser.github.io/" rel="alternate"></link><link href="http://meganehouser.github.io/feeds/meganehouser.atom.xml" rel="self"></link><id>http://meganehouser.github.io/</id><updated>2019-12-11T00:00:00+09:00</updated><subtitle>Pythonとかやるソフトウェアエンジニア</subtitle><entry><title>Rustのターミナル操作crateいろいろ</title><link href="http://meganehouser.github.io/2019-12-11_rust-terminal-crates.html" rel="alternate"></link><published>2019-12-11T00:00:00+09:00</published><updated>2019-12-11T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2019-12-11:/2019-12-11_rust-terminal-crates.html</id><summary type="html">&lt;p&gt;Rustその2 Advent Calendar 2019の記事です。&lt;/p&gt;</summary><content type="html">&lt;p&gt;この記事は&lt;a href="https://qiita.com/advent-calendar/2019/rust2"&gt;Rustその2 Advent Calendar 2019&lt;/a&gt;の11日目の記事です。&lt;/p&gt;
+&lt;p&gt;いろいろなターミナル操作系のcrateがあるので試してみました、という記事です。&lt;/p&gt;
+&lt;h3&gt;目次&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="#preface"&gt;はじめに&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#ncurses-rs"&gt;nucurses-rs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#pancurses"&gt;pancurses&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#rustbox"&gt;rustbox&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#crossterm"&gt;crossterm&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#termion"&gt;termion&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#cursive"&gt;cursive&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#tui-rs"&gt;tui-rs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#conclusion"&gt;まとめ&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="preface"&gt;はじめに&lt;/h2&gt;
+
+&lt;p&gt;映画「マトリックス」に影響を受けまくった世代なので&lt;a href="https://github.com/abishekvashok/cmatrix"&gt;cmatrix&lt;/a&gt;、&lt;a href="https://github.com/will8211/unimatrix"&gt;unimatrix&lt;/a&gt;みたいなターミナルで緑色の文字が振ってくるコマンドをRustで移植しました。&lt;/p&gt;
+&lt;p&gt;作ったコマンド「&lt;a href="https://github.com/meganehouser/rustmatrix"&gt;rustmatrix&lt;/a&gt;」の画面
+&lt;img alt="rustmatrix" src="https://user-images.githubusercontent.com/1280199/67680821-6d5f0100-f9cf-11e9-8989-d88684ff1dfc.png"&gt;&lt;/p&gt;
+&lt;p&gt;ターミナルを操作するcrateは当初cursiveを使っていたのですが、CPU使用率が40%を超えてしまいました。cursiveは毎フレームで描画を行なってアニメーションする用途には向いていないようです。&lt;/p&gt;
+&lt;p&gt;そこで他のターミナル操作系のcrateで書き直すことにしたのですが、結構いろんなcrateがあってよくわからなかったので調べてみました。&lt;/p&gt;
+&lt;p&gt;各情報とサンプルプログラムを掲載しています。サンプルプログラムはHello Worldだけだと簡単すぎるので、&lt;code&gt;m&lt;/code&gt;キーをクリックしたら画面中央に"Merry Christmas"と表示するものです。&lt;/p&gt;
+&lt;p&gt;Star数やLatest versionは2019/12/10での状態です。&lt;/p&gt;
+&lt;h2 id="nucurses-rs"&gt;ncurses-rs&lt;/h2&gt;
+
+&lt;p&gt;割と昔からあるncursesの薄いラッパーです。
+ドキュメントは書かれていませんが、ncursesの方で検索すると使い方がいくらでも出てくるので困ることはありません。&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;key&lt;/th&gt;
+&lt;th&gt;value&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;repository&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://github.com/jeaye/ncurses-rs"&gt;jeaye/ncurses-rs&lt;/a&gt; &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Star&lt;/td&gt;
+&lt;td&gt;473&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;crates.io&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://crates.io/crates/ncurses"&gt;https://crates.io/crates/ncurses&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Latest version&lt;/td&gt;
+&lt;td&gt;5.99.0 (Feb 25, 2019)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;docs.rs&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://docs.rs/ncurses/5.99.0/ncurses/"&gt;ncurses - Rust&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;ncurses&lt;/span&gt;::&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="k"&gt;const&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;MESSAGE&lt;/span&gt;: &lt;span class="kp"&gt;&amp;amp;&lt;/span&gt;&lt;span class="kt"&gt;str&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Merry Christmas !!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;window&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;initscr&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;start_color&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;use_default_colors&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;init_pair&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;COLOR_BLUE&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;addstr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Hello world !!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;refresh&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;keypad&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;window&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;noecho&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;curs_set&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;CURSOR_VISIBILITY&lt;/span&gt;::&lt;span class="n"&gt;CURSOR_INVISIBLE&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;loop&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;match&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;getch&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;             &lt;/span&gt;&lt;span class="mi"&gt;109&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;getmaxy&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;window&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;getmaxx&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;window&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;MESSAGE&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;len&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;as&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;i32&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="n"&gt;clear&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="n"&gt;color_set&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="n"&gt;mvaddstr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;MESSAGE&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="n"&gt;KEY_DC&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="n"&gt;_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;endwin&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;C言語のライブラリの薄いラッパーのため、構造体+メソッドでの抽象化などは行われておらず、フラットに命令を呼んでいく形式になります。&lt;/p&gt;
+&lt;h2 id="pancurses"&gt;pancurses&lt;/h2&gt;
+
+&lt;p&gt;pancursesはLinuxとWindows両方をサポートしつつ、cursesをより使いやすく、かつ移植性を保つために十分にcursesに近いインターフェースを提供することを目的としたcrateです。&lt;/p&gt;
+&lt;p&gt;Linuxではncurses-rs、Windowsではpdcurses-sysに依存しています。&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;key&lt;/th&gt;
+&lt;th&gt;value&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;repository&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://github.com/ihalila/pancurses"&gt;ihalila/pancurses&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Star&lt;/td&gt;
+&lt;td&gt;204&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;crates.io&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://crates.io/crates/pancurses"&gt;https://crates.io/crates/pancurses&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Latest version&lt;/td&gt;
+&lt;td&gt;0.16.1(Dec 26, 2018)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;docs.rs&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://docs.rs/pancurses/0.16.1/pancurses/"&gt;pancurses - Rust&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;pancurses&lt;/span&gt;::&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="k"&gt;const&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;MESSAGE&lt;/span&gt;: &lt;span class="kp"&gt;&amp;amp;&lt;/span&gt;&lt;span class="kt"&gt;str&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Merry Christmas !!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;window&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;initscr&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;start_color&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;use_default_colors&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;init_pair&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;COLOR_BLUE&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;window&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;printw&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Hello world !!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;window&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;refresh&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;window&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;keypad&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;noecho&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;curs_set&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;loop&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;match&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;window&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getch&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="nb"&gt;Some&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Input&lt;/span&gt;::&lt;span class="n"&gt;Character&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sc"&gt;&amp;#39;m&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;window&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_max_y&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;window&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_max_x&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;MESSAGE&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;len&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;as&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;i32&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="n"&gt;window&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;clear&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="n"&gt;window&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;color_set&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="n"&gt;window&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;mvaddstr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;MESSAGE&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="nb"&gt;Some&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Input&lt;/span&gt;::&lt;span class="n"&gt;KeyDC&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="n"&gt;_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;endwin&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;initscrがwindow返して、その後はwindowのメソッドを呼ぶようになっており、生のncursesよりも使いやすく抽象化されていることがわかります。&lt;/p&gt;
+&lt;h2 id="rustbox"&gt;rustbox&lt;/h2&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;key&lt;/th&gt;
+&lt;th&gt;value&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;repository&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://github.com/gchp/rustbox"&gt;gchp/rustbox&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Star&lt;/td&gt;
+&lt;td&gt;391&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;crates.io&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://crates.io/crates/rustbox"&gt;https://crates.io/crates/rustbox&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Latest version&lt;/td&gt;
+&lt;td&gt;0.11.0 Mar 31, 2018&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;docs.rs&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://docs.rs/rustbox/0.11.0/rustbox/"&gt;rustbox - Rust&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Rustboxは&lt;a href="https://github.com/nsf/termbox"&gt;termobox&lt;/a&gt;のRust実装です。READMEでは、現在はCライブラリのラッパーで将来的にRustのみの実装に置き換える計画だと書かれています。&lt;/p&gt;
+&lt;p&gt;しかし、2018年5月以降、新しいリリースはされていないようです。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;rustbox&lt;/span&gt;::&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="k"&gt;const&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;MESSAGE&lt;/span&gt;: &lt;span class="kp"&gt;&amp;amp;&lt;/span&gt;&lt;span class="kt"&gt;str&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Merry Christmas !!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;rustbox&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;RustBox&lt;/span&gt;::&lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;Default&lt;/span&gt;::&lt;span class="n"&gt;default&lt;/span&gt;&lt;span class="p"&gt;()).&lt;/span&gt;&lt;span class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;rustbox&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;clear&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;rustbox&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;rustbox&lt;/span&gt;::&lt;span class="n"&gt;RB_NORMAL&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Color&lt;/span&gt;::&lt;span class="n"&gt;White&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Color&lt;/span&gt;::&lt;span class="nb"&gt;Default&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Hello world !!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;rustbox&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;present&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;loop&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;match&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;rustbox&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;poll_event&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kc"&gt;false&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="nb"&gt;Ok&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;rustbox&lt;/span&gt;::&lt;span class="n"&gt;Event&lt;/span&gt;::&lt;span class="n"&gt;KeyEvent&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="k"&gt;match&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="n"&gt;Key&lt;/span&gt;::&lt;span class="n"&gt;Char&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sc"&gt;&amp;#39;m&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                        &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;rustbox&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;width&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;MESSAGE&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;len&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                        &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;rustbox&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;height&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                        &lt;/span&gt;&lt;span class="n"&gt;rustbox&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;clear&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                        &lt;/span&gt;&lt;span class="n"&gt;rustbox&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;rustbox&lt;/span&gt;::&lt;span class="n"&gt;RB_BOLD&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Color&lt;/span&gt;::&lt;span class="n"&gt;Blue&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Color&lt;/span&gt;::&lt;span class="nb"&gt;Default&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;MESSAGE&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                        &lt;/span&gt;&lt;span class="n"&gt;rustbox&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;present&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="n"&gt;Key&lt;/span&gt;::&lt;span class="n"&gt;Ctrl&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sc"&gt;&amp;#39;c&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="n"&gt;_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{},&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="n"&gt;_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{},&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;ncurses-rsやpancursesよりもシンプルで使い勝手がよいインターフェースとなっています。&lt;/p&gt;
+&lt;h2 id="crossterm"&gt;crossterm&lt;/h2&gt;
+
+&lt;p&gt;crosstermはWindows, UNIX両方をサポートするクロスプラットフォームなターミナル操作ライブラリです。&lt;/p&gt;
+&lt;p&gt;READMEでは、1.0リリースの準備として最新バージョンでインターフェースを大きく変更していることが記載されており、この後のリリース0.14でも破壊的な変更が予定されているようです(&lt;a href="https://github.com/crossterm-rs/crossterm/wiki/Upgrade-from-0.13-to-0.14"&gt;0.13から0.14へのアップグレード&lt;/a&gt;)&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;key&lt;/th&gt;
+&lt;th&gt;value&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;repository&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://github.com/crossterm-rs/crossterm"&gt;crossterm-rs/crossterm&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Star&lt;/td&gt;
+&lt;td&gt;475&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;crates.io&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://crates.io/crates/crossterm"&gt;https://crates.io/crates/crossterm&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Latest version&lt;/td&gt;
+&lt;td&gt;0.13.3(Nov 8, 2019)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;docs.rs&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://docs.rs/crossterm/0.13.3/crossterm/"&gt;crossterm - Rust&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;crossterm&lt;/span&gt;::&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;std&lt;/span&gt;::&lt;span class="n"&gt;io&lt;/span&gt;::&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;stdout&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Write&lt;/span&gt;&lt;span class="p"&gt;};&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;crossterm&lt;/span&gt;::&lt;span class="n"&gt;screen&lt;/span&gt;::&lt;span class="n"&gt;RawScreen&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="k"&gt;const&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;MESSAGE&lt;/span&gt;: &lt;span class="kp"&gt;&amp;amp;&lt;/span&gt;&lt;span class="kt"&gt;str&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Merry Christmas !!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;_screen&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;RawScreen&lt;/span&gt;::&lt;span class="n"&gt;into_raw_mode&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;input&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;input&lt;/span&gt;::&lt;span class="n"&gt;input&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;sync_stdin&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;input&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read_sync&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;execute&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;stdout&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;cursor&lt;/span&gt;::&lt;span class="n"&gt;Hide&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;terminal&lt;/span&gt;::&lt;span class="n"&gt;Clear&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;terminal&lt;/span&gt;::&lt;span class="n"&gt;ClearType&lt;/span&gt;::&lt;span class="n"&gt;All&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;execute&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;stdout&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;style&lt;/span&gt;::&lt;span class="n"&gt;SetForegroundColor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;style&lt;/span&gt;::&lt;span class="n"&gt;Color&lt;/span&gt;::&lt;span class="n"&gt;White&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;cursor&lt;/span&gt;::&lt;span class="n"&gt;MoveTo&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;Output&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Hello world !!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;style&lt;/span&gt;::&lt;span class="n"&gt;ResetColor&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;width&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;height&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;terminal&lt;/span&gt;::&lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;width&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;MESSAGE&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;len&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;as&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;u16&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;height&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;loop&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;sync_stdin&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;next&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;match&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="nb"&gt;Some&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;input&lt;/span&gt;::&lt;span class="n"&gt;InputEvent&lt;/span&gt;::&lt;span class="n"&gt;Keyboard&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="k"&gt;match&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="n"&gt;input&lt;/span&gt;::&lt;span class="n"&gt;KeyEvent&lt;/span&gt;::&lt;span class="n"&gt;Char&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sc"&gt;&amp;#39;m&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                        &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;styled&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;style&lt;/span&gt;::&lt;span class="n"&gt;style&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Merry Christmas !!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                            &lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;with&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;style&lt;/span&gt;::&lt;span class="n"&gt;Color&lt;/span&gt;::&lt;span class="n"&gt;Blue&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                            &lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;attribute&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;style&lt;/span&gt;::&lt;span class="n"&gt;Attribute&lt;/span&gt;::&lt;span class="n"&gt;Bold&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                        &lt;/span&gt;&lt;span class="n"&gt;execute&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                                &lt;/span&gt;&lt;span class="n"&gt;stdout&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                                &lt;/span&gt;&lt;span class="n"&gt;terminal&lt;/span&gt;::&lt;span class="n"&gt;Clear&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;terminal&lt;/span&gt;::&lt;span class="n"&gt;ClearType&lt;/span&gt;::&lt;span class="n"&gt;All&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                                &lt;/span&gt;&lt;span class="n"&gt;cursor&lt;/span&gt;::&lt;span class="n"&gt;MoveTo&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                                &lt;/span&gt;&lt;span class="n"&gt;style&lt;/span&gt;::&lt;span class="n"&gt;PrintStyledContent&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;styled&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                            &lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="n"&gt;input&lt;/span&gt;::&lt;span class="n"&gt;KeyEvent&lt;/span&gt;::&lt;span class="n"&gt;Ctrl&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sc"&gt;&amp;#39;c&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="n"&gt;_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{},&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="n"&gt;_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{},&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;execute&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;stdout&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;cursor&lt;/span&gt;::&lt;span class="n"&gt;Show&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;ターミナル操作コマンドを並べて&lt;code&gt;execute!&lt;/code&gt;で一度に実行するコマンドAPIが特徴的です。
+ドキュメントにはコマンドAPIには以下のメリットがあると記載されています。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;よりよい性能&lt;/li&gt;
+&lt;li&gt;フラッシュするタイミングを完全に制御可能&lt;/li&gt;
+&lt;li&gt;ANSIエスケープコマンドが実行される場所を完全に制御可能&lt;/li&gt;
+&lt;li&gt;より簡単で優れたAPI&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;また、上記サンプルコードでは&lt;code&gt;SyncReader&lt;/code&gt;を使用していますが、非同期版の&lt;code&gt;AsyncReader&lt;/code&gt;が用意されていることも特徴です。&lt;/p&gt;
+&lt;h2 id="termion"&gt;termion&lt;/h2&gt;
+
+&lt;p&gt;termionはピュアRust, 他の低レベルハンドリング用のライブラリに依存しない、ターミナル操作crateです。&lt;/p&gt;
+&lt;p&gt;Rust製のUNIXライクなOSであるRedoxのプロジェクト配下でメンテされています。&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;key&lt;/th&gt;
+&lt;th&gt;value&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;repository&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://github.com/redox-os/termion"&gt;redox-os/termion&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Star&lt;/td&gt;
+&lt;td&gt;1.1k&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;crates.io&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://crates.io/crates/termion"&gt;https://crates.io/crates/termion&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Latest version&lt;/td&gt;
+&lt;td&gt;1.5.4(Nov 30, 2019)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;docs.rs&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://docs.rs/termion/1.5.4/termion/"&gt;termion - Rust&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;termion&lt;/span&gt;::&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;std&lt;/span&gt;::&lt;span class="n"&gt;io&lt;/span&gt;::&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;Write&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;stdout&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;stdin&lt;/span&gt;&lt;span class="p"&gt;};&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;termion&lt;/span&gt;::&lt;span class="n"&gt;input&lt;/span&gt;::&lt;span class="n"&gt;TermRead&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;termion&lt;/span&gt;::&lt;span class="n"&gt;raw&lt;/span&gt;::&lt;span class="n"&gt;IntoRawMode&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="k"&gt;const&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;MESSAGE&lt;/span&gt;: &lt;span class="kp"&gt;&amp;amp;&lt;/span&gt;&lt;span class="kt"&gt;str&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Merry Christmas !!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;stdin&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;stdin&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;stdout&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;stdout&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="n"&gt;into_raw_mode&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;write&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;stdout&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;{}{}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;clear&lt;/span&gt;::&lt;span class="n"&gt;All&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;cursor&lt;/span&gt;::&lt;span class="n"&gt;Hide&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;write&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;stdout&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;{}Hello world !!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;cursor&lt;/span&gt;::&lt;span class="n"&gt;Goto&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)).&lt;/span&gt;&lt;span class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;stdout&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;flush&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;in&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;stdin&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;keys&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;match&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="nb"&gt;Ok&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;::&lt;span class="n"&gt;Key&lt;/span&gt;::&lt;span class="n"&gt;Char&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sc"&gt;&amp;#39;m&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;Ok&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;width&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;height&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;terminal_size&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;width&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;MESSAGE&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;len&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;as&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;u16&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;height&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="n"&gt;write&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;stdout&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;{}{}{}{}{}{}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                           &lt;/span&gt;&lt;span class="n"&gt;clear&lt;/span&gt;::&lt;span class="n"&gt;All&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                           &lt;/span&gt;&lt;span class="n"&gt;cursor&lt;/span&gt;::&lt;span class="n"&gt;Goto&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                           &lt;/span&gt;&lt;span class="n"&gt;color&lt;/span&gt;::&lt;span class="n"&gt;Fg&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;color&lt;/span&gt;::&lt;span class="n"&gt;Blue&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                           &lt;/span&gt;&lt;span class="n"&gt;style&lt;/span&gt;::&lt;span class="n"&gt;Bold&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                           &lt;/span&gt;&lt;span class="n"&gt;MESSAGE&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                           &lt;/span&gt;&lt;span class="n"&gt;style&lt;/span&gt;::&lt;span class="n"&gt;Reset&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="n"&gt;stdout&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;flush&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="nb"&gt;Ok&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;::&lt;span class="n"&gt;Key&lt;/span&gt;::&lt;span class="n"&gt;Ctrl&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sc"&gt;&amp;#39;c&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="n"&gt;_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{},&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;write&lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;stdout&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;{}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;termion&lt;/span&gt;::&lt;span class="n"&gt;cursor&lt;/span&gt;::&lt;span class="n"&gt;Show&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;crosstermのように複数のコマンドを一度に実行する形式ですが、標準出力に制御コードを書き込むというのがよりむき出しとなった見た目です。&lt;/p&gt;
+&lt;h2 id="cursive"&gt;cursive&lt;/h2&gt;
+
+&lt;p&gt;今まで紹介したcrateが単純なターミナル操作に特化したcrateであったのに対して、ここから紹介するcursiveとtui-rsはよりリッチなTUIを実現するcrateです。&lt;/p&gt;
+&lt;p&gt;どちらもWidgetを組み合わせて複雑な画面のアプリケーションを作り込んでいくことができます。&lt;/p&gt;
+&lt;p&gt;cursiveとtui-rsのどちらを使えばいいかは以下のドキュメントがあります。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/gyscos/cursive/wiki/Cursive-vs-tui%E2%80%90rs"&gt;Cursive vs tui‐rs · gyscos/cursive Wiki&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;cursiveはncurses-rs, pancurses, termion, crossterm, BearLibTerminal.rsからbackendを選択することができます。&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;key&lt;/th&gt;
+&lt;th&gt;value&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;repository&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://github.com/gyscos/Cursive"&gt;gyscos/cursive&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Star&lt;/td&gt;
+&lt;td&gt;1.4k&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;crates.io&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://crates.io/crates/cursive"&gt;https://crates.io/crates/cursive&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Latest version&lt;/td&gt;
+&lt;td&gt;0.13.0 (Aug 17, 2019)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;docs.rs&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://docs.rs/cursive/0.13.0/cursive/"&gt;cursive - Rust&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;cursive&lt;/span&gt;::&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="k"&gt;const&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;MESSAGE&lt;/span&gt;: &lt;span class="kp"&gt;&amp;amp;&lt;/span&gt;&lt;span class="kt"&gt;str&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Merry Christmas !!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="k"&gt;enum&lt;/span&gt; &lt;span class="nc"&gt;State&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;HelloWorld&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;MerryChristmas&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="k"&gt;struct&lt;/span&gt; &lt;span class="nc"&gt;StateContainer&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;state&lt;/span&gt;: &lt;span class="nc"&gt;State&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="k"&gt;impl&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;StateContainer&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;new&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-&amp;gt; &lt;span class="nc"&gt;StateContainer&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;StateContainer&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;state&lt;/span&gt;: &lt;span class="nc"&gt;State&lt;/span&gt;::&lt;span class="n"&gt;HelloWorld&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;siv&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Cursive&lt;/span&gt;::&lt;span class="n"&gt;default&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;theme&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;theme&lt;/span&gt;::&lt;span class="n"&gt;Theme&lt;/span&gt;::&lt;span class="n"&gt;default&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;theme&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;palette&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_color&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;view&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;theme&lt;/span&gt;::&lt;span class="n"&gt;Color&lt;/span&gt;::&lt;span class="n"&gt;TerminalDefault&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;theme&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;palette&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_color&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;foreground&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;theme&lt;/span&gt;::&lt;span class="n"&gt;Color&lt;/span&gt;::&lt;span class="n"&gt;from_256colors&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;theme&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;palette&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_color&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;background&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;theme&lt;/span&gt;::&lt;span class="n"&gt;Color&lt;/span&gt;::&lt;span class="n"&gt;TerminalDefault&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;siv&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_theme&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;theme&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;state&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;StateContainer&lt;/span&gt;::&lt;span class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;canvas&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;views&lt;/span&gt;::&lt;span class="n"&gt;Canvas&lt;/span&gt;::&lt;span class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;state&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="n"&gt;canvas&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_required_size&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;_&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;constraint&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;constraint&lt;/span&gt;&lt;span class="p"&gt;});&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;canvas&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_on_event&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;state&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;::&lt;span class="n"&gt;Event&lt;/span&gt;::&lt;span class="n"&gt;Char&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sc"&gt;&amp;#39;m&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="n"&gt;state&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;state&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;State&lt;/span&gt;::&lt;span class="n"&gt;MerryChristmas&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;::&lt;span class="n"&gt;EventResult&lt;/span&gt;::&lt;span class="n"&gt;Ignored&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;});&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;canvas&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_draw&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;state&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;printer&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;match&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;state&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;state&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="n"&gt;State&lt;/span&gt;::&lt;span class="n"&gt;HelloWorld&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="n"&gt;printer&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;print&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Hello world !!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="n"&gt;State&lt;/span&gt;::&lt;span class="n"&gt;MerryChristmas&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;printer&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;MESSAGE&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;len&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;printer&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;style&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;theme&lt;/span&gt;::&lt;span class="n"&gt;Style&lt;/span&gt;::&lt;span class="n"&gt;default&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="n"&gt;style&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;effects&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;insert&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;theme&lt;/span&gt;::&lt;span class="n"&gt;Effect&lt;/span&gt;::&lt;span class="n"&gt;Bold&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="n"&gt;style&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;color&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;Some&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;theme&lt;/span&gt;::&lt;span class="n"&gt;ColorStyle&lt;/span&gt;::&lt;span class="n"&gt;from&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;theme&lt;/span&gt;::&lt;span class="n"&gt;Color&lt;/span&gt;::&lt;span class="n"&gt;from_256colors&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;12&lt;/span&gt;&lt;span class="p"&gt;)));&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="n"&gt;printer&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;with_style&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;style&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;print&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;MESSAGE&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="p"&gt;});&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;};&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;});&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;siv&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add_fullscreen_layer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;canvas&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;siv&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;組み込みのWidgetやサードパーティのWidgetで対応できない場合は、独自のWidgetを定義します。&lt;/p&gt;
+&lt;p&gt;上記サンプルコードでは、インラインで独自の挙動を設定できる組み込みWidgetのCanvasを使用しています。&lt;/p&gt;
+&lt;h2 id="tui-rs"&gt;tui-rs&lt;/h2&gt;
+
+&lt;p&gt;tui-rsは少し前に話題になった&lt;a href="https://github.com/Rigellute/spotify-tui"&gt;spotify-rs&lt;/a&gt;でも使用されているcrateです。&lt;/p&gt;
+&lt;p&gt;tui-rsはtermion, rustbox, crossterm, pancursesからbackendを選択することができます。&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;key&lt;/th&gt;
+&lt;th&gt;value&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;repository&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://github.com/fdehau/tui-rs"&gt;fdehau/tui-rs&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Star&lt;/td&gt;
+&lt;td&gt;2.1k&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;crates.io&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://crates.io/crates/tui"&gt;https://crates.io/crates/tui&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Latest version&lt;/td&gt;
+&lt;td&gt;0.7.0 (Nov 29, 2019)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;docs.rs&lt;/td&gt;
+&lt;td&gt;&lt;a href="https://docs.rs/crate/tui/0.7.0"&gt;tui 0.7.0 - Docs.rs&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;std&lt;/span&gt;::&lt;span class="n"&gt;io&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;termion&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;termion&lt;/span&gt;::&lt;span class="n"&gt;input&lt;/span&gt;::&lt;span class="n"&gt;TermRead&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;termion&lt;/span&gt;::&lt;span class="n"&gt;raw&lt;/span&gt;::&lt;span class="n"&gt;IntoRawMode&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;tui&lt;/span&gt;::&lt;span class="n"&gt;widgets&lt;/span&gt;::&lt;span class="n"&gt;Widget&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="k"&gt;use&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;tui&lt;/span&gt;::&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="k"&gt;const&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;MESSAGE&lt;/span&gt;: &lt;span class="kp"&gt;&amp;amp;&lt;/span&gt;&lt;span class="kt"&gt;str&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Merry Christmas !!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="k"&gt;struct&lt;/span&gt; &lt;span class="nc"&gt;Label&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="na"&gt;&amp;#39;a&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;: &lt;span class="kt"&gt;u16&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;: &lt;span class="kt"&gt;u16&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;: &lt;span class="kp"&gt;&amp;amp;&lt;/span&gt;&lt;span class="na"&gt;&amp;#39;a&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;str&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;style&lt;/span&gt;: &lt;span class="nc"&gt;style&lt;/span&gt;::&lt;span class="n"&gt;Style&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="k"&gt;impl&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="na"&gt;&amp;#39;a&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;Default&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Label&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="na"&gt;&amp;#39;a&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;default&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-&amp;gt; &lt;span class="nc"&gt;Label&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="na"&gt;&amp;#39;a&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;Label&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;: &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;: &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;: &lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="n"&gt;style&lt;/span&gt;: &lt;span class="nc"&gt;style&lt;/span&gt;::&lt;span class="n"&gt;Style&lt;/span&gt;::&lt;span class="n"&gt;default&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="k"&gt;impl&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="na"&gt;&amp;#39;a&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Label&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="na"&gt;&amp;#39;a&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;text&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="k"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;: &lt;span class="kp"&gt;&amp;amp;&lt;/span&gt;&lt;span class="na"&gt;&amp;#39;a&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;str&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-&amp;gt; &lt;span class="kp"&gt;&amp;amp;&lt;/span&gt;&lt;span class="nc"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Label&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="na"&gt;&amp;#39;a&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;position&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="k"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;: &lt;span class="kt"&gt;u16&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;: &lt;span class="kt"&gt;u16&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-&amp;gt; &lt;span class="kp"&gt;&amp;amp;&lt;/span&gt;&lt;span class="nc"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Label&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="na"&gt;&amp;#39;a&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;style&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="k"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;style&lt;/span&gt;: &lt;span class="nc"&gt;style&lt;/span&gt;::&lt;span class="n"&gt;Style&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-&amp;gt; &lt;span class="kp"&gt;&amp;amp;&lt;/span&gt;&lt;span class="nc"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Label&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="na"&gt;&amp;#39;a&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;style&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;style&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="k"&gt;impl&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="na"&gt;&amp;#39;a&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Widget&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Label&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="na"&gt;&amp;#39;a&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;draw&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="k"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;area&lt;/span&gt;: &lt;span class="nc"&gt;layout&lt;/span&gt;::&lt;span class="n"&gt;Rect&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;buf&lt;/span&gt;: &lt;span class="kp"&gt;&amp;amp;&lt;/span&gt;&lt;span class="nc"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;buffer&lt;/span&gt;::&lt;span class="n"&gt;Buffer&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;buf&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_string&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="n"&gt;area&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;left&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="n"&gt;area&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;top&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;style&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;stdout&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;io&lt;/span&gt;::&lt;span class="n"&gt;stdout&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="n"&gt;into_raw_mode&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;stdout&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;termion&lt;/span&gt;::&lt;span class="n"&gt;screen&lt;/span&gt;::&lt;span class="n"&gt;AlternateScreen&lt;/span&gt;::&lt;span class="n"&gt;from&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;stdout&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;backend&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;backend&lt;/span&gt;::&lt;span class="n"&gt;TermionBackend&lt;/span&gt;::&lt;span class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;stdout&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;terminal&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Terminal&lt;/span&gt;::&lt;span class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;backend&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;terminal&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;hide_cursor&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;terminal&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;draw&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="k"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="n"&gt;Label&lt;/span&gt;::&lt;span class="n"&gt;default&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Hello World !!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="n"&gt;render&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="k"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;})&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;stdin&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;io&lt;/span&gt;::&lt;span class="n"&gt;stdin&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;in&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;stdin&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;keys&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="k"&gt;match&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="nb"&gt;Ok&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;termion&lt;/span&gt;::&lt;span class="n"&gt;event&lt;/span&gt;::&lt;span class="n"&gt;Key&lt;/span&gt;::&lt;span class="n"&gt;Char&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sc"&gt;&amp;#39;m&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="n"&gt;terminal&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;clear&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="n"&gt;terminal&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;draw&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="k"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                        &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                        &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;width&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;MESSAGE&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;len&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;as&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;u16&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                        &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;height&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                        &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;style&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;style&lt;/span&gt;::&lt;span class="n"&gt;Style&lt;/span&gt;::&lt;span class="n"&gt;default&lt;/span&gt;&lt;span class="p"&gt;().&lt;/span&gt;&lt;span class="n"&gt;fg&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;style&lt;/span&gt;::&lt;span class="n"&gt;Color&lt;/span&gt;::&lt;span class="n"&gt;Blue&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                        &lt;/span&gt;&lt;span class="n"&gt;Label&lt;/span&gt;::&lt;span class="n"&gt;default&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                            &lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;MESSAGE&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                            &lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;position&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                            &lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;style&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;style&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                            &lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;render&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="k"&gt;mut&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="p"&gt;})&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;                    &lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;unwrap&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="nb"&gt;Ok&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;termion&lt;/span&gt;::&lt;span class="n"&gt;event&lt;/span&gt;::&lt;span class="n"&gt;Key&lt;/span&gt;::&lt;span class="n"&gt;Ctrl&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="sc"&gt;&amp;#39;c&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;break&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;            &lt;/span&gt;&lt;span class="n"&gt;_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;tui-rsは入力はハンドルしないため、termionなどのbackendの仕組みをそのまま使用します。&lt;/p&gt;
+&lt;h2 id="conclusion"&gt;まとめ&lt;/h2&gt;
+
+&lt;p&gt;長いものに巻かれろということでStar数の多いtermionで実装し直したところ、CPU使用率は8%まで下がりました！&lt;/p&gt;</content><category term="rust"></category><category term="advent calendar"></category></entry><entry><title>PythonでGenerative Art入門</title><link href="http://meganehouser.github.io/2019-12-06_python-generative-art.html" rel="alternate"></link><published>2019-12-06T00:00:00+09:00</published><updated>2019-12-06T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2019-12-06:/2019-12-06_python-generative-art.html</id><summary type="html">&lt;p&gt;Pyladies Japan Advent Calender 2019の記事です。PythonでGererative Artに入門してみましょう。&lt;/p&gt;</summary><content type="html">&lt;p&gt;この記事は&lt;a href="https://adventar.org/calendars/4730"&gt;Pyladies Japan Advent Calendar 2019&lt;/a&gt;の6日目の記事です。&lt;/p&gt;
 &lt;p&gt;同僚のPyladiesスタッフに「なんでもいいから記事書いて」と言われたので気軽に書いてみます！
 私自身は男性なのでPyladiesに参加したことはありませんが、色々な分野のテーマで開催されていて、楽しそうで羨ましく感じています。&lt;/p&gt;
 &lt;p&gt;今回は、Pythonを使ってGererative Artに入門する方法について紹介します！&lt;/p&gt;
@@ -134,7 +775,7 @@ Processingは電子アートとビジュアルデザインのための統合開�
 &lt;p&gt;Generative Artに興味を持たれた方は以下の書籍も当たってみてください。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://www.amazon.co.jp/dp/4861009634/"&gt;[普及版]ジェネラティブ・アート―Processingによる実践ガイド | マット・ピアソン, Matt Pearson, 久保田 晃弘, 沖 啓介 |本 | 通販 | Amazon&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><category term="python"></category><category term="generative art"></category><category term="advent calendar"></category></entry><entry><title>Meguro.LYAFGG#4 開催しました</title><link href="https://meganehouser.github.io/2019-06-22_meguro_lyahfgg_04.html" rel="alternate"></link><published>2019-06-22T00:00:00+09:00</published><updated>2019-06-22T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2019-06-22:/2019-06-22_meguro_lyahfgg_04.html</id><summary type="html">&lt;p&gt;2019/06/20に、んむてさんと第四回すごいH本の原書を読む会を開催しました！&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;a href="https://twitter.com/nnm_tech"&gt;んむて(@nnm_tech)さん | Twitter&lt;/a&gt;と第四回すごいH本の原書を読む会を開催しました！&lt;/p&gt;
+&lt;/ul&gt;</content><category term="python"></category><category term="generative art"></category><category term="advent calendar"></category></entry><entry><title>Meguro.LYAFGG#4 開催しました</title><link href="http://meganehouser.github.io/2019-06-22_meguro_lyahfgg_04.html" rel="alternate"></link><published>2019-06-22T00:00:00+09:00</published><updated>2019-06-22T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2019-06-22:/2019-06-22_meguro_lyahfgg_04.html</id><summary type="html">&lt;p&gt;2019/06/20に、んむてさんと第四回すごいH本の原書を読む会を開催しました！&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;a href="https://twitter.com/nnm_tech"&gt;んむて(@nnm_tech)さん | Twitter&lt;/a&gt;と第四回すごいH本の原書を読む会を開催しました！&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://megurolyahfgg.connpass.com/event/133793/"&gt;Meguro.LYAHFGG #4 - connpass&lt;/a&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;今回も開催場所はラクスルさんの会議室をお借りしました。ありがとうございました。&lt;/li&gt;
@@ -245,7 +886,7 @@ Processingは電子アートとビジュアルデザインのための統合開�
 &lt;li&gt;&lt;a href="https://qiita.com/irohiroki/items/b4a3653b3ddf2e357a9d"&gt;yield_selfを使ったリファクタリング - Qiita&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;/ul&gt;</content><category term="Haskell"></category><category term="Meguro.LYAFGG"></category></entry><entry><title>Meguro.LYAFGG#3 開催しました</title><link href="https://meganehouser.github.io/2019-05-19_meguro_lyahfgg_03.html" rel="alternate"></link><published>2019-05-19T00:00:00+09:00</published><updated>2019-05-19T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2019-05-19:/2019-05-19_meguro_lyahfgg_03.html</id><summary type="html">&lt;p&gt;2019/05/16に、んむてさんと第三回すごいH本の原書を読む会を開催しました！&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;a href="https://twitter.com/nnm_tech"&gt;んむて(@nnm_tech)さん | Twitter&lt;/a&gt;と第三回すごいH本の原書を読む会を開催しました！&lt;/p&gt;
+&lt;/ul&gt;</content><category term="Haskell"></category><category term="Meguro.LYAFGG"></category></entry><entry><title>Meguro.LYAFGG#3 開催しました</title><link href="http://meganehouser.github.io/2019-05-19_meguro_lyahfgg_03.html" rel="alternate"></link><published>2019-05-19T00:00:00+09:00</published><updated>2019-05-19T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2019-05-19:/2019-05-19_meguro_lyahfgg_03.html</id><summary type="html">&lt;p&gt;2019/05/16に、んむてさんと第三回すごいH本の原書を読む会を開催しました！&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;a href="https://twitter.com/nnm_tech"&gt;んむて(@nnm_tech)さん | Twitter&lt;/a&gt;と第三回すごいH本の原書を読む会を開催しました！&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://megurolyahfgg.connpass.com/event/127906/"&gt;Meguro.LYAHFGG #3 - connpass&lt;/a&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;今回も開催場所はラクスルさんの会議室をお借りしました。ありがとうございました。&lt;/li&gt;
@@ -279,7 +920,7 @@ Processingは電子アートとビジュアルデザインのための統合開�
 &lt;p&gt;今回は、んむてさんがRuby2.7で入る予定のパターンマッチについて、以下のRubyKaigiの資料を使って説明してくれました。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://www.notion.so/Ruby2-7-Pattern-Match-f5743893c1f040beb8f1a790b4973bce7"&gt;Ruby2.7で導入されるPattern Match&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><category term="Haskell"></category><category term="Meguro.LYAFGG"></category></entry><entry><title>Github活動を出力するツールfurikrs作った</title><link href="https://meganehouser.github.io/2019-04-25_furikrs.html" rel="alternate"></link><published>2019-04-25T00:00:00+09:00</published><updated>2019-04-25T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2019-04-25:/2019-04-25_furikrs.html</id><summary type="html">&lt;p&gt;pepabo/furik, laugh_k/footprintを参考にGithubの活動をMarkdown出力するツールをRustで作ってみた。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;a href="https://github.com/pepabo/furik"&gt;pepabo/furik&lt;/a&gt;、&lt;a href="https://github.com/laughk/footprint"&gt;laghk/footprint&lt;/a&gt;を参考にGihubuの活動をMarkdown出力するツールをRustで作ってみた。&lt;/p&gt;
+&lt;/ul&gt;</content><category term="Haskell"></category><category term="Meguro.LYAFGG"></category></entry><entry><title>Github活動を出力するツールfurikrs作った</title><link href="http://meganehouser.github.io/2019-04-25_furikrs.html" rel="alternate"></link><published>2019-04-25T00:00:00+09:00</published><updated>2019-04-25T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2019-04-25:/2019-04-25_furikrs.html</id><summary type="html">&lt;p&gt;pepabo/furik, laugh_k/footprintを参考にGithubの活動をMarkdown出力するツールをRustで作ってみた。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;a href="https://github.com/pepabo/furik"&gt;pepabo/furik&lt;/a&gt;、&lt;a href="https://github.com/laughk/footprint"&gt;laghk/footprint&lt;/a&gt;を参考にGihubuの活動をMarkdown出力するツールをRustで作ってみた。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://github.com/meganehouser/furikrs"&gt;meganehouser/furikrs&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
@@ -306,7 +947,7 @@ Processingは電子アートとビジュアルデザインのための統合開�
 &lt;li&gt;PullRequestEvent&lt;/li&gt;
 &lt;li&gt;PullRequestReviewCommentEvent&lt;/li&gt;
 &lt;li&gt;CommitCommentEvent&lt;/li&gt;
-&lt;/ul&gt;</content><category term="Rust"></category></entry><entry><title>Meguro.LYAFGG#2 開催しました</title><link href="https://meganehouser.github.io/2019-04-03_meguro_lyahfgg_02.html" rel="alternate"></link><published>2019-04-03T00:00:00+09:00</published><updated>2019-04-03T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2019-04-03:/2019-04-03_meguro_lyahfgg_02.html</id><summary type="html">&lt;p&gt;&lt;a href="https://twitter.com/nnm_tech"&gt;んむて(@nnm_tech)さん | Twitter&lt;/a&gt;と第二回すごいH本の原書を読む会を開催しました！&lt;/p&gt;
+&lt;/ul&gt;</content><category term="Rust"></category></entry><entry><title>Meguro.LYAFGG#2 開催しました</title><link href="http://meganehouser.github.io/2019-04-03_meguro_lyahfgg_02.html" rel="alternate"></link><published>2019-04-03T00:00:00+09:00</published><updated>2019-04-03T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2019-04-03:/2019-04-03_meguro_lyahfgg_02.html</id><summary type="html">&lt;p&gt;&lt;a href="https://twitter.com/nnm_tech"&gt;んむて(@nnm_tech)さん | Twitter&lt;/a&gt;と第二回すごいH本の原書を読む会を開催しました！&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://connpass.com/event/123933/"&gt;Meguro.LYAHFGG #2 - connpass&lt;/a&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;今回も開催場所はラクスルさんの会議室をお借りしました。ありがとうございました。&lt;/li&gt;
@@ -332,7 +973,7 @@ Processingは電子アートとビジュアルデザインのための統合開�
 &lt;p&gt;Meguro.LYAFGGでも宣伝させていただきましたが、弊社（SQUEEZE）の第0回Podcastが公開されました！&lt;/p&gt;
 &lt;blockquote class="twitter-tweet" data-lang="ja"&gt;&lt;p lang="ja" dir="ltr"&gt;.&lt;a href="https://twitter.com/iktakahiro?ref_src=twsrc%5Etfw"&gt;@iktakahiro&lt;/a&gt;と収録したSQUEEZE fm 第0回を公開 🎉 Pixel 3, Jupyter本, ブロリー, サッカー日本代表について話しました。 &lt;br&gt;録音トラブルで1時間飛んだり、収録から公開まで1ヶ月空いちゃってるけど、それは第0回のご愛嬌ということで。&lt;a href="https://t.co/ewsuZDrmjy"&gt;https://t.co/ewsuZDrmjy&lt;/a&gt;&lt;/p&gt;&amp;mdash; masataka arai (@massa142) &lt;a href="https://twitter.com/massa142/status/1112357658642677761?ref_src=twsrc%5Etfw"&gt;2019年3月31日&lt;/a&gt;&lt;/blockquote&gt;
 
-&lt;script async src="https://platform.twitter.com/widgets.js" charset="utf-8"&gt;&lt;/script&gt;</content><category term="Haskell"></category><category term="Meguro.LYAFGG"></category></entry><entry><title>F#についてLTしたよ</title><link href="https://meganehouser.github.io/2019-03-27_fsharp_lt.html" rel="alternate"></link><published>2019-03-27T00:00:00+09:00</published><updated>2019-03-27T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2019-03-27:/2019-03-27_fsharp_lt.html</id><summary type="html">&lt;p&gt;F#は楽しいけど日本では残念ながらあまり使われていないというLTをしました。&lt;/p&gt;</summary><content type="html">&lt;p&gt;3/1から入社した職場でF#愛でLTしてきたよ。&lt;/p&gt;
+&lt;script async src="https://platform.twitter.com/widgets.js" charset="utf-8"&gt;&lt;/script&gt;</content><category term="Haskell"></category><category term="Meguro.LYAFGG"></category></entry><entry><title>F#についてLTしたよ</title><link href="http://meganehouser.github.io/2019-03-27_fsharp_lt.html" rel="alternate"></link><published>2019-03-27T00:00:00+09:00</published><updated>2019-03-27T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2019-03-27:/2019-03-27_fsharp_lt.html</id><summary type="html">&lt;p&gt;F#は楽しいけど日本では残念ながらあまり使われていないというLTをしました。&lt;/p&gt;</summary><content type="html">&lt;p&gt;3/1から入社した職場でF#愛でLTしてきたよ。&lt;/p&gt;
 &lt;hr&gt;
 &lt;h2&gt;&lt;!-- marp: true --&gt;&lt;/h2&gt;
 &lt;p&gt;&lt;!-- $theme: default --&gt;
@@ -619,7 +1260,7 @@ easier to refactor and contains far fewer bugs. As our data analysis tools have 
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;F#のことも記憶の片隅に残しておいてほしい&lt;/li&gt;
-&lt;/ul&gt;</content><category term="FSharp"></category><category term="LT"></category></entry><entry><title>Pythonの便利ツールpipx</title><link href="https://meganehouser.github.io/2019-03-24_pipx.html" rel="alternate"></link><published>2019-03-24T00:00:00+09:00</published><updated>2019-03-24T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2019-03-24:/2019-03-24_pipx.html</id><summary type="html">&lt;p&gt;Pythonパッケージの実行バイナリを分離された仮想環境にインストールする便利ツールpipxについて。&lt;/p&gt;</summary><content type="html">&lt;p&gt;最近触ってみてちょっと便利だったpipxについて紹介。&lt;/p&gt;
+&lt;/ul&gt;</content><category term="FSharp"></category><category term="LT"></category></entry><entry><title>Pythonの便利ツールpipx</title><link href="http://meganehouser.github.io/2019-03-24_pipx.html" rel="alternate"></link><published>2019-03-24T00:00:00+09:00</published><updated>2019-03-24T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2019-03-24:/2019-03-24_pipx.html</id><summary type="html">&lt;p&gt;Pythonパッケージの実行バイナリを分離された仮想環境にインストールする便利ツールpipxについて。&lt;/p&gt;</summary><content type="html">&lt;p&gt;最近触ってみてちょっと便利だったpipxについて紹介。&lt;/p&gt;
 &lt;h1&gt;pipxとは&lt;/h1&gt;
 &lt;p&gt;Pythonパッケージの実行バイナリを分離された仮想環境にインストールする便利ツールです。&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://github.com/pipxproject/pipx"&gt;pipxproject/pipx: Execute binaries from Python packages in isolated environments&lt;/a&gt;&lt;/p&gt;
@@ -712,7 +1353,7 @@ pipx uninstall-all
 
 &lt;h4&gt;インストール済みパッケージのリスト表示&lt;/h4&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;pipx list
-&lt;/pre&gt;&lt;/div&gt;</content><category term="Python"></category></entry><entry><title>Meguro.LYAFGG#1 開催しました</title><link href="https://meganehouser.github.io/2019-03-07_meguro_lyahfgg_01.html" rel="alternate"></link><published>2019-03-07T00:00:00+09:00</published><updated>2019-03-07T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2019-03-07:/2019-03-07_meguro_lyahfgg_01.html</id><summary type="html">&lt;p&gt;&lt;a href="https://twitter.com/nnm_tech?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"&gt;んむて(@nnm_tech)さん | Twitter&lt;/a&gt;とすごいH本の原書を読む会を開催しました！&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;</content><category term="Python"></category></entry><entry><title>Meguro.LYAFGG#1 開催しました</title><link href="http://meganehouser.github.io/2019-03-07_meguro_lyahfgg_01.html" rel="alternate"></link><published>2019-03-07T00:00:00+09:00</published><updated>2019-03-07T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2019-03-07:/2019-03-07_meguro_lyahfgg_01.html</id><summary type="html">&lt;p&gt;&lt;a href="https://twitter.com/nnm_tech?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"&gt;んむて(@nnm_tech)さん | Twitter&lt;/a&gt;とすごいH本の原書を読む会を開催しました！&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://connpass.com/event/121177/"&gt;Meguro.LYAHFGG #1 - connpass&lt;/a&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;開催場所はラクスルさんの会議室をお借りしました。ありがとうございました。&lt;/li&gt;
@@ -730,7 +1371,7 @@ pipx uninstall-all
 &lt;p&gt;&lt;strong&gt;第二回から参加したい方、輪読担当やりたい方大歓迎です&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;以下、第一回目のノートです。
 - @nnm_techさんが作成したまとめに、私が補足と実行結果を追加したものです。
-&lt;script src="https://gist.github.com/meganehouser/c1ccebfc1a5efeed51fee633f14f8327.js"&gt;&lt;/script&gt;&lt;/p&gt;</content><category term="Haskell"></category><category term="Meguro.LYAFGG"></category></entry><entry><title>MacでIHaskellを動かす</title><link href="https://meganehouser.github.io/2019-03-04_run_ihaskell.html" rel="alternate"></link><published>2019-03-04T00:00:00+09:00</published><updated>2019-03-04T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2019-03-04:/2019-03-04_run_ihaskell.html</id><summary type="html">&lt;p&gt;Jupyter notebookをHaskellで動かそうと&lt;a href="https://github.com/gibiansky/IHaskell"&gt;gibiansky/IHaskell: A Haskell kernel for IPython.&lt;/a&gt;をREADMEを見ながらインストールしたが動作せず。動くようになったのでメモ。&lt;/p&gt;
+&lt;script src="https://gist.github.com/meganehouser/c1ccebfc1a5efeed51fee633f14f8327.js"&gt;&lt;/script&gt;&lt;/p&gt;</content><category term="Haskell"></category><category term="Meguro.LYAFGG"></category></entry><entry><title>MacでIHaskellを動かす</title><link href="http://meganehouser.github.io/2019-03-04_run_ihaskell.html" rel="alternate"></link><published>2019-03-04T00:00:00+09:00</published><updated>2019-03-04T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2019-03-04:/2019-03-04_run_ihaskell.html</id><summary type="html">&lt;p&gt;Jupyter notebookをHaskellで動かそうと&lt;a href="https://github.com/gibiansky/IHaskell"&gt;gibiansky/IHaskell: A Haskell kernel for IPython.&lt;/a&gt;をREADMEを見ながらインストールしたが動作せず。動くようになったのでメモ。&lt;/p&gt;
 &lt;h1&gt;環境&lt;/h1&gt;
 &lt;table&gt;
 &lt;thead&gt;
@@ -831,7 +1472,7 @@ ConsoleにWarningログが出ている。&lt;/p&gt;
 &lt;h1&gt;対処&lt;/h1&gt;
 &lt;p&gt;Pythonでインストールするパッケージのバージョンを調整。なんとか動いた。&lt;/p&gt;
 &lt;p&gt;動く状態のrequirements.txtは以下。これを3.でpip installする時に使えば良い。&lt;/p&gt;
-&lt;script src="https://gist.github.com/meganehouser/32d8a93e3d8b13cbceb6a6f2eb339f1d.js"&gt;&lt;/script&gt;</content><category term="Haskell"></category></entry><entry><title>OSXでOpenTKをビルドする</title><link href="https://meganehouser.github.io/2016-07-11_build_opentk_osx.html" rel="alternate"></link><published>2016-07-11T00:00:00+09:00</published><updated>2016-07-11T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2016-07-11:/2016-07-11_build_opentk_osx.html</id><summary type="html">&lt;p&gt;OpenTKのNugetパッケージはソース不明&lt;/p&gt;</summary><content type="html">&lt;p&gt;F#でProcessingのように簡単なAPIでビュジュアライゼーションできるツールを探していたけど良さそうなものがなかったので作ってみることにした。&lt;/p&gt;
+&lt;script src="https://gist.github.com/meganehouser/32d8a93e3d8b13cbceb6a6f2eb339f1d.js"&gt;&lt;/script&gt;</content><category term="Haskell"></category></entry><entry><title>OSXでOpenTKをビルドする</title><link href="http://meganehouser.github.io/2016-07-11_build_opentk_osx.html" rel="alternate"></link><published>2016-07-11T00:00:00+09:00</published><updated>2016-07-11T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2016-07-11:/2016-07-11_build_opentk_osx.html</id><summary type="html">&lt;p&gt;OpenTKのNugetパッケージはソース不明&lt;/p&gt;</summary><content type="html">&lt;p&gt;F#でProcessingのように簡単なAPIでビュジュアライゼーションできるツールを探していたけど良さそうなものがなかったので作ってみることにした。&lt;/p&gt;
 &lt;p&gt;Processingのソースが参考にできるので描画にはProcessingでも使われているOpenGLを使うことにした。
 OpenGLのラッパーを書くのもだるいので、既存の.NET Framework用のラッパーであるOpenTKを使うことにした。&lt;/p&gt;
 &lt;p&gt;OpenTKはNuGet公式ソースでパッケージが配布され、6月に更新版がリリースされいるのだが、手元のMacBook Airで動かないし、公式サイトのリファレンスと名前空間やenum名などが変わっている。&lt;/p&gt;
@@ -922,7 +1563,7 @@ OpenTK.dllをコピーしてプロジェクトに参照追加する。&lt;/p&gt;
 
         &lt;span class="n"&gt;window&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Run&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;30&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
         &lt;span class="mi"&gt;0&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</content><category term="FSharp"></category><category term="OpenTK"></category><category term="OpenGL"></category></entry><entry><title>河津桜をバスで見に行った。</title><link href="https://meganehouser.github.io/2016-03-20_kawazu-sakura.html" rel="alternate"></link><published>2016-03-20T00:00:00+09:00</published><updated>2016-03-20T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2016-03-20:/2016-03-20_kawazu-sakura.html</id><summary type="html">&lt;p&gt;バスの道のり長く長く長い。&lt;/p&gt;</summary><content type="html">&lt;p&gt;先々週くらいに、バスツアーで河津桜を見に行った。&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;</content><category term="FSharp"></category><category term="OpenTK"></category><category term="OpenGL"></category></entry><entry><title>河津桜をバスで見に行った。</title><link href="http://meganehouser.github.io/2016-03-20_kawazu-sakura.html" rel="alternate"></link><published>2016-03-20T00:00:00+09:00</published><updated>2016-03-20T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2016-03-20:/2016-03-20_kawazu-sakura.html</id><summary type="html">&lt;p&gt;バスの道のり長く長く長い。&lt;/p&gt;</summary><content type="html">&lt;p&gt;先々週くらいに、バスツアーで河津桜を見に行った。&lt;/p&gt;
 &lt;p&gt;抜けのいい空の青に、桃色の濃い桜の色が映えて心地がいい。&lt;/p&gt;
 &lt;p&gt;川沿いの桜並木を歩きながら、静岡県なので出店で柑橘類を手軽な値段で売っている。
 「はるか」と「はっさく」を買ってみた。
@@ -933,7 +1574,7 @@ OpenTK.dllをコピーしてプロジェクトに参照追加する。&lt;/p&gt;
 &lt;p&gt;&lt;a href='https://www.flickr.com/photos/125573348@N07/24973081709' title='untitled by meganehouser on Flickr'&gt;&lt;img src='https://farm2.staticflickr.com/1706/24973081709_c70b853e66.jpg' width=640 height=480 alt='untitled'&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href='https://www.flickr.com/photos/125573348@N07/24709672994' title='untitled by meganehouser on Flickr'&gt;&lt;img src='https://farm2.staticflickr.com/1455/24709672994_d9066d5b12.jpg' width=640 height=480 alt='untitled'&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href='https://www.flickr.com/photos/125573348@N07/24710279274' title='untitled by meganehouser on Flickr'&gt;&lt;img src='https://farm2.staticflickr.com/1709/24710279274_72d13bcda2.jpg' width=640 height=480 alt='untitled'&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href='https://www.flickr.com/photos/125573348@N07/25247038361' title='untitled by meganehouser on Flickr'&gt;&lt;img src='https://farm2.staticflickr.com/1564/25247038361_9b5ee28103.jpg' width=640 height=480 alt='untitled'&gt;&lt;/a&gt;&lt;/p&gt;</content><category term="photo"></category><category term="E-PL2"></category></entry><entry><title>low-levelのライブラリのソースを読む</title><link href="https://meganehouser.github.io/2016-03-08_rust-libs.html" rel="alternate"></link><published>2016-03-08T00:00:00+09:00</published><updated>2016-03-08T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2016-03-08:/2016-03-08_rust-libs.html</id><summary type="html">&lt;p&gt;low-levelの知見が得られて良い&lt;/p&gt;</summary><content type="html">&lt;p&gt;最近、&lt;a href="https://www.rust-lang.org/"&gt;Rust&lt;/a&gt;をポチポチ触っている。
+&lt;p&gt;&lt;a href='https://www.flickr.com/photos/125573348@N07/25247038361' title='untitled by meganehouser on Flickr'&gt;&lt;img src='https://farm2.staticflickr.com/1564/25247038361_9b5ee28103.jpg' width=640 height=480 alt='untitled'&gt;&lt;/a&gt;&lt;/p&gt;</content><category term="photo"></category><category term="E-PL2"></category></entry><entry><title>low-levelのライブラリのソースを読む</title><link href="http://meganehouser.github.io/2016-03-08_rust-libs.html" rel="alternate"></link><published>2016-03-08T00:00:00+09:00</published><updated>2016-03-08T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2016-03-08:/2016-03-08_rust-libs.html</id><summary type="html">&lt;p&gt;low-levelの知見が得られて良い&lt;/p&gt;</summary><content type="html">&lt;p&gt;最近、&lt;a href="https://www.rust-lang.org/"&gt;Rust&lt;/a&gt;をポチポチ触っている。
 今まではC#/F#/Python/Clojureなどを書いてきていたので、ちょっとlow-levelよりのものに触れてみたくなったので。&lt;/p&gt;
 &lt;p&gt;Rustのライブラリを読んでいると、low-levelの知見のキーワードが得られて良い。&lt;/p&gt;
 &lt;ul&gt;
@@ -946,7 +1587,7 @@ OpenTK.dllをコピーしてプロジェクトに参照追加する。&lt;/p&gt;
 &lt;p&gt;コルーチンを実装しているライブラリ。&lt;/p&gt;
 &lt;p&gt;インラインアセンブリでyeild相当の処理を実装している&lt;a href="https://github.com/zonyitoo/context-rs"&gt;context-rs&lt;/a&gt;を内部で使用している。&lt;/p&gt;
 &lt;p&gt;個人的には、今はRustでプロキシサーバを書いてみている。
-ロジックとメモリの扱いやOwnership, lifetimeも併せて考える必要があるので、業務ロジック部分などは、F#くらいの抽象度の方が集中できると感じた。&lt;/p&gt;</content><category term="Rust"></category></entry><entry><title>紫陽花とファインダー</title><link href="https://meganehouser.github.io/2015-06-24_hydrangea.html" rel="alternate"></link><published>2015-06-24T00:00:00+09:00</published><updated>2015-06-24T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2015-06-24:/2015-06-24_hydrangea.html</id><summary type="html">&lt;p&gt;鎌倉へ紫陽花を見に行った。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;a href="https://www.flickr.com/photos/125573348@N07/18858969771" title="Untitled by megane houser, on Flickr"&gt;
+ロジックとメモリの扱いやOwnership, lifetimeも併せて考える必要があるので、業務ロジック部分などは、F#くらいの抽象度の方が集中できると感じた。&lt;/p&gt;</content><category term="Rust"></category></entry><entry><title>紫陽花とファインダー</title><link href="http://meganehouser.github.io/2015-06-24_hydrangea.html" rel="alternate"></link><published>2015-06-24T00:00:00+09:00</published><updated>2015-06-24T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2015-06-24:/2015-06-24_hydrangea.html</id><summary type="html">&lt;p&gt;鎌倉へ紫陽花を見に行った。&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;a href="https://www.flickr.com/photos/125573348@N07/18858969771" title="Untitled by megane houser, on Flickr"&gt;
 &lt;img src="https://c2.staticflickr.com/6/5601/18858969771_5a903030ea_z.jpg" width="640" height="480" alt="Untitled"&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://www.flickr.com/photos/125573348@N07/18670429259" title="Untitled by megane houser, on Flickr"&gt;
 &lt;img src="https://c2.staticflickr.com/6/5574/18670429259_e94551f77d_z.jpg" width="640" height="480" alt="Untitled"&gt;&lt;/a&gt;&lt;/p&gt;
@@ -961,7 +1602,7 @@ OpenTK.dllをコピーしてプロジェクトに参照追加する。&lt;/p&gt;
 &lt;p&gt;ファインダーに目を押し付け、暗がりから世界を覗き込む感じが好きだった。
 ファインダーを通した世界は一種の異化作用が働き、僕は少しでも新鮮な感動を定着させようと、四角の枠で切り取られた光景に集中することができた。&lt;/p&gt;
 &lt;p&gt;ライブビューが全盛となり、ファインダーがなかったり、オプションになってしまったのは、残念なのだった。
-外付けのファインダー買うかな。&lt;/p&gt;</content><category term="E-PL2"></category></entry><entry><title>mdファイルを表示する簡易Webサーバ</title><link href="https://meganehouser.github.io/2015-04-19_md-view.html" rel="alternate"></link><published>2015-04-19T00:00:00+09:00</published><updated>2015-04-19T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2015-04-19:/2015-04-19_md-view.html</id><summary type="html"></summary><content type="html">&lt;h2&gt;概要&lt;/h2&gt;
+外付けのファインダー買うかな。&lt;/p&gt;</content><category term="E-PL2"></category></entry><entry><title>mdファイルを表示する簡易Webサーバ</title><link href="http://meganehouser.github.io/2015-04-19_md-view.html" rel="alternate"></link><published>2015-04-19T00:00:00+09:00</published><updated>2015-04-19T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2015-04-19:/2015-04-19_md-view.html</id><summary type="html"></summary><content type="html">&lt;h2&gt;概要&lt;/h2&gt;
 &lt;p&gt;Pythonでは、コマンドラインからモジュールを実行することで簡易的なWebサーバを起動できる。&lt;/p&gt;
 &lt;p&gt;Markdownファイルだった場合はhtmlに変換して、簡易mdビューアとして使用したい。&lt;/p&gt;
 &lt;h2&gt;方法&lt;/h2&gt;
@@ -1023,7 +1664,7 @@ Python3系統で導入された、空を飛べる標準モジュール"antigravi
 &lt;p&gt;http://localhost:8000/cgi-bin/hello.py で実行。&lt;/p&gt;
 &lt;h2&gt;スクリプト全文&lt;/h2&gt;
 &lt;p&gt;MarkDownを表示できる簡易サーバのスクリプト全文は以下。&lt;/p&gt;
-&lt;script src="https://gist.github.com/meganehouser/271852d192e64c9e688e.js"&gt;&lt;/script&gt;</content><category term="python"></category></entry><entry><title>ゆるふわIT談話室 第13回</title><link href="https://meganehouser.github.io/2015-04-18_yurufuwa-it-13.html" rel="alternate"></link><published>2015-04-18T00:00:00+09:00</published><updated>2015-04-18T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2015-04-18:/2015-04-18_yurufuwa-it-13.html</id><summary type="html">&lt;p&gt;ゆるふわIT談話室(第13回)を新橋のコワーキングスペースで開催したよ。&lt;/p&gt;</summary><content type="html">&lt;p&gt;知り合いを集めて非定期でもくもく作業したり、会話したり、LTしたりする会を開いている。&lt;/p&gt;
+&lt;script src="https://gist.github.com/meganehouser/271852d192e64c9e688e.js"&gt;&lt;/script&gt;</content><category term="python"></category></entry><entry><title>ゆるふわIT談話室 第13回</title><link href="http://meganehouser.github.io/2015-04-18_yurufuwa-it-13.html" rel="alternate"></link><published>2015-04-18T00:00:00+09:00</published><updated>2015-04-18T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2015-04-18:/2015-04-18_yurufuwa-it-13.html</id><summary type="html">&lt;p&gt;ゆるふわIT談話室(第13回)を新橋のコワーキングスペースで開催したよ。&lt;/p&gt;</summary><content type="html">&lt;p&gt;知り合いを集めて非定期でもくもく作業したり、会話したり、LTしたりする会を開いている。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;開催経緯&lt;ul&gt;
 &lt;li&gt;&lt;a href="http://meganehouser.hatenablog.com/entry/2013/06/30/154523"&gt;F#談話室に憧れて知り合いでIT勉強会開いた話&lt;/a&gt; &lt;/li&gt;
@@ -1090,7 +1731,7 @@ Python3系統で導入された、空を飛べる標準モジュール"antigravi
 &lt;ul&gt;
 &lt;li&gt;Toggeterにまとめてみた。&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://togetter.com/li/808537"&gt;ゆるふわIT(13)@新橋&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><category term="yurufuwa_it"></category></entry><entry><title>Hello World の代わりにLED風数字</title><link href="https://meganehouser.github.io/2015-04-04_led-numbers.html" rel="alternate"></link><published>2015-04-04T00:00:00+09:00</published><updated>2015-04-04T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2015-04-04:/2015-04-04_led-numbers.html</id><summary type="html">&lt;p&gt;Hello World の代わりにLED風数字を表示するコードを書くよ。&lt;/p&gt;</summary><content type="html">&lt;h3&gt;概要&lt;/h3&gt;
+&lt;/ul&gt;</content><category term="yurufuwa_it"></category></entry><entry><title>Hello World の代わりにLED風数字</title><link href="http://meganehouser.github.io/2015-04-04_led-numbers.html" rel="alternate"></link><published>2015-04-04T00:00:00+09:00</published><updated>2015-04-04T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2015-04-04:/2015-04-04_led-numbers.html</id><summary type="html">&lt;p&gt;Hello World の代わりにLED風数字を表示するコードを書くよ。&lt;/p&gt;</summary><content type="html">&lt;h3&gt;概要&lt;/h3&gt;
 &lt;p&gt;こんな記事を見かけたので書いてみることにした。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://blagrants.blogspot.jp/2015/04/led-is-my-new-hello-world-clojure-time.html"&gt;Blag's bag of rants: LED is my new Hello World - Clojure Time&lt;/a&gt;&lt;/li&gt;
@@ -1104,14 +1745,14 @@ Python3系統で導入された、空を飛べる標準モジュール"antigravi
 &lt;script src="https://gist.github.com/meganehouser/14d255f336189b6f4603.js"&gt;&lt;/script&gt;
 
 &lt;h3&gt;FSharp&lt;/h3&gt;
-&lt;script src="https://gist.github.com/meganehouser/457c0b149b8e866205e6.js"&gt;&lt;/script&gt;</content><category term="fsharp"></category><category term="rust"></category><category term="python"></category></entry><entry><title>Scheme in Rust</title><link href="https://meganehouser.github.io/2015-01-10.html" rel="alternate"></link><published>2015-01-10T00:00:00+09:00</published><updated>2015-01-10T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2015-01-10:/2015-01-10.html</id><summary type="html">&lt;p&gt;RustでSchemeをちょっとだけ実装してみた。&lt;/p&gt;</summary><content type="html">&lt;p&gt;Rust 1.0 alpha がリリースされたのでRustを書いてみた。&lt;/p&gt;
+&lt;script src="https://gist.github.com/meganehouser/457c0b149b8e866205e6.js"&gt;&lt;/script&gt;</content><category term="fsharp"></category><category term="rust"></category><category term="python"></category></entry><entry><title>Scheme in Rust</title><link href="http://meganehouser.github.io/2015-01-10.html" rel="alternate"></link><published>2015-01-10T00:00:00+09:00</published><updated>2015-01-10T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2015-01-10:/2015-01-10.html</id><summary type="html">&lt;p&gt;RustでSchemeをちょっとだけ実装してみた。&lt;/p&gt;</summary><content type="html">&lt;p&gt;Rust 1.0 alpha がリリースされたのでRustを書いてみた。&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://blogs.msdn.com/b/ashleyf/archive/2010/09/24/fscheme-0-0-0.aspx"&gt;FScheme - Scheme in F# - Code Monkey Have Fun - Site Home - MSDN Blogs&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;このサイトを参考にSchemeをさわりだけ実装。 減算・乗算・if式が実行可能。&lt;/p&gt;
 &lt;p&gt;今までGCある言語しか使ってこなかった身としては結構つらいところある。 
 C/C++の素養があればもっとスムーズに始められと思われる。&lt;/p&gt;
 &lt;p&gt;enumにclosure入れるのとかやっとの事で理解できた。&lt;/p&gt;
 &lt;p&gt;次はRust製のゲームエンジン&lt;a href="http://www.piston.rs/"&gt;piston&lt;/a&gt;触ってみたい。&lt;/p&gt;
-&lt;script src="https://gist.github.com/meganehouser/e8eee004304fbda7d4a8.js"&gt;&lt;/script&gt;</content><category term="rust"></category></entry><entry><title>ドロネー三角形分割の羊</title><link href="https://meganehouser.github.io/2015-01-01_sheep.html" rel="alternate"></link><published>2015-01-01T00:00:00+09:00</published><updated>2015-01-01T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2015-01-01:/2015-01-01_sheep.html</id><summary type="html">&lt;p&gt;ドロネー三角形分割を実装した。そして羊に見立てた。&lt;/p&gt;</summary><content type="html">&lt;p&gt;あけましておめでとうございます。ドロネー三角形分割で羊を書いてみた。&lt;/p&gt;
+&lt;script src="https://gist.github.com/meganehouser/e8eee004304fbda7d4a8.js"&gt;&lt;/script&gt;</content><category term="rust"></category></entry><entry><title>ドロネー三角形分割の羊</title><link href="http://meganehouser.github.io/2015-01-01_sheep.html" rel="alternate"></link><published>2015-01-01T00:00:00+09:00</published><updated>2015-01-01T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2015-01-01:/2015-01-01_sheep.html</id><summary type="html">&lt;p&gt;ドロネー三角形分割を実装した。そして羊に見立てた。&lt;/p&gt;</summary><content type="html">&lt;p&gt;あけましておめでとうございます。ドロネー三角形分割で羊を書いてみた。&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://www.flickr.com/photos/125573348@N07/16151453002" title="delauny by megane houser, on Flickr"&gt;&lt;img src="https://farm8.staticflickr.com/7518/16151453002_e77a1c43e3_o.jpg" width="1000" height="800" alt="delauny"&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;コードは以下。
 &lt;script src="https://gist.github.com/meganehouser/2322ebd7b3f16857b3fe.js"&gt;&lt;/script&gt;&lt;/p&gt;
@@ -1136,7 +1777,7 @@ C/C++の素養があればもっとスムーズに始められと思われる。
 &lt;li&gt;&lt;a href="http://www.riken.jp/brict/Ijiri/study/DelaunayTriangulation.htm"&gt;制約付きドロネー三角形分割&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://tercel-sakuragaoka.blogspot.jp/2011/06/processingdelaunay_3958.html"&gt;Tercel::Diary: ProcessingでDelaunay分割(解説篇)&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://katsura-kotonoha.sakura.ne.jp/prog/c/tip00030.shtml"&gt;点が三角形内に含まれるか調べる－C/C++－水無瀬の部屋&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><category term="computational geometry"></category><category term="quil"></category><category term="processing"></category></entry><entry><title>Quil -&gt; Movie -&gt; Youtube</title><link href="https://meganehouser.github.io/2014-12-30_quil-movie-youtube.html" rel="alternate"></link><published>2014-12-30T00:00:00+09:00</published><updated>2014-12-30T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2014-12-30:/2014-12-30_quil-movie-youtube.html</id><summary type="html">&lt;p&gt;Quilで作成したSketchから動画を作成し、YouTubeにアップロードしてみた。&lt;/p&gt;</summary><content type="html">&lt;p&gt;写真とQuil(Processing)を組み合わせたものに興味があり、試しに動画化、YouTubeにアップロードしてみた。&lt;/p&gt;
+&lt;/ul&gt;</content><category term="computational geometry"></category><category term="quil"></category><category term="processing"></category></entry><entry><title>Quil -&gt; Movie -&gt; Youtube</title><link href="http://meganehouser.github.io/2014-12-30_quil-movie-youtube.html" rel="alternate"></link><published>2014-12-30T00:00:00+09:00</published><updated>2014-12-30T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2014-12-30:/2014-12-30_quil-movie-youtube.html</id><summary type="html">&lt;p&gt;Quilで作成したSketchから動画を作成し、YouTubeにアップロードしてみた。&lt;/p&gt;</summary><content type="html">&lt;p&gt;写真とQuil(Processing)を組み合わせたものに興味があり、試しに動画化、YouTubeにアップロードしてみた。&lt;/p&gt;
 &lt;h2&gt;1. Quilのスケッチからフレームごとの画像を作成する&lt;/h2&gt;
 &lt;p&gt;今回、動画を作ったコード。
 &lt;script src="https://gist.github.com/meganehouser/0507cbb86075878a5ed4.js"&gt;&lt;/script&gt;&lt;/p&gt;
@@ -1157,7 +1798,7 @@ C/C++の素養があればもっとスムーズに始められと思われる。
 &lt;ul&gt;
 &lt;li&gt;参考&lt;br&gt;
 &lt;a href="view-source:http://minidoga.jp/blog/20140327.html"&gt;PCからVine投稿できるChrome機能拡張に不審な通信【Vineユーザー検索のミニ動画JP】&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><category term="quil"></category><category term="processing"></category><category term="YouTube"></category></entry><entry><title>F#でTHETA360を制御</title><link href="https://meganehouser.github.io/2014-12-06_theta360-fsharp.html" rel="alternate"></link><published>2014-12-06T00:00:00+09:00</published><updated>2014-12-06T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2014-12-06:/2014-12-06_theta360-fsharp.html</id><summary type="html">&lt;p&gt;F#でTHETA360のシャッターを切ります。&lt;/p&gt;</summary><content type="html">&lt;p&gt;RICOH THETA 360はAPIが公開されているので、F#で制御するコードを書いてみることにした。&lt;/p&gt;
+&lt;/ul&gt;</content><category term="quil"></category><category term="processing"></category><category term="YouTube"></category></entry><entry><title>F#でTHETA360を制御</title><link href="http://meganehouser.github.io/2014-12-06_theta360-fsharp.html" rel="alternate"></link><published>2014-12-06T00:00:00+09:00</published><updated>2014-12-06T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2014-12-06:/2014-12-06_theta360-fsharp.html</id><summary type="html">&lt;p&gt;F#でTHETA360のシャッターを切ります。&lt;/p&gt;</summary><content type="html">&lt;p&gt;RICOH THETA 360はAPIが公開されているので、F#で制御するコードを書いてみることにした。&lt;/p&gt;
 &lt;p&gt;THETAのAPIはPTP-IPという規格に沿っている。
 ただし、PTP-IPの規格書は法人しか入手できないため、THETAのSDKに入っているコード(Android, iOS向け)を参考にして書くなどする必要がある。&lt;/p&gt;
 &lt;ul&gt;
@@ -1170,7 +1811,7 @@ C/C++の素養があればもっとスムーズに始められと思われる。
 &lt;/ul&gt;
 &lt;p&gt;Wi-Fiで接続し、下記のF#スクリプトを実行すると、接続-&amp;gt;シャッター-&amp;gt;切断、の流れを実行する。&lt;br&gt;
 なお、作っている途中に興味が他に映ってしまったため、シャッターを切るところまでしか実装していない…
-&lt;script src="https://gist.github.com/meganehouser/b86e208c5e2b887c2789.js"&gt;&lt;/script&gt;&lt;/p&gt;</content><category term="fsharp"></category></entry><entry><title>銅版画のようなイメージを作りたい その1</title><link href="https://meganehouser.github.io/2014-12-03_mezzotint-like-image01.html" rel="alternate"></link><published>2014-12-03T00:00:00+09:00</published><updated>2014-12-03T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2014-12-03:/2014-12-03_mezzotint-like-image01.html</id><summary type="html">&lt;p&gt;浜口陽三の多色刷りのメゾチントが好きだ。なんとかしてProcessingでメゾチント風味を表現できないか。&lt;/p&gt;</summary><content type="html">&lt;p&gt;浜口陽三の多色刷りのメゾチントが好きだ。なんとかしてProcessingでメゾチント風味を表現できないか。&lt;/p&gt;
+&lt;script src="https://gist.github.com/meganehouser/b86e208c5e2b887c2789.js"&gt;&lt;/script&gt;&lt;/p&gt;</content><category term="fsharp"></category></entry><entry><title>銅版画のようなイメージを作りたい その1</title><link href="http://meganehouser.github.io/2014-12-03_mezzotint-like-image01.html" rel="alternate"></link><published>2014-12-03T00:00:00+09:00</published><updated>2014-12-03T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2014-12-03:/2014-12-03_mezzotint-like-image01.html</id><summary type="html">&lt;p&gt;浜口陽三の多色刷りのメゾチントが好きだ。なんとかしてProcessingでメゾチント風味を表現できないか。&lt;/p&gt;</summary><content type="html">&lt;p&gt;浜口陽三の多色刷りのメゾチントが好きだ。なんとかしてProcessingでメゾチント風味を表現できないか。&lt;/p&gt;
 &lt;h3&gt;メゾチントの手法&lt;/h3&gt;
 &lt;ol&gt;
 &lt;li&gt;版の面全体に縦横斜めに無数の線を刻む。(目立て)
@@ -1279,7 +1920,7 @@ C/C++の素養があればもっとスムーズに始められと思われる。
 
 &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;defn &lt;/span&gt;&lt;span class="nv"&gt;-main&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt; &lt;span class="nv"&gt;args&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
   &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;start-sketch&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</content><category term="mezzotint"></category><category term="quil"></category><category term="processing"></category></entry><entry><title>カジュアルF#</title><link href="https://meganehouser.github.io/2014-12-02_casual-fsharp.html" rel="alternate"></link><published>2014-12-02T00:00:00+09:00</published><updated>2014-12-02T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2014-12-02:/2014-12-02_casual-fsharp.html</id><summary type="html">&lt;p&gt;この記事では、F#をカジュアルに使い始める方法について説明したい。&lt;/p&gt;</summary><content type="html">&lt;p&gt;社内Advent Calendar用に書いた記事&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;</content><category term="mezzotint"></category><category term="quil"></category><category term="processing"></category></entry><entry><title>カジュアルF#</title><link href="http://meganehouser.github.io/2014-12-02_casual-fsharp.html" rel="alternate"></link><published>2014-12-02T00:00:00+09:00</published><updated>2014-12-02T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2014-12-02:/2014-12-02_casual-fsharp.html</id><summary type="html">&lt;p&gt;この記事では、F#をカジュアルに使い始める方法について説明したい。&lt;/p&gt;</summary><content type="html">&lt;p&gt;社内Advent Calendar用に書いた記事&lt;/p&gt;
 &lt;h3&gt;目次&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="#whoareyou"&gt;お前誰よ&lt;/a&gt;&lt;/li&gt;
@@ -1533,11 +2174,11 @@ F#はLinuxでもMacでも書けるよ。&lt;br&gt;
 あとF#の強力な抽象化の機能と、シンプルに書ける言語表現力は魅力だよ。&lt;/p&gt;
 &lt;h3&gt;言い訳&lt;/h3&gt;
 &lt;p&gt;（駆け足で紹介したので説明不足や厳密にいうと不正確な部分もあると思います。
-疑問、指摘などあればコメントお願いします。）&lt;/p&gt;</content><category term="fsharp"></category></entry><entry><title>THETA360試し取り</title><link href="https://meganehouser.github.io/2014-11-30_first-theta360.html" rel="alternate"></link><published>2014-11-30T00:00:00+09:00</published><updated>2014-11-30T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2014-11-30:/2014-11-30_first-theta360.html</id><summary type="html">&lt;p&gt;THETA360を購入したので試しに取ってみた。&lt;/p&gt;</summary><content type="html">&lt;p&gt;THETA360を購入したので試しに取ってみた。&lt;/p&gt;
+疑問、指摘などあればコメントお願いします。）&lt;/p&gt;</content><category term="fsharp"></category></entry><entry><title>THETA360試し取り</title><link href="http://meganehouser.github.io/2014-11-30_first-theta360.html" rel="alternate"></link><published>2014-11-30T00:00:00+09:00</published><updated>2014-11-30T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2014-11-30:/2014-11-30_first-theta360.html</id><summary type="html">&lt;p&gt;THETA360を購入したので試しに取ってみた。&lt;/p&gt;</summary><content type="html">&lt;p&gt;THETA360を購入したので試しに取ってみた。&lt;/p&gt;
 &lt;p&gt;1プッシュでぐるりと周囲の全てが記録される感覚、通常のカメラとの被写体と撮影者の位置の違い（自らが撮影場所のど真ん中に踏み込む）のが新鮮だ。&lt;/p&gt;
 &lt;blockquote data-width="500" data-height="375" class="ricoh-theta-spherical-image" &gt;Post from RICOH THETA. - &lt;a href="https://theta360.com/s/aLn" target="_blank"&gt;Spherical Image - RICOH THETA&lt;/a&gt;&lt;/blockquote&gt;
 
-&lt;script async src="https://theta360.com/widgets.js" charset="utf-8"&gt;&lt;/script&gt;</content><category term="THETA360"></category></entry><entry><title>macvim-kaoriyaをソースからビルド</title><link href="https://meganehouser.github.io/2014-11-29_build-macvim-kaoriya.html" rel="alternate"></link><published>2014-11-29T00:00:00+09:00</published><updated>2014-11-29T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2014-11-29:/2014-11-29_build-macvim-kaoriya.html</id><summary type="html">&lt;p&gt;Python2を無効化、Python3を有効化してビルドしてみた。&lt;/p&gt;</summary><content type="html">&lt;p&gt;普段はMacVim-Kaoriyaを配布されているdmgからインストールしていて使用している。&lt;/p&gt;
+&lt;script async src="https://theta360.com/widgets.js" charset="utf-8"&gt;&lt;/script&gt;</content><category term="THETA360"></category></entry><entry><title>macvim-kaoriyaをソースからビルド</title><link href="http://meganehouser.github.io/2014-11-29_build-macvim-kaoriya.html" rel="alternate"></link><published>2014-11-29T00:00:00+09:00</published><updated>2014-11-29T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2014-11-29:/2014-11-29_build-macvim-kaoriya.html</id><summary type="html">&lt;p&gt;Python2を無効化、Python3を有効化してビルドしてみた。&lt;/p&gt;</summary><content type="html">&lt;p&gt;普段はMacVim-Kaoriyaを配布されているdmgからインストールしていて使用している。&lt;/p&gt;
 &lt;p&gt;配布されているdmgでは、Python2/Python3とも有効かされているが、jedi-vimがどうしてもPython2.7で実行されてしまうので、Python3のコード編集時に補完がうまくいかない。&lt;/p&gt;
 &lt;p&gt;Python2を無効化、Python3を有効化してビルドしてみた。&lt;/p&gt;
 &lt;ul&gt;
@@ -1600,5 +2241,5 @@ make
 &lt;li&gt;&lt;a href="https://github.com/b4winckler/macvim/wiki/Building#how-to-build-macvim"&gt;Building · b4winckler/macvim Wiki&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://blog.wwwjfy.net/2011/03/02/compile-vim-7-3-in-mac-os-x-10-6-6/"&gt;Compile vim 7.3 in Mac OS X 10.6.6&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://muryoimpl.com/blog/2013/06/27/compile-macvim/"&gt;Macvimを自分でコンパイルした(mac) - なんか書いていこうぜー.com&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><category term="vim macvim"></category></entry><entry><title>Pelicanでblogを始めました</title><link href="https://meganehouser.github.io/2014-11-15_first-article.html" rel="alternate"></link><published>2014-11-15T00:00:00+09:00</published><updated>2014-11-15T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2014-11-15:/2014-11-15_first-article.html</id><summary type="html">&lt;p&gt;夕焼けの歌を聴いた&lt;/p&gt;</summary><content type="html">&lt;p&gt;夕焼けの歌を聴いた
+&lt;/ul&gt;</content><category term="vim macvim"></category></entry><entry><title>Pelicanでblogを始めました</title><link href="http://meganehouser.github.io/2014-11-15_first-article.html" rel="alternate"></link><published>2014-11-15T00:00:00+09:00</published><updated>2014-11-15T00:00:00+09:00</updated><author><name>meganehouser</name></author><id>tag:meganehouser.github.io,2014-11-15:/2014-11-15_first-article.html</id><summary type="html">&lt;p&gt;夕焼けの歌を聴いた&lt;/p&gt;</summary><content type="html">&lt;p&gt;夕焼けの歌を聴いた
 &lt;a href="https://www.flickr.com/photos/125573348@N07/14737390253"&gt;&lt;img alt="夕焼け" src="https://farm6.staticflickr.com/5571/14737390253_d40f03cd12_z.jpg"&gt;&lt;/a&gt;&lt;/p&gt;</content><category term="E-PL2"></category></entry></feed>
